@@ -226,8 +226,8 @@ class _MyAppState extends State<MyApp> {
 
     Pose inputPose = Pose(landmarks);
     PoseValidator poseValidator = PoseValidator(inputPose);
-    poseValidator.getAngle(PoseLandmarkType.rightShoulder,
-        PoseLandmarkType.leftShoulder, PoseLandmarkType.leftHip);
+    print(poseValidator.getAngle(PoseLandmarkType.leftElbow,
+        PoseLandmarkType.leftShoulder, PoseLandmarkType.leftWrist));
   }
 
   @override

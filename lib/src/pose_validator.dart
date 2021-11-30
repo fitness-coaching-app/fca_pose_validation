@@ -7,19 +7,27 @@ class PoseValidator {
 
   PoseValidator(this.pose);
 
-  Vector3 getPoseVectorPosition(PoseLandmarkType landmark) => Vector3(
-      pose.landmarks[landmark]!.x,
-      pose.landmarks[landmark]!.y,
-      pose.landmarks[landmark]!.z);
+  Vector3 _getVectorFromLandmarks(
+      PoseLandmarkType landmarkA, PoseLandmarkType landmarkB) {
+    return Vector3(
+        pose.landmarks[landmarkB]!.x - pose.landmarks[landmarkA]!.x,
+        pose.landmarks[landmarkB]!.y - pose.landmarks[landmarkA]!.y,
+        pose.landmarks[landmarkB]!.z - pose.landmarks[landmarkA]!.z);
+  }
 
-  double getAngle(PoseLandmarkType landmark1, PoseLandmarkType landmark2,
-      PoseLandmarkType landmark3) {
-    List<Vector3> landmarkVector = [
-      getPoseVectorPosition(landmark1),
-      getPoseVectorPosition(landmark2),
-      getPoseVectorPosition(landmark3)
+  double vectorMagnitude(Vector3 vector) {
+    return sqrt(
+        vector.x * vector.x + vector.y * vector.y + vector.z * vector.z);
+  }
+
+  double getAngle(PoseLandmarkType landmarkA, PoseLandmarkType landmarkB,
+      PoseLandmarkType landmarkC) {
+    List<Vector3> vector = [
+      _getVectorFromLandmarks(landmarkA, landmarkB),
+      _getVectorFromLandmarks(landmarkA, landmarkC)
     ];
-
-    return 0.000;
+    print(vector);
+    return acos(dot3(vector[0], vector[1]) /
+        (vectorMagnitude(vector[0]) * vectorMagnitude(vector[1])));
   }
 }

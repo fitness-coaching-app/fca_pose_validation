@@ -5,7 +5,11 @@ import 'package:google_ml_kit/google_ml_kit.dart';
 import 'camera_view.dart';
 import 'painters/pose_painter.dart';
 
+
 class PoseDetectorView extends StatefulWidget {
+  late final Pose pose;
+  PoseDetectorView({required this.pose});
+
   @override
   State<StatefulWidget> createState() => _PoseDetectorViewState();
 }
@@ -37,6 +41,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     isBusy = true;
     final poses = await poseDetector.processImage(inputImage);
     print('Found ${poses.length} poses');
+    widget.pose = poses[0];
     if (inputImage.inputImageData?.size != null &&
         inputImage.inputImageData?.imageRotation != null) {
       final painter = PosePainter(poses, inputImage.inputImageData!.size,

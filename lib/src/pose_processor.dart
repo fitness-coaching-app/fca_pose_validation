@@ -2,10 +2,10 @@ import 'package:google_ml_kit/google_ml_kit.dart';
 import 'dart:math';
 import 'package:vector_math/vector_math.dart';
 
-class PoseValidator {
+class PoseProcessor {
   Pose pose;
 
-  PoseValidator(this.pose);
+  PoseProcessor(this.pose);
 
   Vector3 _getVectorFromLandmarks(
       PoseLandmarkType landmarkA, PoseLandmarkType landmarkB) {

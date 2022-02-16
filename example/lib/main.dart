@@ -25,17 +25,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late final Pose pose;
   @override
   void initState() {
     super.initState();
-  }
-
-  void poseProcessorTest() {
-    PoseProcessor poseValidator = PoseProcessor(pose);
-    print(pose);
-    print(poseValidator.getAngle(PoseLandmarkType.leftElbow,
-        PoseLandmarkType.leftShoulder, PoseLandmarkType.leftWrist));
   }
 
   @override
@@ -50,7 +42,7 @@ class _MyAppState extends State<MyApp> {
         body: SafeArea(
           child: Center(
             child:
-              PoseDetectorView(pose: pose)
+              PoseDetectorView()
               // TextField()
             ),
           ),

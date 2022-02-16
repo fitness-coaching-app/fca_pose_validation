@@ -1,9 +1,6 @@
 <component name="libraryTable">
   <library name="Flutter Plugins" type="FlutterPluginsLibraryType">
-    <CLASSES>
-      <root url="file:///usr/local/Caskroom/flutter/2.5.3/flutter/.pub-cache/hosted/pub.dartlang.org/google_ml_kit-0.7.3" />
-      <root url="file://$PROJECT_DIR$" />
-    </CLASSES>
+    <CLASSES />
     <JAVADOC />
     <SOURCES />
   </library>

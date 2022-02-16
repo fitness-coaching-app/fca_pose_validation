@@ -1,15 +1,13 @@
+import 'package:fca_pose_validation/fca_pose_processor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 
 import 'camera_view.dart';
 import 'painters/pose_painter.dart';
-
+import  'dart:developer' as dev;
 
 class PoseDetectorView extends StatefulWidget {
-  late final Pose pose;
-  PoseDetectorView({required this.pose});
-
   @override
   State<StatefulWidget> createState() => _PoseDetectorViewState();
 }
@@ -36,12 +34,18 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     );
   }
 
+  void poseProcessorTest(Pose pose) {
+    PoseProcessor poseValidator = PoseProcessor(pose);
+    dev.log(poseValidator.getAngle(PoseLandmarkType.leftElbow,
+        PoseLandmarkType.leftShoulder, PoseLandmarkType.leftWrist).toString());
+  }
+
   Future<void> processImage(InputImage inputImage) async {
     if (isBusy) return;
     isBusy = true;
     final poses = await poseDetector.processImage(inputImage);
-    print('Found ${poses.length} poses');
-    widget.pose = poses[0];
+    // print('Found ${poses.length} poses');
+    if(poses.isNotEmpty)  poseProcessorTest(poses[0]);
     if (inputImage.inputImageData?.size != null &&
         inputImage.inputImageData?.imageRotation != null) {
       final painter = PosePainter(poses, inputImage.inputImageData!.size,

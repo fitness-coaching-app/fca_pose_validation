@@ -5,16 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="13f1378a-451b-4865-849d-ee1e2cb3a772" name="Changes" comment="[FCA-108] Make Google ML Kit run on the example file">
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/Runner.xcodeproj/xcshareddata/xcschemes/Runner.xcscheme" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Runner.xcodeproj/xcshareddata/xcschemes/Runner.xcscheme" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/lib/pose_detector_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/pose_detector_view.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fca_pose_validation.iml" beforeDir="false" afterPath="$PROJECT_DIR$/fca_pose_validation.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/fca_pose_validation.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/fca_pose_processor.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/pose_validator.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/pose_processor.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/fca_pose_validation_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/test/fca_pose_validation_test.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/pose_processor.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/pose_processor.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,6 +19,11 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitSEFilterConfiguration">
@@ -38,9 +40,9 @@
     <setting file="file://$PROJECT_DIR$/example/lib/painters/pose_painter.dart" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/example/lib/pose_detector_view.dart" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/example/lib/camera_view.dart" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/example/lib/main.dart" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/example/lib/main.dart" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/pubspec.yaml" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/test/fca_pose_validation_test.dart" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/test/fca_pose_validation_test.dart" root0="SKIP_INSPECTION" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -63,14 +65,19 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File" value="TEXT" />
     <property name="dart.analysis.tool.window.force.activate" value="true" />
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/example/lib/painters" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/example/ios/Runner" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/example/ios/Runner" />
       <recent name="$PROJECT_DIR$/example/lib/painters" />
       <recent name="$PROJECT_DIR$/example/lib" />
     </key>
@@ -102,6 +109,10 @@
       <workItem from="1644647946314" duration="121000" />
       <workItem from="1644648534211" duration="1908000" />
       <workItem from="1644651768625" duration="1035000" />
+      <workItem from="1644838181612" duration="189000" />
+      <workItem from="1644996609828" duration="766000" />
+      <workItem from="1644997435317" duration="507000" />
+      <workItem from="1644997988900" duration="6298000" />
     </task>
     <option name="localTasksCounter" value="2" />
     <servers />
@@ -129,5 +140,9 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="[FCA-108] Make Google ML Kit run on the example file" />
     <option name="LAST_COMMIT_MESSAGE" value="[FCA-108] Make Google ML Kit run on the example file" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

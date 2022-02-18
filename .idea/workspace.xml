@@ -5,8 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="13f1378a-451b-4865-849d-ee1e2cb3a772" name="Changes" comment=":sparkles: [FCA-108] Complete angle inference w/ 2-axis">
+      <change afterPath="$PROJECT_DIR$/example/ios/Runner/GoogleService-Info.plist" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/angle_calculator.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/exercise_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/pose_detector_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/pose_detector_view.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fca_pose_validation.iml" beforeDir="false" afterPath="$PROJECT_DIR$/fca_pose_validation.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/pose_processor.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/pose_processor.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,7 +27,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="develop" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -108,6 +119,8 @@
       <workItem from="1644996609828" duration="766000" />
       <workItem from="1644997435317" duration="507000" />
       <workItem from="1644997988900" duration="6667000" />
+      <workItem from="1645086123613" duration="27000" />
+      <workItem from="1645162763669" duration="7788000" />
     </task>
     <task id="LOCAL-00002" summary=":sparkles: [FCA-108] Complete angle inference w/ 2-axis">
       <created>1645004769348</created>

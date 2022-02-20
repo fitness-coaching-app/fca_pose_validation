@@ -1,0 +1,19 @@
+id: test01
+name: course.yaml test
+steps:
+  - name: test01
+    mediaDir: assets/image01.jpg
+    bounce: false
+    criteria:
+      timer:
+        durationSecond: 10
+    poses:
+      - id: test
+        definitions:
+          - angle:
+              landmarkA: leftShoulder
+              landmarkB: rightShoulder
+              vertex: leftMouth
+              conditions:
+                - "> 45"
+                - "!= 90"

@@ -28,7 +28,7 @@ packages:
       name: camera_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.4"
+    version: "2.1.5"
   characters:
     dependency: transitive
     description:
@@ -148,14 +148,14 @@ packages:
       name: image_picker_for_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.5"
+    version: "2.1.6"
   image_picker_platform_interface:
     dependency: transitive
     description:
       name: image_picker_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.4.3"
+    version: "2.4.4"
   js:
     dependency: transitive
     description:
@@ -280,6 +280,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
+  yaml:
+    dependency: "direct main"
+    description:
+      name: yaml
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.1.0"
 sdks:
   dart: ">=2.14.0 <3.0.0"
   flutter: ">=2.0.0"

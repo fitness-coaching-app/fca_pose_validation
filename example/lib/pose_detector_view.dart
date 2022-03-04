@@ -1,11 +1,9 @@
-import 'package:fca_pose_validation/fca_pose_processor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 
 import 'camera_view.dart';
 import 'painters/pose_painter.dart';
-import  'dart:developer' as dev;
 
 class PoseDetectorView extends StatefulWidget {
   @override
@@ -35,9 +33,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   }
 
   void poseProcessorTest(Pose pose) {
-    PoseProcessor poseValidator = PoseProcessor(pose);
-    dev.log(poseValidator.getAngle(PoseLandmarkType.leftElbow,
-        PoseLandmarkType.leftShoulder, PoseLandmarkType.leftWrist).toString());
+
   }
 
   Future<void> processImage(InputImage inputImage) async {

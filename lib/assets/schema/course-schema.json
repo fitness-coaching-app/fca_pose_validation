@@ -1,0 +1,128 @@
+{
+  "title": "course.yaml schema",
+  "description": "schema for course.yaml",
+  "type": "object",
+  "required": ["steps"],
+  "properties": {
+    "id": {
+      "description": "Course ID",
+      "type": "string"
+    },
+    "name": {
+      "description": "Course Name",
+      "type": "string"
+    },
+    "steps": {
+      "description": "Course exercise steps",
+      "type": "array",
+      "items": {
+        "title": "Exercise Definition",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "mediaDir": {
+            "type": "string"
+          },
+          "bounce": {
+            "type": "boolean"
+          },
+          "criteria": {
+            "type": "object",
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "timer": {
+                    "type": "object",
+                    "properties": {
+                      "durationSecond": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "counter": {
+                    "type": "object",
+                    "properties": {
+                      "repeat": {
+                        "type": "integer"
+                      },
+                      "countOnId": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "poses": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {"type":  "string"},
+                "definitions": {
+                  "type":  "array",
+                  "items": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "angle": {
+                            "type": "object",
+                            "properties": {
+                              "landmarkA": {
+                                "type": "string"
+                              },
+                              "landmarkB": {
+                                "type": "string"
+                              },
+                              "vertex": {
+                                "type": "string"
+                              },
+                              "conditions": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string",
+                                  "pattern": "^(==|>|>=|<|<=|!=)( )*[0-9]+$"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "touch": {
+                            "type": "object",
+                            "properties": {
+                              "landmarks": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+
+    }
+  }
+}

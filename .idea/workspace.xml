@@ -4,14 +4,24 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="13f1378a-451b-4865-849d-ee1e2cb3a772" name="Changes" comment=":sparkles: Implement ExerciseDefinition class along with subclasses">
+    <list default="true" id="13f1378a-451b-4865-849d-ee1e2cb3a772" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/lib/src/exercise_definition.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/touch_checker.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/exercise_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/exercise_controller.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/pose_processor.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/pose_processor.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Dart File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -119,6 +129,8 @@
       <workItem from="1645256527894" duration="10212000" />
       <workItem from="1645280696602" duration="74000" />
       <workItem from="1645366427035" duration="9115000" />
+      <workItem from="1646466948176" duration="329000" />
+      <workItem from="1646467307823" duration="454000" />
     </task>
     <task id="LOCAL-00002" summary=":sparkles: [FCA-108] Complete angle inference w/ 2-axis">
       <created>1645004769348</created>

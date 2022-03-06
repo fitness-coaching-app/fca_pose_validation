@@ -4,10 +4,14 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="13f1378a-451b-4865-849d-ee1e2cb3a772" name="Changes" comment=":sparkles: Create TouchChecker class for further development">
+    <list default="true" id="13f1378a-451b-4865-849d-ee1e2cb3a772" name="Changes" comment=":sparkles: Create ExerciseState class">
+      <change beforePath="$PROJECT_DIR$/.idea/jsonSchemas.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsonSchemas.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/assets/course-test.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/example/assets/course-test.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/assets/schema/course-schema.json" beforeDir="false" afterPath="$PROJECT_DIR$/lib/assets/schema/course-schema.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/exercise_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/exercise_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/exercise_definition.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/exercise_definition.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -133,7 +137,8 @@
       <workItem from="1645366427035" duration="9115000" />
       <workItem from="1646466948176" duration="329000" />
       <workItem from="1646467307823" duration="2743000" />
-      <workItem from="1646470121304" duration="1258000" />
+      <workItem from="1646470121304" duration="14908000" />
+      <workItem from="1646555328892" duration="2396000" />
     </task>
     <task id="LOCAL-00002" summary=":sparkles: [FCA-108] Complete angle inference w/ 2-axis">
       <created>1645004769348</created>
@@ -149,7 +154,14 @@
       <option name="project" value="LOCAL" />
       <updated>1646467816666</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary=":sparkles: Create ExerciseState class">
+      <created>1646473765765</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1646473765765</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -177,7 +189,8 @@
     <MESSAGE value=":sparkles: [FCA-108] Complete angle inference w/ 2-axis" />
     <MESSAGE value=":sparkles: Implement ExerciseDefinition class along with subclasses" />
     <MESSAGE value=":sparkles: Create TouchChecker class for further development" />
-    <option name="LAST_COMMIT_MESSAGE" value=":sparkles: Create TouchChecker class for further development" />
+    <MESSAGE value=":sparkles: Create ExerciseState class" />
+    <option name="LAST_COMMIT_MESSAGE" value=":sparkles: Create ExerciseState class" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

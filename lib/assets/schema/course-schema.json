@@ -78,20 +78,24 @@
                           "angle": {
                             "type": "object",
                             "properties": {
-                              "landmarkA": {
-                                "type": "string"
-                              },
-                              "landmarkB": {
-                                "type": "string"
+                              "landmarks": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
                               },
                               "vertex": {
                                 "type": "string"
                               },
-                              "conditions": {
-                                "type": "array",
-                                "items": {
-                                  "type": "string",
-                                  "pattern": "^(==|>|>=|<|<=|!=)( )*[0-9]+$"
+                              "range": {
+                                "type": "object",
+                                "properties": {
+                                  "from": {
+                                    "type": "integer",
+                                  },
+                                  "to": {
+                                    "type": "integer",
+                                  }
                                 }
                               }
                             }

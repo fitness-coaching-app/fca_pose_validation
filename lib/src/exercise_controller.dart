@@ -1,22 +1,17 @@
 import 'package:google_ml_kit/google_ml_kit.dart';
+import 'exercise_definition.dart';
 import 'pose_processor.dart';
 
-enum ExerciseDispCriteria{
-  timer,
-  counter
-}
-enum DispState{
-  preExercise,
-  teach,
-  exercise
-}
+enum ExerciseDispCriteria { timer, counter }
+enum DispState { preExercise, teach, exercise }
 
-class ExerciseState{
+class ExerciseState {
   DispState displayState = DispState.preExercise;
-  int exerciseNumber = 0;
+  int currentStep = 0;
   String exerciseName = "";
-  bool exerciseComplete = false;
-  bool displayStateChanged = false;
+  bool _exerciseCompleted = false;
+  bool _stepCompleted = false;
+  bool _displayStateChanged = false;
 
   ExerciseDispCriteria criteria = ExerciseDispCriteria.timer;
   int remaining = 0;
@@ -25,24 +20,68 @@ class ExerciseState{
   bool warning = false;
   String warningMessage = "";
   List<PoseLandmarkType> warningPoseHighlight = [];
+
+  int currentSubpose = 0;
+
+  bool displayStateChanged() {
+    bool temp = _displayStateChanged;
+    _displayStateChanged = false;
+    return temp;
+  }
+
+  bool stepCompleted() {
+    bool temp = _stepCompleted;
+    _stepCompleted = false;
+    return temp;
+  }
 }
 
 class ExerciseController {
+  late Pose? _prevPose;
   late Pose _pose;
-  PoseProcessor _poseProcessor = PoseProcessor();
-  ExerciseState _currentState = ExerciseState();
+  final PoseProcessor _poseProcessor = PoseProcessor();
+  final ExerciseState _currentState = ExerciseState();
+  late ExerciseDefinition definition;
 
+  void Function(DispState displayState)? onDisplayStateChangeCallback;
+  void Function()? onStepCompleteCallback;
 
-  void setPose(Pose pose) {
-    _pose = pose;
+  ExerciseController(String yamlDefinition, {void Function(DispState displayState)? onDisplayStateChange,void Function()? onStepComplete}){
+    definition = ExerciseDefinition(yamlDefinition);
+    onDisplayStateChangeCallback = onDisplayStateChange;
+    onStepCompleteCallback = onStepComplete;
+  }
+
+  void setPose(Pose newPose) {
+    _prevPose = _pose;
+    _pose = newPose;
     _poseProcessor.setPose(_pose);
   }
 
-  ExerciseState getCurrentState(){
+  ExerciseState getCurrentState() {
     return _currentState;
   }
 
-  ExerciseState check(){
+  void _subposeCheck(List<ExercisePose> subposes){
+
+  }
+
+  ExerciseState check() {
+    if(_currentState.displayStateChanged()){
+      onDisplayStateChangeCallback!(_currentState.displayState);
+    }
+    if(_currentState.stepCompleted()){
+      onStepCompleteCallback!();
+    }
+
+    final ExerciseStep currentStep = definition.steps[_currentState.currentStep];
+
+    _subposeCheck(currentStep.poses);
+
+
+
+
+
     return _currentState;
   }
 

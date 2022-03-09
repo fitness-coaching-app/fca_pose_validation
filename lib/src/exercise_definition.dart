@@ -45,9 +45,9 @@ class Range {
 }
 
 class AngleDefinition {
-  Set<PoseLandmarkType> landmarks = {};
+  List<PoseLandmarkType> landmarks = [];
   late PoseLandmarkType vertex;
-  late Range range;
+  Range range = Range(0,0);
 
   AngleDefinition(this.landmarks, this.vertex, this.range);
   AngleDefinition.loadFromYaml(YamlMap angle){
@@ -69,9 +69,6 @@ class TouchDefinition {
 class Definition {
   AngleDefinition? angle;
   TouchDefinition? touch;
-
-  int? angleRangeFrom;
-  int? angleRangeTo;
 
   Definition(this.angle, this.touch);
 
@@ -107,15 +104,12 @@ class ExercisePose {
   }
 }
 
-enum Direction { decrease, increase }
-
 class ExerciseStep {
   String name = "";
   String mediaDir = "";
   bool bounce = false;
   Criteria criteria = Criteria(null, null);
   List<ExercisePose> poses = []; // Only have 2 stages
-  List<Direction> poseTransitionDirection = [];
 
   ExerciseStep(
       this.name, this.mediaDir, this.bounce, this.criteria, this.poses);
@@ -129,11 +123,6 @@ class ExerciseStep {
     for (YamlMap pose in step['poses']) {
       poses.add(ExercisePose.loadFromYaml(pose));
     }
-    _analysePoses();
-  }
-
-  void _analysePoses() {
-    for (var i = 0; i < poses[0].definitions.length; ++i) {}
   }
 }
 

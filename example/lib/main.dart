@@ -4,7 +4,6 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/services.dart';
-import 'package:fca_pose_validation/fca_pose_processor.dart';
 import 'pose_detector_view.dart';
 
 List<CameraDescription> cameras = [];
@@ -74,7 +73,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return ExerciseControllerTestingApp();
+    return PoseDetectorApplication();
   }
 
 }

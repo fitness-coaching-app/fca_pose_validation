@@ -53,20 +53,16 @@ class ExerciseController {
   }
 
   void setPose(Pose newPose) {
-    _prevPose = _pose;
+    _prevPose = newPose;
     _pose = newPose;
-    _poseProcessor.setPose(_pose);
+    _poseProcessor.setPose(newPose);
   }
 
   ExerciseState getCurrentState() {
     return _currentState;
   }
 
-  void _subposeCheck(List<ExercisePose> subposes){
-
-  }
-
-  ExerciseState check() {
+  ExerciseState update() {
     if(_currentState.displayStateChanged()){
       onDisplayStateChangeCallback!(_currentState.displayState);
     }
@@ -76,13 +72,30 @@ class ExerciseController {
 
     final ExerciseStep currentStep = definition.steps[_currentState.currentStep];
 
-    _subposeCheck(currentStep.poses);
-
-
-
-
+    _subposeCheck();
 
     return _currentState;
   }
+
+  void _subposeCheck(){
+    final subposes = definition.steps[_currentState.currentStep].poses;
+    final angles = [
+      subposes[0].definitions[0].angle,
+      subposes[1].definitions[0].angle
+    ];
+    final currentAngle = _poseProcessor.angle.getAngle(
+        angles[0]!.vertex,
+        angles[0]!.landmarks[0],
+        angles[0]!.landmarks[1]);
+    if(angles[0]!.range.from <= currentAngle && currentAngle <= angles[0]!.range.to){
+      print("CURRENT ANGLE[0] " + currentAngle.toString() );
+    }
+    if(angles[1]!.range.from <= currentAngle && currentAngle <= angles[1]!.range.to){
+      print("CURRENT ANGLE[1] " + currentAngle.toString() );
+    }
+
+
+  }
+
 
 }

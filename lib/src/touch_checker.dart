@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/foundation.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'dart:math';
@@ -13,7 +11,7 @@ class TouchChecker {
     _pose = pose;
   }
 
-  List<double> _getPointsFromLandmarks(
+  List<double> _getCoordinateFromLandmarks(
       PoseLandmarkType landmarkA, PoseLandmarkType landmarkB) {
     return [
       _pose.landmarks[landmarkA]!.x,
@@ -24,16 +22,21 @@ class TouchChecker {
   }
 
   String? touchChecker(PoseLandmarkType landmarkA, PoseLandmarkType landmarkB) {
-    List<double> points = _getPointsFromLandmarks(landmarkA, landmarkB);
+    List<double> coordinates =
+        _getCoordinateFromLandmarks(landmarkA, landmarkB);
     if (kDebugMode) {
-      print(points);
+      print(coordinates);
     }
-    if ((points[0] - points[1] <= 15 ||
-            points[0] - points[1] >= 0 ||
-            points[1] - points[0] <= 15) &&
-        (points[2] - points[3] <= 15 ||
-            points[2] - points[3] >= 0 ||
-            points[3] - points[2] <= 15)) {
+    // dev.log("LANDMARK A: ${_pose.landmarks[landmarkA]!.x} | ${_pose.landmarks[landmarkA]!.y} | ${_pose.landmarks[landmarkA]!.z}");
+    // dev.log("LANDMARK B: ${_pose.landmarks[landmarkB]!.x} | ${_pose.landmarks[landmarkB]!.y} | ${_pose.landmarks[landmarkB]!.z}");
+
+    // set point of touch each other must not exceed 15 pixels in X and Y coordinates.
+    if ((coordinates[0] - coordinates[1] <= 15 ||
+            coordinates[0] - coordinates[1] >= 0 ||
+            coordinates[1] - coordinates[0] <= 15) &&
+        (coordinates[2] - coordinates[3] <= 15 ||
+            coordinates[2] - coordinates[3] >= 0 ||
+            coordinates[3] - coordinates[2] <= 15)) {
       return "Touch!";
     } else {
       return "Not touch";

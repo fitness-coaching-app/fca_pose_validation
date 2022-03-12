@@ -4,8 +4,7 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="13f1378a-451b-4865-849d-ee1e2cb3a772" name="Changes" comment=":sparkles:">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="13f1378a-451b-4865-849d-ee1e2cb3a772" name="Changes" comment=":sparkles: Add PoseProcessorResult">
       <change beforePath="$PROJECT_DIR$/lib/src/exercise_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/exercise_controller.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -154,6 +153,7 @@
       <workItem from="1646824374443" duration="12280000" />
       <workItem from="1646902984554" duration="323000" />
       <workItem from="1646903383677" duration="7992000" />
+      <workItem from="1647092941156" duration="673000" />
     </task>
     <task id="LOCAL-00002" summary=":sparkles: [FCA-108] Complete angle inference w/ 2-axis">
       <created>1645004769348</created>
@@ -190,7 +190,14 @@
       <option name="project" value="LOCAL" />
       <updated>1646829715580</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary=":sparkles: Add PoseProcessorResult">
+      <created>1647093484099</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1647093484099</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -221,7 +228,8 @@
     <MESSAGE value=":sparkles: Create ExerciseState class" />
     <MESSAGE value=":sparkles: Change angle schema" />
     <MESSAGE value=":sparkles: Change some format" />
-    <option name="LAST_COMMIT_MESSAGE" value=":sparkles: Change some format" />
+    <MESSAGE value=":sparkles: Add PoseProcessorResult" />
+    <option name="LAST_COMMIT_MESSAGE" value=":sparkles: Add PoseProcessorResult" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

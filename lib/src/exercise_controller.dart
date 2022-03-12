@@ -134,9 +134,8 @@ class ExerciseController {
     final ExerciseStep currentStep =
         definition.steps[_currentState.currentStep];
 
-    _processPoses(currentStep.poses);
-
     // process the returned value from _processPoses
+    PoseProcessorResult result = _processPoses(currentStep.poses);
 
     // callback
     _eventHandler();
@@ -144,7 +143,7 @@ class ExerciseController {
     return _currentState;
   }
 
-  void _processPoses(List<ExercisePose> subposes) {
+  PoseProcessorResult _processPoses(List<ExercisePose> subposes) {
     // call getAngle and getTouch according to the definition.
     // getAngles
     final angles = [
@@ -157,7 +156,10 @@ class ExerciseController {
 
     // getTouch
 
-    // call poseChecker + poseInstructor
+    // TODO: call poseChecker + poseInstructor
+
+    // TODO This is just a mock up
+    return PoseProcessorResult();
   }
 
   void _eventHandler() {

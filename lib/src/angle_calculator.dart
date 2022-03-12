@@ -28,9 +28,9 @@ class AngleCalculator{
       _getVectorFromLandmarks(landmarkA, landmarkB),
       _getVectorFromLandmarks(landmarkA, landmarkC)
     ];
-    dev.log("LANDMARK A: ${_pose.landmarks[landmarkA]!.x} | ${_pose.landmarks[landmarkA]!.y} | ${_pose.landmarks[landmarkA]!.z}");
-    dev.log("LANDMARK B: ${_pose.landmarks[landmarkB]!.x} | ${_pose.landmarks[landmarkB]!.y} | ${_pose.landmarks[landmarkB]!.z}");
-    dev.log("LANDMARK C: ${_pose.landmarks[landmarkC]!.x} | ${_pose.landmarks[landmarkC]!.y} | ${_pose.landmarks[landmarkC]!.z}");
+    // dev.log("LANDMARK A: ${_pose.landmarks[landmarkA]!.x} | ${_pose.landmarks[landmarkA]!.y} | ${_pose.landmarks[landmarkA]!.z}");
+    // dev.log("LANDMARK B: ${_pose.landmarks[landmarkB]!.x} | ${_pose.landmarks[landmarkB]!.y} | ${_pose.landmarks[landmarkB]!.z}");
+    // dev.log("LANDMARK C: ${_pose.landmarks[landmarkC]!.x} | ${_pose.landmarks[landmarkC]!.y} | ${_pose.landmarks[landmarkC]!.z}");
     return acos(dot2(vector[0], vector[1]) /
         (_vectorMagnitude(vector[0]) * _vectorMagnitude(vector[1]))) * 180 / pi;
   }

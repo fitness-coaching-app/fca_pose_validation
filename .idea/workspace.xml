@@ -4,14 +4,20 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="13f1378a-451b-4865-849d-ee1e2cb3a772" name="Changes" comment=":sparkles: Implement ExerciseDefinition class along with subclasses">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/pose_processor.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/pose_processor.dart" afterDir="false" />
+    <list default="true" id="13f1378a-451b-4865-849d-ee1e2cb3a772" name="Changes" comment=":sparkles: Add PoseProcessorResult">
+      <change beforePath="$PROJECT_DIR$/lib/src/exercise_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/exercise_controller.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Dart File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -33,11 +39,16 @@
     <setting file="file://$PROJECT_DIR$/lib/src/pose_processor.dart" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/lib/fca_pose_processor.dart" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/example/lib/painters/pose_painter.dart" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/example/lib/pose_detector_view.dart" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/example/lib/pose_detector_view.dart" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/example/lib/camera_view.dart" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/example/lib/main.dart" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/pubspec.yaml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/example/assets/course-test.yaml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/lib/src/angle_calculator.dart" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/lib/src/exercise_definition.dart" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/test/fca_pose_validation_test.dart" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/lib/src/exercise_controller.dart" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/lib/assets/schema/course-schema.json" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/example/lib/main.dart" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/pubspec.yaml" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -69,8 +80,11 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/assets/schema" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="settings.json.schema" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
     <property name="show.migrate.to.gradle.popup" value="false" />
+  </component>
+  <component name="ReaderModeSettings">
+    <option name="enabled" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -85,6 +99,17 @@
       <recent name="$PROJECT_DIR$/example/ios/Runner" />
       <recent name="$PROJECT_DIR$/example/ios" />
     </key>
+  </component>
+  <component name="RunManager" selected="Flutter.example/lib/main.dart">
+    <configuration name="Release (example/lib/main.dart)" type="FlutterRunConfigurationType" factoryName="Flutter">
+      <option name="additionalArgs" value="--release" />
+      <option name="filePath" value="$PROJECT_DIR$/example/lib/main.dart" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Flutter.example/lib/main.dart" />
+      <item itemvalue="Flutter.Release (example/lib/main.dart)" />
+    </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -119,6 +144,16 @@
       <workItem from="1645256527894" duration="10212000" />
       <workItem from="1645280696602" duration="74000" />
       <workItem from="1645366427035" duration="9115000" />
+      <workItem from="1646466948176" duration="329000" />
+      <workItem from="1646467307823" duration="2743000" />
+      <workItem from="1646470121304" duration="14908000" />
+      <workItem from="1646555328892" duration="7810000" />
+      <workItem from="1646581041391" duration="22000" />
+      <workItem from="1646818438022" duration="940000" />
+      <workItem from="1646824374443" duration="12280000" />
+      <workItem from="1646902984554" duration="323000" />
+      <workItem from="1646903383677" duration="7992000" />
+      <workItem from="1647092941156" duration="673000" />
     </task>
     <task id="LOCAL-00002" summary=":sparkles: [FCA-108] Complete angle inference w/ 2-axis">
       <created>1645004769348</created>
@@ -127,7 +162,42 @@
       <option name="project" value="LOCAL" />
       <updated>1645004769348</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary=":sparkles: Create TouchChecker class for further development">
+      <created>1646467816666</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1646467816666</updated>
+    </task>
+    <task id="LOCAL-00004" summary=":sparkles: Create ExerciseState class">
+      <created>1646473765765</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1646473765765</updated>
+    </task>
+    <task id="LOCAL-00005" summary=":sparkles: Change angle schema">
+      <created>1646566292916</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1646566292916</updated>
+    </task>
+    <task id="LOCAL-00006" summary=":sparkles: Change some format">
+      <created>1646829715580</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1646829715580</updated>
+    </task>
+    <task id="LOCAL-00007" summary=":sparkles: Add PoseProcessorResult">
+      <created>1647093484099</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1647093484099</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -154,7 +224,12 @@
     <MESSAGE value="[FCA-108] Make Google ML Kit run on the example file" />
     <MESSAGE value=":sparkles: [FCA-108] Complete angle inference w/ 2-axis" />
     <MESSAGE value=":sparkles: Implement ExerciseDefinition class along with subclasses" />
-    <option name="LAST_COMMIT_MESSAGE" value=":sparkles: Implement ExerciseDefinition class along with subclasses" />
+    <MESSAGE value=":sparkles: Create TouchChecker class for further development" />
+    <MESSAGE value=":sparkles: Create ExerciseState class" />
+    <MESSAGE value=":sparkles: Change angle schema" />
+    <MESSAGE value=":sparkles: Change some format" />
+    <MESSAGE value=":sparkles: Add PoseProcessorResult" />
+    <option name="LAST_COMMIT_MESSAGE" value=":sparkles: Add PoseProcessorResult" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

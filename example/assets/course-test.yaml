@@ -11,9 +11,20 @@ steps:
       - id: test
         definitions:
           - angle:
-              landmarkA: leftShoulder
-              landmarkB: rightShoulder
-              vertex: leftMouth
-              conditions:
-                - "> 45"
-                - "!= 90"
+              landmarks:
+                - leftHip
+                - leftElbow
+              vertex: leftShoulder
+              range:
+                from: 0
+                to: 30
+      - id: test2
+        definitions:
+          - angle:
+              landmarks:
+                - leftHip
+                - leftElbow
+              vertex: rightElbow
+              range:
+                from: 120
+                to: 200

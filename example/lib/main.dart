@@ -4,7 +4,6 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/services.dart';
-import 'package:fca_pose_validation/fca_pose_processor.dart';
 import 'pose_detector_view.dart';
 
 List<CameraDescription> cameras = [];
@@ -18,7 +17,6 @@ Future<void> main() async {
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
-
   @override
   State<MyApp> createState() => _MyAppState();
 }
@@ -31,7 +29,7 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> exerciseControllerLogicTest() async {
     final data = await rootBundle.loadString('assets/course-test.yaml');
-    ExerciseDefinition(data);
+
   }
 
   Widget PoseDetectorApplication(){
@@ -75,7 +73,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return ExerciseControllerTestingApp();
+    return PoseDetectorApplication();
   }
 
 }

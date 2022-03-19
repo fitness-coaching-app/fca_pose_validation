@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'exercise_definition.dart';
 import 'pose_processor.dart';
@@ -144,22 +145,27 @@ class ExerciseController {
   }
 
   PoseProcessorResult _processPoses(List<ExercisePose> subposes) {
-    // call getAngle and getTouch according to the definition.
-    // getAngles
-    final angles = [
-      subposes[0].definitions[0].angle,
-      subposes[1].definitions[0].angle
-    ];
+    List<double> computeResults = _computeDefinitions(subposes);
 
-    final currentAngle = _poseProcessor.angle.getAngle(
-        angles[0]!.vertex, angles[0]!.landmarks[0], angles[0]!.landmarks[1]);
-
-    // getTouch
-
-    // TODO: call poseChecker + poseInstructor
+    // TODO: call poseChecker + poseSuggestion
+    _poseChecker(computeResults);
 
     // TODO This is just a mock up
     return PoseProcessorResult();
+  }
+
+  List<double> _computeDefinitions(List<ExercisePose> subposes){
+    // Call getAngle and getTouch according to the definition.
+
+    return [0];
+  }
+
+  void _poseChecker(List<double> computeResults){
+
+  }
+
+  void _poseSuggestion(){
+
   }
 
   void _eventHandler() {

@@ -150,6 +150,7 @@ class ExerciseController {
     // TODO: call poseChecker + poseSuggestion
     _poseChecker(computeResults);
 
+
     // TODO This is just a mock up
     return PoseProcessorResult();
   }

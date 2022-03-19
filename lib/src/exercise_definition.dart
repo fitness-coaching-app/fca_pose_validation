@@ -2,9 +2,9 @@ import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:yaml/yaml.dart';
 
 class Timer {
-  int durationSecond;
+  int duration;
 
-  Timer(this.durationSecond);
+  Timer(this.duration);
 }
 
 class Counter {
@@ -23,7 +23,7 @@ class Criteria {
   Criteria.loadFromYaml(YamlMap criteria) {
     switch (criteria.keys.first) {
       case "timer":
-        timer = Timer(criteria['timer']['durationSecond']);
+        timer = Timer(criteria['timer']['duration']);
         break;
       case "counter":
         counter = Counter(
@@ -33,21 +33,10 @@ class Criteria {
   }
 }
 
-class Range {
-  int from = 0;
-  int to = 0;
-
-  Range(this.from, this.to);
-  Range.loadFromYaml(YamlMap range){
-    from = range['from'];
-    to = range['to'];
-  }
-}
-
 class AngleDefinition {
   List<PoseLandmarkType> landmarks = [];
   late PoseLandmarkType vertex;
-  Range range = Range(0,0);
+  List<int> range = [];
 
   AngleDefinition(this.landmarks, this.vertex, this.range);
   AngleDefinition.loadFromYaml(YamlMap angle){
@@ -56,7 +45,7 @@ class AngleDefinition {
     }
 
     vertex = PoseLandmarkType.values.firstWhere((e) => e.toString() == 'PoseLandmarkType.' + angle['vertex']);
-    range = Range.loadFromYaml(angle['range']);
+    range = angle['range'];
   }
 }
 

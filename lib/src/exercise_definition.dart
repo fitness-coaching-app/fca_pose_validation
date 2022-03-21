@@ -78,6 +78,20 @@ class Definition {
   }
 }
 
+class WarningPose {
+  List<Definition> definitions = [];
+  String? warningMessage = "";
+
+  WarningPose(this.definitions,this.warningMessage);
+  WarningPose.loadFromYaml(YamlMap warningPose){
+    for (YamlMap def in warningPose['definitions']) {
+      definitions.add(Definition.loadFromYaml(def));
+    }
+
+    warningMessage = warningPose['warningMessage'];
+  }
+}
+
 class ExercisePose {
   String? id;
   List<Definition> definitions = [];
@@ -99,6 +113,7 @@ class ExerciseStep {
   bool bounce = false;
   Criteria criteria = Criteria(null, null);
   List<ExercisePose> poses = []; // Only have 2 stages
+  List<WarningPose> warningPoses = [];
 
   ExerciseStep(
       this.name, this.mediaDir, this.bounce, this.criteria, this.poses);
@@ -111,6 +126,9 @@ class ExerciseStep {
 
     for (YamlMap pose in step['poses']) {
       poses.add(ExercisePose.loadFromYaml(pose));
+    }
+    for (YamlMap warningPose in step['warningPoses']) {
+      poses.add(ExercisePose.loadFromYaml(warningPose));
     }
   }
 }

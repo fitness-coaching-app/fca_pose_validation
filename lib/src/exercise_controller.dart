@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'exercise_definition.dart';
 import 'pose_processor.dart';
@@ -189,12 +188,12 @@ class ExerciseController {
     ];
     final currentAngle = _poseProcessor.angle.getAngle(
         angles[0]!.vertex, angles[0]!.landmarks[0], angles[0]!.landmarks[1]);
-    if (angles[0]!.range.from <= currentAngle &&
-        currentAngle <= angles[0]!.range.to) {
+    if (angles[0]!.range[0] <= currentAngle &&
+        currentAngle <= angles[0]!.range[1]) {
       print("CURRENT ANGLE[0] " + currentAngle.toString());
     }
-    if (angles[1]!.range.from <= currentAngle &&
-        currentAngle <= angles[1]!.range.to) {
+    if (angles[1]!.range[0] <= currentAngle &&
+        currentAngle <= angles[1]!.range[1]) {
       print("CURRENT ANGLE[1] " + currentAngle.toString());
     }
   }

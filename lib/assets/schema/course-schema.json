@@ -1,0 +1,206 @@
+{
+  "title": "course.yaml schema",
+  "description": "schema for course.yaml",
+  "type": "object",
+  "required": ["steps"],
+  "properties": {
+    "id": {
+      "description": "Course ID",
+      "type": "string"
+    },
+    "name": {
+      "description": "Course Name",
+      "type": "string"
+    },
+    "steps": {
+      "description": "Course exercise steps",
+      "type": "array",
+      "items": {
+        "title": "Exercise Definition",
+        "type": "object",
+        "required": ["name", "mediaDir", "bounce", "criteria", "poses"],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "mediaDir": {
+            "type": "string"
+          },
+          "bounce": {
+            "type": "boolean"
+          },
+          "criteria": {
+            "type": "object",
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "timer": {
+                    "type": "object",
+                    "properties": {
+                      "duration": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "counter": {
+                    "type": "object",
+                    "properties": {
+                      "repeat": {
+                        "type": "integer"
+                      },
+                      "countOnId": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "poses": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["definitions"],
+              "properties": {
+                "id": {"type":  "string"},
+                "definitions": {
+                  "type":  "array",
+                  "items": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "required": ["angle"],
+                        "additionalProperties": false,
+                        "properties": {
+                          "angle": {
+                            "type": "object",
+                            "required": ["landmarks", "vertex", "range"],
+                            "additionalProperties": false,
+                            "properties": {
+                              "landmarks": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "minItems": 2,
+                                "maxItems": 2,
+                                "uniqueItems": true
+                              },
+                              "vertex": {
+                                "type": "string"
+                              },
+                              "range": {
+                                "type": "array",
+                                "items": {
+                                  "type": "integer"
+                                },
+                                "minItems": 2,
+                                "maxItems": 2
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "type": "object",
+                        "required": ["touch"],
+                        "additionalProperties": false,
+                        "properties": {
+                          "touch": {
+                            "type": "object",
+                            "required": ["landmarks"],
+                            "additionalProperties": false,
+                            "properties": {
+                              "landmarks": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "warningPoses":{
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "definitions": {
+                  "type":  "array",
+                  "items": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "angle": {
+                            "type": "object",
+                            "properties": {
+                              "landmarks": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              },
+                              "vertex": {
+                                "type": "string"
+                              },
+                              "range": {
+                                "type": "object",
+                                "properties": {
+                                  "from": {
+                                    "type": "integer",
+                                  },
+                                  "to": {
+                                    "type": "integer",
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "touch": {
+                            "type": "object",
+                            "properties": {
+                              "landmarks": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                "warningMessage": {"type": "string"}
+              }
+            }
+          }
+        }
+      },
+
+    }
+  }
+}

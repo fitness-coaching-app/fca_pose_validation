@@ -1,0 +1,30 @@
+id: test01
+name: course.yaml test
+steps:
+  - name: test01
+    mediaDir: assets/image01.jpg
+    bounce: false
+    criteria:
+      timer:
+        durationSecond: 10
+    poses:
+      - id: test
+        definitions:
+          - angle:
+              landmarks:
+                - leftHip
+                - leftElbow
+              vertex: leftShoulder
+              range:
+                from: 0
+                to: 30
+      - id: test2
+        definitions:
+          - angle:
+              landmarks:
+                - leftHip
+                - leftElbow
+              vertex: rightElbow
+              range:
+                from: 120
+                to: 200

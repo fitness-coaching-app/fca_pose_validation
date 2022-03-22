@@ -156,8 +156,20 @@ class ExerciseController {
 
   List<double> _computeDefinitions(List<ExercisePose> subposes){
     // Call getAngle and getTouch according to the definition.
+    final subposeDef = subposes[0]; // Use only first subpose for calculation
+    List<double> result = [];
+    for(var i in subposeDef.definitions){
+      if(i.angle != null){
+        result += [_poseProcessor.angle.getAngle(i.angle!.vertex, i.angle!.landmarks[0], i.angle!.landmarks[1])];
+      }
+      else if(i.touch != null){
+        // TODO: Change the touchChecker return type
+        // result += [_poseProcessor.touch.touchChecker(i.touch!.landmarks[0], i.touch!.landmarks[1])];
+      }
+    }
 
-    return [0];
+
+    return result;
   }
 
   void _poseChecker(List<double> computeResults){

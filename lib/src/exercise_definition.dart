@@ -45,7 +45,7 @@ class AngleDefinition {
     }
 
     vertex = PoseLandmarkType.values.firstWhere((e) => e.toString() == 'PoseLandmarkType.' + angle['vertex']);
-    range = angle['range'].toList();
+    range = List<int>.from(angle['range'].toList());
   }
 }
 
@@ -127,8 +127,10 @@ class ExerciseStep {
     for (YamlMap pose in step['poses']) {
       poses.add(ExercisePose.loadFromYaml(pose));
     }
-    for (YamlMap warningPose in step['warningPoses']) {
-      poses.add(ExercisePose.loadFromYaml(warningPose));
+    if(step['warningPoses'] != null){
+      for (YamlMap warningPose in step['warningPoses']) {
+        poses.add(ExercisePose.loadFromYaml(warningPose));
+      }
     }
   }
 }

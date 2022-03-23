@@ -45,7 +45,7 @@ class AngleDefinition {
     }
 
     vertex = PoseLandmarkType.values.firstWhere((e) => e.toString() == 'PoseLandmarkType.' + angle['vertex']);
-    range = angle['range'];
+    range = angle['range'].toList();
   }
 }
 

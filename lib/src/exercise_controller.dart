@@ -168,7 +168,7 @@ class ExerciseController {
       }
     }
 
-
+    print(result);
     return result;
   }
 

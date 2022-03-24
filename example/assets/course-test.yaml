@@ -6,7 +6,7 @@ steps:
     bounce: false
     criteria:
       timer:
-        durationSecond: 10
+        duration: 10
     poses:
       - id: test
         definitions:
@@ -15,9 +15,7 @@ steps:
                 - leftHip
                 - leftElbow
               vertex: leftShoulder
-              range:
-                from: 0
-                to: 30
+              range: [0, 30]
       - id: test2
         definitions:
           - angle:

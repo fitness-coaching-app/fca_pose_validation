@@ -28,7 +28,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   }
 
   _asyncMethod() async {
-    data = await rootBundle.loadString('assets/course-test.yaml');
+    data = await rootBundle.loadString('assets/crunches.yaml');
     controller = ExerciseController(data);
   }
 

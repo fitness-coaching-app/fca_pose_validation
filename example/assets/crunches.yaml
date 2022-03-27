@@ -8,6 +8,9 @@ steps:
       counter:
         repeat: 10
         countOnId: crunchesCnt
+    posturePosition: liedown
+    angle: side
+    facing: up
     poses:
       - definitions:
           - angle:

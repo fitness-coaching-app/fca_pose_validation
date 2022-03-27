@@ -65,6 +65,18 @@
               }
             ]
           },
+          "posturePosition": {
+            "type": "string",
+            "enum": ["stand", "lieDown"]
+          },
+          "angle": {
+            "type": "string",
+            "enum": ["font", "side"]
+          },
+          "facing": {
+            "type": "string",
+            "enum": ["up", "down"]
+          },
           "poses": {
             "type": "array",
             "items": {

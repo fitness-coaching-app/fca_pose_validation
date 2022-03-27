@@ -9,7 +9,7 @@ steps:
         repeat: 10
         countOnId: crunchesCnt
     posturePosition: liedown
-    angle: side
+    cameraAngle: side
     facing: up
     poses:
       - definitions:

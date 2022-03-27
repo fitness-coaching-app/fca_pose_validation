@@ -69,7 +69,7 @@
             "type": "string",
             "enum": ["stand", "lieDown"]
           },
-          "angle": {
+          "cameraAngle": {
             "type": "string",
             "enum": ["font", "side"]
           },

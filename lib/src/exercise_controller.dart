@@ -99,6 +99,21 @@ class PoseProcessorResult{
   List<PoseLandmarkType> warningPoseHighlight = [];
 }
 
+class PoseCheckerResult{
+  Definition definition;
+  bool warning;
+  double actualValue;
+
+  PoseCheckerResult(this.definition, this.warning, this.actualValue);
+}
+
+class PoseSuggestionResult{
+  bool warning;
+  String? warningMessage;
+
+  PoseSuggestionResult(this.warning, {this.warningMessage});
+}
+
 class ExerciseController {
   late Pose? _prevPose;
   late Pose _pose;
@@ -176,8 +191,15 @@ class ExerciseController {
 
   }
 
-  void _poseSuggestion(){
+  void _poseSuggestion(PoseCheckerResult result){
+    if(!result.warning) return;
 
+    if(result.definition.angle != null){
+      
+    }
+    else if(result.definition.touch != null){
+
+    }
   }
 
   void _eventHandler() {

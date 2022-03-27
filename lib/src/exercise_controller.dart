@@ -23,9 +23,7 @@ class ExerciseState {
 
   int currentSubpose = 0;
 
-  void loadNewStep() {
-
-  }
+  void loadNewStep() {}
 
   DisplayState getDisplayState() => _displayState;
 
@@ -89,7 +87,7 @@ class ExerciseState {
   }
 }
 
-class PoseProcessorResult{
+class PoseProcessorResult {
   int? predictedCurrentSubpose;
   int? expectedCurrentSubpose;
   int? predictedNextSubpose;
@@ -149,22 +147,26 @@ class ExerciseController {
     // TODO: call poseChecker + poseSuggestion
     _poseChecker(computeResults);
 
-
     // TODO This is just a mock up
     return PoseProcessorResult();
   }
 
-  List<double> _computeDefinitions(List<ExercisePose> subposes){
+  List<double> _computeDefinitions(List<ExercisePose> subposes) {
     // Call getAngle and getTouch according to the definition.
     final subposeDef = subposes[0]; // Use only first subpose for calculation
     List<double> result = [];
-    for(var i in subposeDef.definitions){
-      if(i.angle != null){
-        result += [_poseProcessor.angle.getAngle(i.angle!.vertex, i.angle!.landmarks[0], i.angle!.landmarks[1])];
-      }
-      else if(i.touch != null){
+    for (var i in subposeDef.definitions) {
+      if (i.angle != null) {
+        result += [
+          _poseProcessor.angle.getAngle(
+              i.angle!.vertex, i.angle!.landmarks[0], i.angle!.landmarks[1])
+        ];
+      } else if (i.touch != null) {
         // TODO: Change the touchChecker return type
-        // result += [_poseProcessor.touch.touchChecker(i.touch!.landmarks[0], i.touch!.landmarks[1])];
+        result += [
+          _poseProcessor.touch
+              .touchChecker(i.touch!.landmarks[0], i.touch!.landmarks[1])
+        ];
       }
     }
 
@@ -172,13 +174,9 @@ class ExerciseController {
     return result;
   }
 
-  void _poseChecker(List<double> computeResults){
+  void _poseChecker(List<double> computeResults) {}
 
-  }
-
-  void _poseSuggestion(){
-
-  }
+  void _poseSuggestion() {}
 
   void _eventHandler() {
     if (_currentState.displayStateChanged()) {

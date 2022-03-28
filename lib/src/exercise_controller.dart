@@ -1,6 +1,7 @@
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'exercise_definition.dart';
 import 'pose_processor.dart';
+import 'pose_suggestion.dart';
 
 enum ExerciseDisplayCriteria { timer, counter }
 enum DisplayState { preExercise, teach, exercise }
@@ -191,23 +192,25 @@ class ExerciseController {
 
   }
 
-  void _poseSuggestion(PoseCheckerResult result){
-    ExerciseStep currentStep = definition.steps[_currentState.currentStep];
-    if(!result.warning) return;
-    if(result.definition.angle != null){
-      if(currentStep.posturePosition == "stand"){
-        final Map<AngleDefinition, Map<String, String>> list;
-        if(currentStep.cameraAngle == "front"){
+  String? _poseSuggestion(PoseCheckerResult poseCheckerResult){
+    final String posturePosition = definition.steps[_currentState.currentStep].posturePosition;
+    final String cameraAngle = definition.steps[_currentState.currentStep].cameraAngle;
+    final String facing = definition.steps[_currentState.currentStep].facing;
 
-        }
-      }
-      else if(currentStep.posturePosition == "lieDown"){
-
-      }
+    String? result;
+    if(!poseCheckerResult.warning) return null;
+    if(poseCheckerResult.definition.angle != null){
+      Direction suggestingDirection = Direction.positive;
+      result = SuggestionSentenceList.getSentenceAngle(
+          poseCheckerResult.definition.angle!.landmarks,
+          poseCheckerResult.definition.angle!.vertex,
+          posturePosition, cameraAngle, suggestingDirection, facing: facing);
     }
-    else if(result.definition.touch != null){
+    else if(poseCheckerResult.definition.touch != null){
 
     }
+
+    return result;
   }
 
   void _eventHandler() {

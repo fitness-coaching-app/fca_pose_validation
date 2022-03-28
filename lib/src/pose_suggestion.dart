@@ -134,28 +134,28 @@ class SuggestionSentenceList{
     SuggestionSentence([PoseLandmarkType.rightHip, PoseLandmarkType.rightAnkle], PoseLandmarkType.rightKnee, Side.right, sentenceFormat[3], directionPair[1], "leg"),
   ];
 
-  static final _sentenceList = {
+  static final _sentenceListAngle = {
     'stand': {
-      'faceUp':{
+      'up':{
         'front': _standFrontList,
         'side': _standSideList
       }
     },
     'lieDown':{
       'front':{
-        'faceUp': _lieDownFaceUpFrontList,
-        'faceDown': _lieDownFaceDownFrontList
+        'up': _lieDownFaceUpFrontList,
+        'down': _lieDownFaceDownFrontList
       },
       'side':{
-        'faceUp': _lieDownFaceUpSideList,
-        'faceDown': _lieDownFaceDownSideList
+        'up': _lieDownFaceUpSideList,
+        'down': _lieDownFaceDownSideList
       }
     }
   };
 
-  static String? getSentence(List<PoseLandmarkType> landmarks, PoseLandmarkType vertex, String posturePosition, String cameraAngle, Direction direction,
-      {String facing = "faceUp", String aux = ""}){
-    List<SuggestionSentence> sentenceList = _sentenceList[posturePosition]![facing]![cameraAngle] as List<SuggestionSentence>;
+  static String? getSentenceAngle(List<PoseLandmarkType> landmarks, PoseLandmarkType vertex, String posturePosition, String cameraAngle, Direction direction,
+      {String facing = "up", String aux = ""}){
+    List<SuggestionSentence> sentenceList = _sentenceListAngle[posturePosition]![facing]![cameraAngle] as List<SuggestionSentence>;
     String? resultSentence;
     for(SuggestionSentence i in sentenceList){
       if(i.compareLandmarks(landmarks, vertex)){
@@ -164,5 +164,10 @@ class SuggestionSentenceList{
       }
     }
     return resultSentence;
+  }
+
+  static String? getSentenceTouch(List<PoseLandmarkType> landmarks){
+    String result = "";
+
   }
 }

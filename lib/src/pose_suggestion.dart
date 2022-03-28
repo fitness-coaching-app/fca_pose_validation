@@ -9,8 +9,7 @@ enum Side{
 enum Direction{
   positive,
   negative
-};
-
+}
 
 final List<String> sentenceFormat = [
   "#DIRECTION your #SIDE #PART #AUX",

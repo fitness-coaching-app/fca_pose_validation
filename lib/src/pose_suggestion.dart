@@ -1,5 +1,6 @@
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:collection/collection.dart';
+import 'package:recase/recase.dart';
 
 enum Side{
   left,
@@ -167,7 +168,10 @@ class SuggestionSentenceList{
   }
 
   static String? getSentenceTouch(List<PoseLandmarkType> landmarks){
-    String result = "";
-
+    List<String> landmarkString = [
+      landmarks[0].toString().replaceAll("PoseLandmarkType.","").sentenceCase,
+      landmarks[1].toString().replaceAll("PoseLandmarkType.","").sentenceCase,
+    ];
+    return "${landmarkString[0]} and ${landmarkString[1]} have to touch";
   }
 }

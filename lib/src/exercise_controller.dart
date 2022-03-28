@@ -207,7 +207,7 @@ class ExerciseController {
           posturePosition, cameraAngle, suggestingDirection, facing: facing);
     }
     else if(poseCheckerResult.definition.touch != null){
-
+      result = SuggestionSentenceList.getSentenceTouch(poseCheckerResult.definition.touch!.landmarks);
     }
 
     return result;

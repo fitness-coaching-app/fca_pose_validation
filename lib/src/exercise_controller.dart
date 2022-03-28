@@ -192,10 +192,18 @@ class ExerciseController {
   }
 
   void _poseSuggestion(PoseCheckerResult result){
+    ExerciseStep currentStep = definition.steps[_currentState.currentStep];
     if(!result.warning) return;
-
     if(result.definition.angle != null){
-      
+      if(currentStep.posturePosition == "stand"){
+        final Map<AngleDefinition, Map<String, String>> list;
+        if(currentStep.cameraAngle == "front"){
+
+        }
+      }
+      else if(currentStep.posturePosition == "lieDown"){
+
+      }
     }
     else if(result.definition.touch != null){
 

@@ -8,7 +8,7 @@ steps:
       counter:
         repeat: 10
         countOnId: crunchesCnt
-    posturePosition: liedown
+    posturePosition: lieDown
     cameraAngle: side
     facing: up
     poses:

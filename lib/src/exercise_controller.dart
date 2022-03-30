@@ -146,7 +146,7 @@ class ExerciseController {
   PoseProcessorResult _processPoses(ExerciseStep currentStep) {
     List<double> computeResults = _poseProcessor.computeFromDefinition(currentStep.poses);
 
-    // TODO: call poseChecker
+    // TODO: เปลี่ยน return type เป็น PoseCheckerResult
     List<PoseLandmarkType>? poseCheckerResult = PoseChecker.check(computeResults, currentStep.poses);
 
     // TODO: call poseSuggestion

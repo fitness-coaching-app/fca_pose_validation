@@ -3,9 +3,9 @@ import '../exercise_definition.dart';
 import 'angle_calculator.dart';
 import 'touch_checker.dart';
 
-enum PoseProcessorType { angle, touch }
+enum PoseCalculatorType { angle, touch }
 
-class PoseProcessor {
+class PoseCalculator {
   AngleCalculator angle = AngleCalculator();
   TouchChecker touch = TouchChecker();
 

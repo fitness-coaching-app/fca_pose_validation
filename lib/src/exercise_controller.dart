@@ -1,6 +1,6 @@
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'exercise_definition.dart';
-import 'pose_processor/pose_processor.dart';
+import 'pose_calculator/pose_calculator.dart';
 import 'pose_checker.dart';
 import 'pose_suggestion.dart';
 
@@ -102,7 +102,7 @@ class PoseProcessorResult {
 class ExerciseController {
   late Pose? _prevPose;
   late Pose _pose;
-  final PoseProcessor _poseProcessor = PoseProcessor();
+  final PoseCalculator _poseProcessor = PoseCalculator();
   final ExerciseState _currentState = ExerciseState();
   late ExerciseDefinition definition;
 

@@ -1,6 +1,7 @@
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'exercise_definition.dart';
 import 'pose_processor.dart';
+import 'pose_checker.dart';
 import 'pose_suggestion.dart';
 
 enum ExerciseDisplayCriteria { timer, counter }
@@ -98,14 +99,6 @@ class PoseProcessorResult {
   List<PoseLandmarkType> warningPoseHighlight = [];
 }
 
-class PoseCheckerResult{
-  Definition definition;
-  bool warning;
-  double actualValue;
-
-  PoseCheckerResult(this.definition, this.warning, this.actualValue);
-}
-
 class PoseSuggestionResult{
   bool warning;
   String? warningMessage;
@@ -161,7 +154,7 @@ class ExerciseController {
     List<double> computeResults = _computeDefinitions(subposes);
 
     // TODO: call poseChecker + poseSuggestion
-    _poseChecker(computeResults, subposes);
+    PoseChecker.check(computeResults, subposes);
 
     // TODO This is just a mock up
     return PoseProcessorResult();
@@ -188,43 +181,6 @@ class ExerciseController {
     print(result);
     return result;
   }
-
-  List<PoseLandmarkType>? _poseChecker(
-      List<double> computeResults, List<ExercisePose> subposes) {
-    final subposeDef = subposes[0];
-    List<PoseLandmarkType> poseWarningPoint = [];
-    List<int> angleDef = [];
-    List<double> touchDef = [];
-    int computeCnt = 0;
-    int angleCnt = 0;
-    //loop for collect poses angle
-    for (var i in subposeDef.definitions) {
-      if (i.angle != null) {
-        angleDef += (i.angle!.range);
-      } else if (i.touch != null) {}
-    }
-    //loop for check computeResults's angle is in the range of angleDefinition
-    for (var i in subposeDef.definitions) {
-      if (i.angle != null) {
-        if (computeResults[computeCnt] >= angleDef[angleCnt] &&
-            computeResults[computeCnt] <= angleDef[angleCnt + 1]) {
-        } else {
-          poseWarningPoint += [i.angle!.vertex] +
-              [i.angle!.landmarks[0]] +
-              [i.angle!.landmarks[0]];
-        }
-      } else if (i.touch != null) {
-        //if not touch
-        if (computeResults[computeCnt] == 0) {
-          poseWarningPoint += [i.touch!.landmarks[0]] + [i.touch!.landmarks[1]];
-        }
-      }
-      computeCnt++;
-      angleCnt += 2;
-    }
-    return poseWarningPoint;
-  }
-
 
   String? _poseSuggestion(PoseCheckerResult poseCheckerResult){
     final String posturePosition = definition.steps[_currentState.currentStep].posturePosition;

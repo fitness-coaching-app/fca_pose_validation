@@ -178,23 +178,37 @@ class SuggestionSentenceList{
   }
 }
 
+class PoseSuggestionResult{
+  bool warning;
+  String? warningMessage;
+
+  PoseSuggestionResult({this.warning = false, this.warningMessage});
+}
+
 class PoseSuggestion{
-  static String? getSuggestion(PoseCheckerResult poseCheckerResult, ExerciseStep currentStep){
+  static PoseSuggestionResult getSuggestion(PoseCheckerResult poseCheckerResult, ExerciseStep currentStep){
     final String posturePosition = currentStep.posturePosition;
     final String cameraAngle = currentStep.cameraAngle;
     final String facing = currentStep.facing;
 
-    String? result;
-    if(!poseCheckerResult.warning) return null;
+    PoseSuggestionResult result = PoseSuggestionResult();
+    if(!poseCheckerResult.warning) return result;
+
     if(poseCheckerResult.definition.angle != null){
       Direction suggestingDirection = Direction.positive;
-      result = SuggestionSentenceList.getSentenceAngle(
-          poseCheckerResult.definition.angle!.landmarks,
-          poseCheckerResult.definition.angle!.vertex,
-          posturePosition, cameraAngle, suggestingDirection, facing: facing);
+      result = PoseSuggestionResult(
+        warning: true,
+        warningMessage: SuggestionSentenceList.getSentenceAngle(
+            poseCheckerResult.definition.angle!.landmarks,
+            poseCheckerResult.definition.angle!.vertex,
+            posturePosition, cameraAngle, suggestingDirection, facing: facing)
+      );
     }
     else if(poseCheckerResult.definition.touch != null){
-      result = SuggestionSentenceList.getSentenceTouch(poseCheckerResult.definition.touch!.landmarks);
+      result = PoseSuggestionResult(
+        warning: true,
+        warningMessage: SuggestionSentenceList.getSentenceTouch(poseCheckerResult.definition.touch!.landmarks)
+      );
     }
 
     return result;

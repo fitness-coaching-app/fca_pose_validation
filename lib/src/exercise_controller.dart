@@ -99,13 +99,6 @@ class PoseProcessorResult {
   List<PoseLandmarkType> warningPoseHighlight = [];
 }
 
-class PoseSuggestionResult{
-  bool warning;
-  String? warningMessage;
-
-  PoseSuggestionResult(this.warning, {this.warningMessage});
-}
-
 class ExerciseController {
   late Pose? _prevPose;
   late Pose _pose;

@@ -26,7 +26,7 @@ class PoseProcessor {
         ];
       } else if (i.touch != null) {
         result += [
-          touch.touchChecker(i.touch!.landmarks[0], i.touch!.landmarks[1])
+          touch.check(i.touch!.landmarks[0], i.touch!.landmarks[1])
         ];
       }
     }

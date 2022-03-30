@@ -23,7 +23,7 @@ class TouchChecker {
     ];
   }
 
-  double touchChecker(PoseLandmarkType landmarkA, PoseLandmarkType landmarkB) {
+  double check(PoseLandmarkType landmarkA, PoseLandmarkType landmarkB) {
     List<double> coordinates =
         _getCoordinateFromLandmarks(landmarkA, landmarkB);
     if (kDebugMode) {

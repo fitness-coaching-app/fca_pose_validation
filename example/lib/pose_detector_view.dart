@@ -7,8 +7,6 @@ import 'package:google_ml_kit/google_ml_kit.dart';
 import 'camera_view.dart';
 import 'painters/pose_painter.dart';
 
-import 'package:fca_pose_validation/src/angle_calculator.dart';
-
 class PoseDetectorView extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _PoseDetectorViewState();

@@ -1,6 +1,6 @@
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'exercise_definition.dart';
-import 'pose_processor.dart';
+import 'pose_processor/pose_processor.dart';
 import 'pose_checker.dart';
 import 'pose_suggestion.dart';
 

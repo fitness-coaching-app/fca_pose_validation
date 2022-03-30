@@ -139,9 +139,11 @@ class SuggestionSentenceList{
 
   static final _sentenceListAngle = {
     'stand': {
-      'up':{
-        'front': _standFrontList,
-        'side': _standSideList
+      'front': {
+        'up': _standFrontList
+      },
+      'side': {
+        'up': _standSideList
       }
     },
     'lieDown':{
@@ -158,7 +160,7 @@ class SuggestionSentenceList{
 
   static String? getSentenceAngle(List<PoseLandmarkType> landmarks, PoseLandmarkType vertex, String posturePosition, String cameraAngle, Direction direction,
       {String facing = "up", String aux = ""}){
-    List<SuggestionSentence> sentenceList = _sentenceListAngle[posturePosition]![facing]![cameraAngle] as List<SuggestionSentence>;
+    List<SuggestionSentence> sentenceList = _sentenceListAngle[posturePosition]![cameraAngle]![facing] as List<SuggestionSentence>;
     String? resultSentence;
     for(SuggestionSentence i in sentenceList){
       if(i.compareLandmarks(landmarks, vertex)){
@@ -191,11 +193,14 @@ class PoseSuggestion{
     final String cameraAngle = currentStep.cameraAngle;
     final String facing = currentStep.facing;
 
+    print("$posturePosition / $cameraAngle / $facing");
+
     PoseSuggestionResult result = PoseSuggestionResult();
     if(!poseCheckerResult.warning) return result;
 
     if(poseCheckerResult.definition.angle != null){
-      Direction suggestingDirection = Direction.positive;
+      List<int> range = poseCheckerResult.definition.angle!.range;
+      Direction suggestingDirection = poseCheckerResult.actualValue < range[0]? Direction.positive: Direction.negative;
       result = PoseSuggestionResult(
         warning: true,
         warningMessage: SuggestionSentenceList.getSentenceAngle(

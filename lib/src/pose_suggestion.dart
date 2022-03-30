@@ -1,6 +1,8 @@
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:collection/collection.dart';
 import 'package:recase/recase.dart';
+import 'exercise_definition.dart';
+import 'pose_checker.dart';
 
 enum Side{
   left,
@@ -173,5 +175,28 @@ class SuggestionSentenceList{
       landmarks[1].toString().replaceAll("PoseLandmarkType.","").sentenceCase,
     ];
     return "${landmarkString[0]} and ${landmarkString[1]} have to touch";
+  }
+}
+
+class PoseSuggestion{
+  static String? getSuggestion(PoseCheckerResult poseCheckerResult, ExerciseStep currentStep){
+    final String posturePosition = currentStep.posturePosition;
+    final String cameraAngle = currentStep.cameraAngle;
+    final String facing = currentStep.facing;
+
+    String? result;
+    if(!poseCheckerResult.warning) return null;
+    if(poseCheckerResult.definition.angle != null){
+      Direction suggestingDirection = Direction.positive;
+      result = SuggestionSentenceList.getSentenceAngle(
+          poseCheckerResult.definition.angle!.landmarks,
+          poseCheckerResult.definition.angle!.vertex,
+          posturePosition, cameraAngle, suggestingDirection, facing: facing);
+    }
+    else if(poseCheckerResult.definition.touch != null){
+      result = SuggestionSentenceList.getSentenceTouch(poseCheckerResult.definition.touch!.landmarks);
+    }
+
+    return result;
   }
 }

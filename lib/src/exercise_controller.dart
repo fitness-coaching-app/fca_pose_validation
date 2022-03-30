@@ -182,27 +182,6 @@ class ExerciseController {
     return result;
   }
 
-  String? _poseSuggestion(PoseCheckerResult poseCheckerResult){
-    final String posturePosition = definition.steps[_currentState.currentStep].posturePosition;
-    final String cameraAngle = definition.steps[_currentState.currentStep].cameraAngle;
-    final String facing = definition.steps[_currentState.currentStep].facing;
-
-    String? result;
-    if(!poseCheckerResult.warning) return null;
-    if(poseCheckerResult.definition.angle != null){
-      Direction suggestingDirection = Direction.positive;
-      result = SuggestionSentenceList.getSentenceAngle(
-          poseCheckerResult.definition.angle!.landmarks,
-          poseCheckerResult.definition.angle!.vertex,
-          posturePosition, cameraAngle, suggestingDirection, facing: facing);
-    }
-    else if(poseCheckerResult.definition.touch != null){
-      result = SuggestionSentenceList.getSentenceTouch(poseCheckerResult.definition.touch!.landmarks);
-    }
-
-    return result;
-  }
-
   void _eventHandler() {
     if (_currentState.displayStateChanged()) {
       _onDisplayStateChangeCallback!(_currentState.getDisplayState());
@@ -212,24 +191,6 @@ class ExerciseController {
       _onExerciseCompleteCallback!();
     } else if (_currentState.stepCompleted()) {
       _onStepCompleteCallback!();
-    }
-  }
-
-  void _subposeCheck() {
-    final subposes = definition.steps[_currentState.currentStep].poses;
-    final angles = [
-      subposes[0].definitions[0].angle,
-      subposes[1].definitions[0].angle
-    ];
-    final currentAngle = _poseProcessor.angle.getAngle(
-        angles[0]!.vertex, angles[0]!.landmarks[0], angles[0]!.landmarks[1]);
-    if (angles[0]!.range[0] <= currentAngle &&
-        currentAngle <= angles[0]!.range[1]) {
-      print("CURRENT ANGLE[0] " + currentAngle.toString());
-    }
-    if (angles[1]!.range[0] <= currentAngle &&
-        currentAngle <= angles[1]!.range[1]) {
-      print("CURRENT ANGLE[1] " + currentAngle.toString());
     }
   }
 }

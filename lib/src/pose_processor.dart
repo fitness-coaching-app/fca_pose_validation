@@ -8,16 +8,6 @@ enum PoseProcessorType{
   touch
 }
 
-class PoseProcessorError{
-  final PoseLandmarkType landmark;
-  final PoseProcessorType from;
-  final Definition rule;
-  final double actualValue;
-
-  PoseProcessorError(this.landmark, this.from, this.rule, this.actualValue);
-}
-
-
 class PoseProcessor {
   AngleCalculator angle = AngleCalculator();
   TouchChecker touch = TouchChecker();

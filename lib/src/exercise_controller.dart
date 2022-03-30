@@ -142,7 +142,7 @@ class ExerciseController {
         definition.steps[_currentState.currentStep];
 
     // process the returned value from _processPoses
-    PoseProcessorResult result = _processPoses(currentStep.poses);
+    PoseProcessorResult result = _processPoses(currentStep);
 
     // callback
     _eventHandler();
@@ -150,36 +150,15 @@ class ExerciseController {
     return _currentState;
   }
 
-  PoseProcessorResult _processPoses(List<ExercisePose> subposes) {
-    List<double> computeResults = _computeDefinitions(subposes);
+  PoseProcessorResult _processPoses(ExerciseStep currentStep) {
+    List<double> computeResults = _poseProcessor.computeFromDefinition(currentStep.poses);
 
     // TODO: call poseChecker + poseSuggestion
-    PoseChecker.check(computeResults, subposes);
+    List<PoseLandmarkType>? poseCheckerResult = PoseChecker.check(computeResults, currentStep.poses);
+
 
     // TODO This is just a mock up
     return PoseProcessorResult();
-  }
-
-  List<double> _computeDefinitions(List<ExercisePose> subposes) {
-    // Call getAngle and getTouch according to the definition.
-    final subposeDef = subposes[0]; // Use only first subpose for calculation
-    List<double> result = [];
-    for (var i in subposeDef.definitions) {
-      if (i.angle != null) {
-        result += [
-          _poseProcessor.angle.getAngle(
-              i.angle!.vertex, i.angle!.landmarks[0], i.angle!.landmarks[1])
-        ];
-      } else if (i.touch != null) {
-        result += [
-          _poseProcessor.touch
-              .touchChecker(i.touch!.landmarks[0], i.touch!.landmarks[1])
-        ];
-      }
-    }
-
-    print(result);
-    return result;
   }
 
   void _eventHandler() {

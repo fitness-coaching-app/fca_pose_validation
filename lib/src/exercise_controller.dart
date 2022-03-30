@@ -1,6 +1,7 @@
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'exercise_definition.dart';
-import 'pose_processor.dart';
+import 'pose_calculator/pose_calculator.dart';
+import 'pose_checker.dart';
 import 'pose_suggestion.dart';
 
 enum ExerciseDisplayCriteria { timer, counter }
@@ -98,25 +99,10 @@ class PoseProcessorResult {
   List<PoseLandmarkType> warningPoseHighlight = [];
 }
 
-class PoseCheckerResult{
-  Definition definition;
-  bool warning;
-  double actualValue;
-
-  PoseCheckerResult(this.definition, this.warning, this.actualValue);
-}
-
-class PoseSuggestionResult{
-  bool warning;
-  String? warningMessage;
-
-  PoseSuggestionResult(this.warning, {this.warningMessage});
-}
-
 class ExerciseController {
   late Pose? _prevPose;
   late Pose _pose;
-  final PoseProcessor _poseProcessor = PoseProcessor();
+  final PoseCalculator _poseProcessor = PoseCalculator();
   final ExerciseState _currentState = ExerciseState();
   late ExerciseDefinition definition;
 
@@ -149,7 +135,7 @@ class ExerciseController {
         definition.steps[_currentState.currentStep];
 
     // process the returned value from _processPoses
-    PoseProcessorResult result = _processPoses(currentStep.poses);
+    PoseProcessorResult result = _processPoses(currentStep);
 
     // callback
     _eventHandler();
@@ -157,94 +143,16 @@ class ExerciseController {
     return _currentState;
   }
 
-  PoseProcessorResult _processPoses(List<ExercisePose> subposes) {
-    List<double> computeResults = _computeDefinitions(subposes);
+  PoseProcessorResult _processPoses(ExerciseStep currentStep) {
+    List<double> computeResults = _poseProcessor.computeFromDefinition(currentStep.poses);
 
-    // TODO: call poseChecker + poseSuggestion
-    _poseChecker(computeResults, subposes);
+    // TODO: เปลี่ยน return type เป็น PoseCheckerResult
+    List<PoseLandmarkType>? poseCheckerResult = PoseChecker.check(computeResults, currentStep.poses);
+
+    // TODO: call poseSuggestion
 
     // TODO This is just a mock up
     return PoseProcessorResult();
-  }
-
-  List<double> _computeDefinitions(List<ExercisePose> subposes) {
-    // Call getAngle and getTouch according to the definition.
-    final subposeDef = subposes[0]; // Use only first subpose for calculation
-    List<double> result = [];
-    for (var i in subposeDef.definitions) {
-      if (i.angle != null) {
-        result += [
-          _poseProcessor.angle.getAngle(
-              i.angle!.vertex, i.angle!.landmarks[0], i.angle!.landmarks[1])
-        ];
-      } else if (i.touch != null) {
-        result += [
-          _poseProcessor.touch
-              .touchChecker(i.touch!.landmarks[0], i.touch!.landmarks[1])
-        ];
-      }
-    }
-
-    print(result);
-    return result;
-  }
-
-  List<PoseLandmarkType>? _poseChecker(
-      List<double> computeResults, List<ExercisePose> subposes) {
-    final subposeDef = subposes[0];
-    List<PoseLandmarkType> poseWarningPoint = [];
-    List<int> angleDef = [];
-    List<double> touchDef = [];
-    int computeCnt = 0;
-    int angleCnt = 0;
-    //loop for collect poses angle
-    for (var i in subposeDef.definitions) {
-      if (i.angle != null) {
-        angleDef += (i.angle!.range);
-      } else if (i.touch != null) {}
-    }
-    //loop for check computeResults's angle is in the range of angleDefinition
-    for (var i in subposeDef.definitions) {
-      if (i.angle != null) {
-        if (computeResults[computeCnt] >= angleDef[angleCnt] &&
-            computeResults[computeCnt] <= angleDef[angleCnt + 1]) {
-        } else {
-          poseWarningPoint += [i.angle!.vertex] +
-              [i.angle!.landmarks[0]] +
-              [i.angle!.landmarks[0]];
-        }
-      } else if (i.touch != null) {
-        //if not touch
-        if (computeResults[computeCnt] == 0) {
-          poseWarningPoint += [i.touch!.landmarks[0]] + [i.touch!.landmarks[1]];
-        }
-      }
-      computeCnt++;
-      angleCnt += 2;
-    }
-    return poseWarningPoint;
-  }
-
-
-  String? _poseSuggestion(PoseCheckerResult poseCheckerResult){
-    final String posturePosition = definition.steps[_currentState.currentStep].posturePosition;
-    final String cameraAngle = definition.steps[_currentState.currentStep].cameraAngle;
-    final String facing = definition.steps[_currentState.currentStep].facing;
-
-    String? result;
-    if(!poseCheckerResult.warning) return null;
-    if(poseCheckerResult.definition.angle != null){
-      Direction suggestingDirection = Direction.positive;
-      result = SuggestionSentenceList.getSentenceAngle(
-          poseCheckerResult.definition.angle!.landmarks,
-          poseCheckerResult.definition.angle!.vertex,
-          posturePosition, cameraAngle, suggestingDirection, facing: facing);
-    }
-    else if(poseCheckerResult.definition.touch != null){
-      result = SuggestionSentenceList.getSentenceTouch(poseCheckerResult.definition.touch!.landmarks);
-    }
-
-    return result;
   }
 
   void _eventHandler() {
@@ -256,24 +164,6 @@ class ExerciseController {
       _onExerciseCompleteCallback!();
     } else if (_currentState.stepCompleted()) {
       _onStepCompleteCallback!();
-    }
-  }
-
-  void _subposeCheck() {
-    final subposes = definition.steps[_currentState.currentStep].poses;
-    final angles = [
-      subposes[0].definitions[0].angle,
-      subposes[1].definitions[0].angle
-    ];
-    final currentAngle = _poseProcessor.angle.getAngle(
-        angles[0]!.vertex, angles[0]!.landmarks[0], angles[0]!.landmarks[1]);
-    if (angles[0]!.range[0] <= currentAngle &&
-        currentAngle <= angles[0]!.range[1]) {
-      print("CURRENT ANGLE[0] " + currentAngle.toString());
-    }
-    if (angles[1]!.range[0] <= currentAngle &&
-        currentAngle <= angles[1]!.range[1]) {
-      print("CURRENT ANGLE[1] " + currentAngle.toString());
     }
   }
 }

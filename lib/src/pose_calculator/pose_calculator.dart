@@ -30,8 +30,6 @@ class PoseCalculator {
         ];
       }
     }
-
-    print(result);
     return result;
   }
 }

@@ -2,6 +2,7 @@ import 'package:google_ml_kit/google_ml_kit.dart';
 import 'exercise_definition.dart';
 import 'pose_calculator/pose_calculator.dart';
 import 'pose_checker.dart';
+import 'pose_logger.dart';
 import 'pose_suggestion.dart';
 
 enum ExerciseDisplayCriteria { timer, counter }
@@ -102,6 +103,9 @@ class PoseProcessorResult {
 class ExerciseController {
   late Pose? _prevPose;
   late Pose _pose;
+  PoseLogger _poseLogger = PoseLogger('testUserID', 'testCourseID');
+  DateTime lastLog = DateTime.now();
+  DateTime exportTime = DateTime.now();
   final PoseCalculator _poseProcessor = PoseCalculator();
   final ExerciseState _currentState = ExerciseState();
   late ExerciseDefinition definition;
@@ -118,6 +122,8 @@ class ExerciseController {
     _onDisplayStateChangeCallback = onDisplayStateChange;
     _onStepCompleteCallback = onStepComplete;
     _onExerciseCompleteCallback = onExerciseComplete;
+    _poseLogger.startNewStep();
+    lastLog = DateTime.now();
   }
 
   void setPose(Pose newPose) {
@@ -133,6 +139,14 @@ class ExerciseController {
   ExerciseState update() {
     final ExerciseStep currentStep =
         definition.steps[_currentState.currentStep];
+
+    // Log the pose
+    if(DateTime.now().difference(lastLog).inSeconds >= 2){
+      _poseLogger.log(_pose, [0,0,0,0,0], 0);
+      // print(_poseLogger.toJSON());
+      lastLog = DateTime.now();
+    }
+
 
     // process the returned value from _processPoses
     PoseProcessorResult result = _processPoses(currentStep);

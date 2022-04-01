@@ -29,6 +29,7 @@ class PoseLogger{
 
   void startNewStep(){
     ++_currentStep;
+    _steps.add(PoseStep());
   }
 
   void log(Pose pose, List<double> computedDefinition,int currentSubpose){
@@ -42,14 +43,14 @@ class PoseLogger{
     Map<String, dynamic> data = {
       'userId': _userId,
       'courseId': _courseId,
-      'startTimeUTC': _startTime,
+      'startTimeUTC': _startTime!.toUtc().toIso8601String(),
       'steps': []
     };
     for(int i = 0;i < _steps.length;++i){
       data["steps"].add({
           'recordedData': []
         });
-      for(int j = 0;j < data["steps"][i].length;++j){
+      for(int j = 0;j < _steps[i].length;++j){
         final int timeElapsed = _steps[i].poseTimestamp[j].difference(_startTime!).inMilliseconds;
         final int currentSubpose = _steps[i].currentSubpose[j];
         final List<Map<String, dynamic>> rawPoseData = [];

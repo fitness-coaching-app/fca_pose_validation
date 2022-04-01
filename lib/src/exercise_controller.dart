@@ -141,12 +141,11 @@ class ExerciseController {
         definition.steps[_currentState.currentStep];
 
     // Log the pose
-    if(DateTime.now().difference(lastLog).inSeconds >= 2){
-      _poseLogger.log(_pose, [0,0,0,0,0], 0);
+    if (DateTime.now().difference(lastLog).inSeconds >= 2) {
+      _poseLogger.log(_pose, [0, 0, 0, 0, 0], 0);
       // print(_poseLogger.toJSON());
       lastLog = DateTime.now();
     }
-
 
     // process the returned value from _processPoses
     PoseProcessorResult result = _processPoses(currentStep);
@@ -158,10 +157,12 @@ class ExerciseController {
   }
 
   PoseProcessorResult _processPoses(ExerciseStep currentStep) {
-    List<double> computeResults = _poseProcessor.computeFromDefinition(currentStep.poses);
+    List<double> computeResults =
+        _poseProcessor.computeFromDefinition(currentStep.poses);
 
     // TODO: เปลี่ยน return type เป็น PoseCheckerResult
-    List<PoseLandmarkType>? poseCheckerResult = PoseChecker.check(computeResults, currentStep.poses);
+    List<PoseLandmarkType>? poseCheckerResult = PoseChecker.check(
+        computeResults, currentStep.poses, currentStep.criteria);
 
     // TODO: call poseSuggestion
 

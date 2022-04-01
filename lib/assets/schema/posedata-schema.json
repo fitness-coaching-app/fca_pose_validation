@@ -40,6 +40,9 @@
                       "items": {
                         "type": "number"
                       }
+                    },
+                    "likelihood": {
+                      "type": "number"
                     }
                   }
                 },

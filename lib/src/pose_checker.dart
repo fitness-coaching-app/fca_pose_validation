@@ -44,9 +44,9 @@ class PoseChecker {
                 if (subposeDef.id == countOnId) exerciseCnt++;
               }
             } else {
-              //pose warning delay after 500 frames
+              //pose warning delay after 50 frames (approx. 5 sec.)
               falsePoseCnt++;
-              if (falsePoseCnt > 500) {
+              if (falsePoseCnt > 50) {
                 poseWarningPoint += [i.angle!.vertex] +
                     [i.angle!.landmarks[0]] +
                     [i.angle!.landmarks[1]];
@@ -57,7 +57,7 @@ class PoseChecker {
             //if not touch
             if (computeResults[computeCnt] == 0) {
               falsePoseTouchCnt++;
-              if (falsePoseTouchCnt > 500) {
+              if (falsePoseTouchCnt > 50) {
                 poseWarningPoint +=
                     [i.touch!.landmarks[0]] + [i.touch!.landmarks[1]];
                 falsePoseTouchCnt = 0;

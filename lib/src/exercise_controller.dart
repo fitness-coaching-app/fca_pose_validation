@@ -58,11 +58,11 @@ class ExerciseController {
         definition.steps[_currentState.currentStep];
 
     // Log the pose
-    if (DateTime.now().difference(lastLog).inSeconds >= 2) {
-      _poseLogger.log(_pose, [0, 0, 0, 0, 0], 0);
-      // print(_poseLogger.toJSON());
-      lastLog = DateTime.now();
-    }
+    // if (DateTime.now().difference(lastLog).inSeconds >= 2) {
+    //   _poseLogger.log(_pose, [0, 0, 0, 0, 0], 0);
+    //   // print(_poseLogger.toJSON());
+    //   lastLog = DateTime.now();
+    // }
 
     // process the returned value from _processPoses
     PoseProcessorResult result = _processPoses(currentStep);
@@ -80,12 +80,19 @@ class ExerciseController {
     PoseCheckerResult poseCheckerResult =
         _poseChecker.check(currentStep, _currentState,computeResults);
 
-
-    print(poseCheckerResult.warning);
-    print(poseCheckerResult.warningDefinition?.angle?.vertex);
+    _currentState.allSubpose += poseCheckerResult.incrementAllSubpose;
+    print(_currentState.currentSubpose);
+    print("Count: ${_currentState.repeatCount}");
+    if(poseCheckerResult.nextSubpose){
+      _currentState.currentSubpose = _currentState.expectedNextSubpose;
+      _currentState.expectedNextSubpose = (_currentState.expectedNextSubpose + 1) % 2;
+    }
+    if(poseCheckerResult.count){
+      _currentState.repeatCount++;
+    }
     // TODO: call poseSuggestion
     // print("TEST");
-    // print(PoseSuggestion.getSuggestion(poseCheckerResult, currentStep).warningMessage);
+    print(PoseSuggestion.getSuggestion(poseCheckerResult, currentStep).warningMessage);
     // TODO This is just a mock up
     return PoseProcessorResult();
   }

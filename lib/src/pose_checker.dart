@@ -7,16 +7,18 @@ class PoseCheckerResult {
   bool warning;
   Definition? warningDefinition;
   double? actualValue;
-  int? incrementCorrectSubpose = 0;
-  int? incrementAllSubpose = 0;
-  bool? nextSubpose = false;
+  int incrementCorrectSubpose = 0;
+  int incrementAllSubpose = 0;
+  bool nextSubpose = false;
+  bool count = false;
 
   PoseCheckerResult(this.warning,
       {this.warningDefinition,
       this.actualValue,
-      this.incrementCorrectSubpose,
-      this.incrementAllSubpose,
-      this.nextSubpose});
+      this.incrementCorrectSubpose = 0,
+      this.incrementAllSubpose = 0,
+      this.nextSubpose = false,
+      this.count = false});
 }
 
 class PoseChecker {
@@ -40,7 +42,8 @@ class PoseChecker {
         actualValue: countCheckResult["warningActualValue"],
         incrementCorrectSubpose: countCheckResult["incrementCorrectSubpose"],
         incrementAllSubpose: countCheckResult["incrementAllSubpose"],
-        nextSubpose: countCheckResult["nextSubpose"]
+        nextSubpose: countCheckResult["nextSubpose"],
+        count: countCheckResult["count"]
       );
     }
 
@@ -90,12 +93,16 @@ class PoseChecker {
 
     Definition? warningDefinition;
     double? warningActualValue;
+    bool count = false;
+
     if (subposeAllCorrect) {
       incrementCorrectSubpose++;
       incrementAllSubpose++;
       warningTriggered = false;
+      nextSubpose = true;
+      falsePoseCnt = 0;
       if (subpose.id != null && subpose.id == countOnId) {
-        nextSubpose = true;
+        count = true;
       }
     } else {
       if (warningTriggered) {
@@ -122,7 +129,8 @@ class PoseChecker {
       "warningActualValue": warningActualValue,
       "incrementCorrectSubpose": incrementCorrectSubpose,
       "incrementAllSubpose": incrementAllSubpose,
-      "nextSubpose": nextSubpose
+      "nextSubpose": nextSubpose,
+      "count": count
     };
   }
 }

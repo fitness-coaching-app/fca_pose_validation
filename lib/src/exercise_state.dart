@@ -12,7 +12,7 @@ class ExerciseState {
   bool _displayStateChanged = false;
 
   ExerciseDisplayCriteria criteria = ExerciseDisplayCriteria.counter;
-  int remaining = 0;
+  int repeatCount = 0;
   int target = 0;
 
   bool _warning = false;
@@ -49,7 +49,7 @@ class ExerciseState {
     _displayStateChanged = false;
 
     criteria = ExerciseDisplayCriteria.timer;
-    remaining = 0;
+    repeatCount = 0;
     target = 0;
 
     clearWarning();

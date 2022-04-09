@@ -28,7 +28,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> exerciseControllerLogicTest() async {
-    final data = await rootBundle.loadString('assets/course-test.yaml');
+    final data = await rootBundle.loadString('assets/jumping-jacks.yaml');
 
   }
 

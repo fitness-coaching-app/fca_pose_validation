@@ -77,12 +77,12 @@ class ExerciseController {
     List<double> computeResults =
         _poseCalculator.computeFromDefinition(currentStep.poses);
 
-    // PoseCheckerResult poseCheckerResult =
-    //     _poseChecker.check(currentStep, _currentState,computeResults);
+    PoseCheckerResult poseCheckerResult =
+        _poseChecker.check(currentStep, _currentState,computeResults);
 
 
-    // print(poseCheckerResult.warning);
-    // print(poseCheckerResult.warningDefinition?.angle?.vertex);
+    print(poseCheckerResult.warning);
+    print(poseCheckerResult.warningDefinition?.angle?.vertex);
     // TODO: call poseSuggestion
     // print("TEST");
     // print(PoseSuggestion.getSuggestion(poseCheckerResult, currentStep).warningMessage);

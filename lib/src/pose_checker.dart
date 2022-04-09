@@ -35,7 +35,7 @@ class PoseChecker {
     //check yaml criteria is counter and collect repeat, countOnId
     if (subposeCriteria.counter != null) {
       final Map<String, dynamic> countCheckResult = _countCheck(currentStep, currentState, computeResults);
-      result = PoseCheckerResult(countCheckResult["warning"],
+      result = PoseCheckerResult(warningTriggered,
         warningDefinition: countCheckResult["warningDefinition"],
         actualValue: countCheckResult["warningActualValue"],
         incrementCorrectSubpose: countCheckResult["incrementCorrectSubpose"],
@@ -68,7 +68,8 @@ class PoseChecker {
     List<bool> isDefinitionCorrect = [];
 
     // loop for check computeResults's angle is in the range of angleDefinition
-    subpose.definitions.asMap().forEach((defIndex, def) {
+    for(int defIndex = 0;defIndex < subpose.definitions.length;++defIndex){
+      Definition def = subpose.definitions[defIndex];
       if (def.angle != null) {
         if (computeResults[defIndex] >= def.angle!.range[0] &&
             computeResults[defIndex] <= def.angle!.range[1]) {
@@ -78,7 +79,6 @@ class PoseChecker {
           isDefinitionCorrect.add(false);
         }
       } else if (def.touch != null) {
-        //if not touch
         if (computeResults[defIndex] == 1) {
           isDefinitionCorrect.add(true);
         } else {
@@ -86,7 +86,7 @@ class PoseChecker {
           isDefinitionCorrect.add(false);
         }
       }
-    });
+    }
 
     Definition? warningDefinition;
     double? warningActualValue;
@@ -118,7 +118,6 @@ class PoseChecker {
     }
 
     return {
-      "warning": warningTriggered,
       "warningDefinition": warningDefinition,
       "warningActualValue": warningActualValue,
       "incrementCorrectSubpose": incrementCorrectSubpose,

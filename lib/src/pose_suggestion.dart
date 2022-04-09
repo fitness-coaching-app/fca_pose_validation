@@ -193,26 +193,26 @@ class PoseSuggestion{
     final String cameraAngle = currentStep.cameraAngle;
     final String facing = currentStep.facing;
 
-    print("$posturePosition / $cameraAngle / $facing");
+    // print("$posturePosition / $cameraAngle / $facing");
 
     PoseSuggestionResult result = PoseSuggestionResult();
     if(!poseCheckerResult.warning) return result;
 
-    if(poseCheckerResult.definition.angle != null){
-      List<int> range = poseCheckerResult.definition.angle!.range;
-      Direction suggestingDirection = poseCheckerResult.actualValue < range[0]? Direction.positive: Direction.negative;
+    if(poseCheckerResult.warningDefinition!.angle != null){
+      List<int> range = poseCheckerResult.warningDefinition!.angle!.range;
+      Direction suggestingDirection = poseCheckerResult.actualValue! < range[0]? Direction.positive: Direction.negative;
       result = PoseSuggestionResult(
         warning: true,
         warningMessage: SuggestionSentenceList.getSentenceAngle(
-            poseCheckerResult.definition.angle!.landmarks,
-            poseCheckerResult.definition.angle!.vertex,
+            poseCheckerResult.warningDefinition!.angle!.landmarks,
+            poseCheckerResult.warningDefinition!.angle!.vertex,
             posturePosition, cameraAngle, suggestingDirection, facing: facing)
       );
     }
-    else if(poseCheckerResult.definition.touch != null){
+    else if(poseCheckerResult.warningDefinition!.touch != null){
       result = PoseSuggestionResult(
         warning: true,
-        warningMessage: SuggestionSentenceList.getSentenceTouch(poseCheckerResult.definition.touch!.landmarks)
+        warningMessage: SuggestionSentenceList.getSentenceTouch(poseCheckerResult.warningDefinition!.touch!.landmarks)
       );
     }
 

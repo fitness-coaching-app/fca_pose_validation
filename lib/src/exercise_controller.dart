@@ -4,91 +4,7 @@ import 'pose_calculator/pose_calculator.dart';
 import 'pose_checker.dart';
 import 'pose_logger.dart';
 import 'pose_suggestion.dart';
-
-enum ExerciseDisplayCriteria { timer, counter }
-enum DisplayState { preExercise, teach, exercise }
-
-class ExerciseState {
-  DisplayState _displayState = DisplayState.preExercise;
-  int currentStep = 0;
-  String exerciseName = "";
-  bool _exerciseCompleted = false;
-  bool _stepCompleted = false;
-  bool _displayStateChanged = false;
-
-  ExerciseDisplayCriteria criteria = ExerciseDisplayCriteria.timer;
-  int remaining = 0;
-  int target = 0;
-
-  bool _warning = false;
-  String _warningMessage = "";
-  List<PoseLandmarkType> _warningPoseHighlight = [];
-
-  int currentSubpose = 0;
-
-  void loadNewStep() {}
-
-  DisplayState getDisplayState() => _displayState;
-
-  void setDisplayState(DisplayState value) {
-    _displayState = value;
-    _displayStateChanged = true;
-  }
-
-  void clearWarning() {
-    _warning = false;
-    _warningMessage = "";
-    _warningPoseHighlight = [];
-  }
-
-  void clearState() {
-    _displayState = DisplayState.preExercise;
-    currentStep = 0;
-    exerciseName = "";
-    _exerciseCompleted = false;
-    _stepCompleted = false;
-    _displayStateChanged = false;
-
-    criteria = ExerciseDisplayCriteria.timer;
-    remaining = 0;
-    target = 0;
-
-    clearWarning();
-  }
-
-  Map<String, dynamic> getWarning() {
-    return {
-      "warning": _warning,
-      "warningMessage": _warningMessage,
-      "warningPoseHighlight": _warningPoseHighlight
-    };
-  }
-
-  void setWarning(
-      String warningMessage, List<PoseLandmarkType> warningPoseHighlight) {
-    _warning = true;
-    _warningMessage = warningMessage;
-    _warningPoseHighlight = warningPoseHighlight;
-  }
-
-  bool displayStateChanged() {
-    bool temp = _displayStateChanged;
-    _displayStateChanged = false;
-    return temp;
-  }
-
-  bool stepCompleted() {
-    bool temp = _stepCompleted;
-    _stepCompleted = false;
-    return temp;
-  }
-
-  bool exerciseCompleted() {
-    bool temp = _exerciseCompleted;
-    _exerciseCompleted = false;
-    return temp;
-  }
-}
+import 'exercise_state.dart';
 
 class PoseProcessorResult {
   int? predictedCurrentSubpose;
@@ -103,11 +19,12 @@ class PoseProcessorResult {
 class ExerciseController {
   late Pose? _prevPose;
   late Pose _pose;
-  PoseLogger _poseLogger = PoseLogger('testUserID', 'testCourseID');
+  final PoseLogger _poseLogger = PoseLogger('testUserID', 'testCourseID');
+  final ExerciseState _currentState = ExerciseState();
   DateTime lastLog = DateTime.now();
   DateTime exportTime = DateTime.now();
-  final PoseCalculator _poseProcessor = PoseCalculator();
-  final ExerciseState _currentState = ExerciseState();
+  final PoseCalculator _poseCalculator = PoseCalculator();
+  final PoseChecker _poseChecker = PoseChecker();
   late ExerciseDefinition definition;
 
   void Function(DisplayState displayState)? _onDisplayStateChangeCallback;
@@ -129,7 +46,7 @@ class ExerciseController {
   void setPose(Pose newPose) {
     _prevPose = newPose;
     _pose = newPose;
-    _poseProcessor.setPose(newPose);
+    _poseCalculator.setPose(newPose);
   }
 
   ExerciseState getCurrentState() {
@@ -158,14 +75,17 @@ class ExerciseController {
 
   PoseProcessorResult _processPoses(ExerciseStep currentStep) {
     List<double> computeResults =
-        _poseProcessor.computeFromDefinition(currentStep.poses);
+        _poseCalculator.computeFromDefinition(currentStep.poses);
 
-    // TODO: เปลี่ยน return type เป็น PoseCheckerResult
-    List<PoseLandmarkType>? poseCheckerResult = PoseChecker.check(
-        computeResults, currentStep.poses, currentStep.criteria);
+    // PoseCheckerResult poseCheckerResult =
+    //     _poseChecker.check(currentStep, _currentState,computeResults);
 
+
+    // print(poseCheckerResult.warning);
+    // print(poseCheckerResult.warningDefinition?.angle?.vertex);
     // TODO: call poseSuggestion
-
+    // print("TEST");
+    // print(PoseSuggestion.getSuggestion(poseCheckerResult, currentStep).warningMessage);
     // TODO This is just a mock up
     return PoseProcessorResult();
   }

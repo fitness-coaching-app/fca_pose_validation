@@ -6,14 +6,22 @@ enum DisplayState { preExercise, teach, exercise }
 class ExerciseState {
   DisplayState _displayState = DisplayState.preExercise;
   int currentStep = 0;
-  String exerciseName = "";
+
   bool _exerciseCompleted = false;
   bool _stepCompleted = false;
   bool _displayStateChanged = false;
 
+  String stepName = "";
+
   ExerciseDisplayCriteria criteria = ExerciseDisplayCriteria.counter;
+
+  // For counter criteria
   int repeatCount = 0;
   int target = 0;
+
+  // For timer criteria
+  Stopwatch timer = Stopwatch();
+  int targetTimeMillisec = 0;
 
   bool _warning = false;
   String _warningMessage = "";
@@ -25,7 +33,9 @@ class ExerciseState {
   int correctSubpose = 0;
   int allSubpose = 0;
 
-  void loadNewStep() {}
+  void loadNewStep() {
+    clearStateForNewStep();
+  }
 
   DisplayState getDisplayState() => _displayState;
 
@@ -40,17 +50,20 @@ class ExerciseState {
     _warningPoseHighlight = [];
   }
 
-  void clearState() {
-    _displayState = DisplayState.preExercise;
-    currentStep = 0;
-    exerciseName = "";
+  void clearStateForNewStep() {
+    stepName = "";
     _exerciseCompleted = false;
     _stepCompleted = false;
     _displayStateChanged = false;
 
+    currentSubpose = -1;
+    expectedNextSubpose = 0;
+
     criteria = ExerciseDisplayCriteria.timer;
     repeatCount = 0;
     target = 0;
+
+    timer.reset();
 
     clearWarning();
   }

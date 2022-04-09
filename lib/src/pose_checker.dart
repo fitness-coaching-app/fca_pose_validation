@@ -25,35 +25,61 @@ class PoseChecker {
   int falsePoseCnt = 0;
   int falsePoseTouchCnt = 0;
   bool warningTriggered = false;
+  Stopwatch warningBufferTimer = Stopwatch();
 
-  int prevSubpose = -1;
-
-  PoseCheckerResult check(ExerciseStep currentStep,
-      ExerciseState currentState, List<double> computeResults) {
+  PoseCheckerResult check(ExerciseStep currentStep, ExerciseState currentState,
+      List<double> computeResults) {
     List<ExercisePose> subposes = currentStep.poses;
     Criteria subposeCriteria = currentStep.criteria;
     PoseCheckerResult result = PoseCheckerResult(false); // Mock up
 
     //check yaml criteria is counter and collect repeat, countOnId
     if (subposeCriteria.counter != null) {
-      final Map<String, dynamic> countCheckResult = _countCheck(currentStep, currentState, computeResults);
+      final Map<String, dynamic> countCheckResult =
+          _countCheck(currentStep, currentState, computeResults);
       result = PoseCheckerResult(warningTriggered,
-        warningDefinition: countCheckResult["warningDefinition"],
-        actualValue: countCheckResult["warningActualValue"],
-        incrementCorrectSubpose: countCheckResult["incrementCorrectSubpose"],
-        incrementAllSubpose: countCheckResult["incrementAllSubpose"],
-        nextSubpose: countCheckResult["nextSubpose"],
-        count: countCheckResult["count"]
+          warningDefinition: countCheckResult["warningDefinition"],
+          actualValue: countCheckResult["warningActualValue"],
+          incrementCorrectSubpose: countCheckResult["incrementCorrectSubpose"],
+          incrementAllSubpose: countCheckResult["incrementAllSubpose"],
+          nextSubpose: countCheckResult["nextSubpose"],
+          count: countCheckResult["count"]);
+    }
+
+    // check yaml criteria is timer and collect duration
+    if (subposeCriteria.timer != null) {
+      final Map<String, dynamic> timerCheckResult = _timerCheck(currentStep, computeResults);
+      result = PoseCheckerResult(warningTriggered,
+        warningDefinition: timerCheckResult["warningDefinition"],
+        actualValue: timerCheckResult["warningActualValue"]
       );
     }
 
-    // TODO: For now, check only counter
-    // check yaml criteria is timer and collect duration
-    // if (subposeCriteria.timer != null) {
-    //   int? duration = subposeCriteria.timer?.duration;
-    // }
-
     return result;
+  }
+
+  List<bool> _definitionCheck(
+      ExercisePose subpose, List<double> computeResults) {
+    List<bool> isDefinitionCorrect = [];
+    // loop for check computeResults's angle is in the range of angleDefinition
+    for (int defIndex = 0; defIndex < subpose.definitions.length; ++defIndex) {
+      Definition def = subpose.definitions[defIndex];
+      if (def.angle != null) {
+        if (computeResults[defIndex] >= def.angle!.range[0] &&
+            computeResults[defIndex] <= def.angle!.range[1]) {
+          isDefinitionCorrect.add(true);
+        } else {
+          isDefinitionCorrect.add(false);
+        }
+      } else if (def.touch != null) {
+        if (computeResults[defIndex] == 1) {
+          isDefinitionCorrect.add(true);
+        } else {
+          isDefinitionCorrect.add(false);
+        }
+      }
+    }
+    return isDefinitionCorrect;
   }
 
   Map<String, dynamic> _countCheck(ExerciseStep currentStep,
@@ -68,31 +94,30 @@ class PoseChecker {
 
     bool subposeAllCorrect = true;
     ExercisePose subpose = subposes[currentState.expectedNextSubpose];
-    List<bool> isDefinitionCorrect = [];
 
-    // loop for check computeResults's angle is in the range of angleDefinition
-    for(int defIndex = 0;defIndex < subpose.definitions.length;++defIndex){
-      Definition def = subpose.definitions[defIndex];
-      if (def.angle != null) {
-        if (computeResults[defIndex] >= def.angle!.range[0] &&
-            computeResults[defIndex] <= def.angle!.range[1]) {
-          isDefinitionCorrect.add(true);
+    List<bool> isDefinitionCorrect = _definitionCheck(subpose, computeResults);
+    Definition? warningDefinition;
+    double? warningActualValue;
+
+    for (int i = 0; i < isDefinitionCorrect.length; ++i) {
+      if (!isDefinitionCorrect[i]) {
+        subposeAllCorrect = false;
+        if (warningTriggered) {
+          warningDefinition = subpose.definitions[i];
+          warningActualValue = computeResults[i];
         } else {
-          subposeAllCorrect = false;
-          isDefinitionCorrect.add(false);
+          falsePoseCnt++;
+          // pose warning delay after 50 frames (approx. 5 sec.)
+          if (falsePoseCnt > 50) {
+            incrementAllSubpose++;
+            warningTriggered = true;
+            falsePoseCnt = 0;
+          }
         }
-      } else if (def.touch != null) {
-        if (computeResults[defIndex] == 1) {
-          isDefinitionCorrect.add(true);
-        } else {
-          subposeAllCorrect = false;
-          isDefinitionCorrect.add(false);
-        }
+        break;
       }
     }
 
-    Definition? warningDefinition;
-    double? warningActualValue;
     bool count = false;
 
     if (subposeAllCorrect) {
@@ -104,24 +129,6 @@ class PoseChecker {
       if (subpose.id != null && subpose.id == countOnId) {
         count = true;
       }
-    } else {
-      if (warningTriggered) {
-        for (int i = 0; i < isDefinitionCorrect.length; ++i) {
-          if (!isDefinitionCorrect[i]) {
-            warningDefinition = subpose.definitions[i];
-            warningActualValue = computeResults[i];
-            break;
-          }
-        }
-      } else {
-        falsePoseCnt++;
-        // pose warning delay after 50 frames (approx. 5 sec.)
-        if (falsePoseCnt > 50) {
-          incrementAllSubpose++;
-          warningTriggered = true;
-          falsePoseCnt = 0;
-        }
-      }
     }
 
     return {
@@ -131,6 +138,39 @@ class PoseChecker {
       "incrementAllSubpose": incrementAllSubpose,
       "nextSubpose": nextSubpose,
       "count": count
+    };
+  }
+
+  Map<String, dynamic> _timerCheck(ExerciseStep currentStep, List<double> computeResults) {
+    ExercisePose subpose = currentStep.poses[0];
+
+    List<bool> isDefinitionCorrect = _definitionCheck(subpose, computeResults);
+    bool allCorrect = true;
+    Definition? warningDefinition;
+    double? warningActualValue;
+
+    for (int i = 0; i < isDefinitionCorrect.length; ++i) {
+      if (!isDefinitionCorrect[i]) {
+        allCorrect = false;
+        warningBufferTimer.start();
+        if (warningBufferTimer.elapsedMilliseconds > 1500) {
+          warningTriggered = true;
+        }
+        if (warningTriggered) {
+          warningDefinition = subpose.definitions[i];
+          warningActualValue = computeResults[i];
+        }
+        break;
+      }
+    }
+    if (allCorrect) {
+      warningBufferTimer.reset();
+      warningTriggered = false;
+    }
+
+    return {
+      "warningDefinition": warningDefinition,
+      "warningActualValue": warningActualValue
     };
   }
 }

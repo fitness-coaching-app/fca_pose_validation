@@ -58,11 +58,11 @@ class ExerciseController {
         definition.steps[_currentState.currentStep];
 
     // Log the pose
-    // if (DateTime.now().difference(lastLog).inSeconds >= 2) {
-    //   _poseLogger.log(_pose, [0, 0, 0, 0, 0], 0);
-    //   // print(_poseLogger.toJSON());
-    //   lastLog = DateTime.now();
-    // }
+    if (DateTime.now().difference(lastLog).inSeconds >= 2) {
+      _poseLogger.log(_pose, [0, 0, 0, 0, 0], 0);
+      // print(_poseLogger.toJSON());
+      lastLog = DateTime.now();
+    }
 
     // process the returned value from _processPoses
     PoseProcessorResult result = _processPoses(currentStep);
@@ -80,16 +80,29 @@ class ExerciseController {
     PoseCheckerResult poseCheckerResult =
         _poseChecker.check(currentStep, _currentState,computeResults);
 
-    _currentState.allSubpose += poseCheckerResult.incrementAllSubpose;
-    print(_currentState.currentSubpose);
-    print("Count: ${_currentState.repeatCount}");
-    if(poseCheckerResult.nextSubpose){
-      _currentState.currentSubpose = _currentState.expectedNextSubpose;
-      _currentState.expectedNextSubpose = (_currentState.expectedNextSubpose + 1) % 2;
+    if(currentStep.criteria.counter != null){
+      _currentState.allSubpose += poseCheckerResult.incrementAllSubpose;
+      print("${_currentState.currentSubpose} -> ${_currentState.expectedNextSubpose}");
+      print("Count: ${_currentState.repeatCount}");
+      if(poseCheckerResult.nextSubpose){
+        _currentState.currentSubpose = _currentState.expectedNextSubpose;
+        _currentState.expectedNextSubpose = (_currentState.expectedNextSubpose + 1) % 2;
+      }
+      if(poseCheckerResult.count){
+        _currentState.repeatCount++;
+      }
     }
-    if(poseCheckerResult.count){
-      _currentState.repeatCount++;
+    else if(currentStep.criteria.timer != null){
+      if(poseCheckerResult.warning){
+        _currentState.timer.stop();
+      }
+      else{
+        _currentState.timer.start();
+      }
+      print("Time Elapsed: ${_currentState.timer.elapsedMilliseconds}");
     }
+
+
     // TODO: call poseSuggestion
     // print("TEST");
     print(PoseSuggestion.getSuggestion(poseCheckerResult, currentStep).warningMessage);

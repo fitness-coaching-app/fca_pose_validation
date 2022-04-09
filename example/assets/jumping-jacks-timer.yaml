@@ -1,0 +1,26 @@
+id: courseId
+name: Jumping Jacks Timer (Preview)
+steps:
+  - name: Jumping Jacks Timer
+    mediaDir: ""
+    bounce: true
+    criteria:
+      timer:
+        duration: 20
+    posturePosition: stand
+    cameraAngle: front
+    facing: up
+    poses:
+      - definitions:
+          - angle:
+              landmarks:
+                - rightElbow
+                - rightHip
+              vertex: rightShoulder
+              range: [0, 30]
+          - angle:
+              landmarks:
+                - leftElbow
+                - leftHip
+              vertex: leftShoulder
+              range: [0, 30]

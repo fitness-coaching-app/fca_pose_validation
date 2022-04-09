@@ -26,7 +26,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   }
 
   _asyncMethod() async {
-    data = await rootBundle.loadString('assets/jumping-jacks.yaml');
+    data = await rootBundle.loadString('assets/jumping-jacks-timer.yaml');
     controller = ExerciseController(data);
   }
 
@@ -55,16 +55,20 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   }
 
   Future<void> processImage(InputImage inputImage) async {
+    final DateTime time = DateTime.now();
     if (isBusy) return;
     isBusy = true;
     final poses = await poseDetector.processImage(inputImage);
+    final DateTime detectionTime = DateTime.now();
     // print('Found ${poses.length} poses');
     if(poses.isNotEmpty) poseProcessorTest(poses[0]);
+    final DateTime poseProcessorTime = DateTime.now();
     if (inputImage.inputImageData?.size != null &&
         inputImage.inputImageData?.imageRotation != null) {
       final painter = PosePainter(poses, inputImage.inputImageData!.size,
           inputImage.inputImageData!.imageRotation);
       customPaint = CustomPaint(painter: painter);
+      // customPaint = null;
     } else {
       customPaint = null;
     }
@@ -72,5 +76,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     if (mounted) {
       setState(() {});
     }
+    final DateTime stopTime = DateTime.now();
+    print("Process time: ${stopTime.difference(time).inMilliseconds} ms | ${detectionTime.difference(time).inMicroseconds} us | ${poseProcessorTime.difference(detectionTime).inMicroseconds} us");
   }
 }

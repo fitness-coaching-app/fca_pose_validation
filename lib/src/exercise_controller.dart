@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
+
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'exercise_definition.dart';
 import 'pose_calculator/pose_calculator.dart';
@@ -17,12 +20,10 @@ class PoseProcessorResult {
 }
 
 class ExerciseController {
-  late Pose? _prevPose;
   late Pose _pose;
   final PoseLogger _poseLogger = PoseLogger('testUserID', 'testCourseID');
   final ExerciseState _currentState = ExerciseState();
   DateTime lastLog = DateTime.now();
-  DateTime exportTime = DateTime.now();
   final PoseCalculator _poseCalculator = PoseCalculator();
   final PoseChecker _poseChecker = PoseChecker();
   late ExerciseDefinition definition;
@@ -44,7 +45,6 @@ class ExerciseController {
   }
 
   void setPose(Pose newPose) {
-    _prevPose = newPose;
     _pose = newPose;
     _poseCalculator.setPose(newPose);
   }
@@ -57,11 +57,10 @@ class ExerciseController {
     final ExerciseStep currentStep =
         definition.steps[_currentState.currentStep];
 
-    // Log the pose
-    if (DateTime.now().difference(lastLog).inSeconds >= 2) {
-      _poseLogger.log(_pose, [0, 0, 0, 0, 0], 0);
-      // print(_poseLogger.toJSON());
-      lastLog = DateTime.now();
+    if (currentStep.criteria.counter != null) {
+      _currentState.criteria = ExerciseDisplayCriteria.counter;
+    } else if (currentStep.criteria.timer != null) {
+      _currentState.criteria = ExerciseDisplayCriteria.timer;
     }
 
     // process the returned value from _processPoses
@@ -78,35 +77,50 @@ class ExerciseController {
         _poseCalculator.computeFromDefinition(currentStep.poses);
 
     PoseCheckerResult poseCheckerResult =
-        _poseChecker.check(currentStep, _currentState,computeResults);
+        _poseChecker.check(currentStep, _currentState, computeResults);
 
-    if(currentStep.criteria.counter != null){
+    // Log the pose
+    if (DateTime.now().difference(lastLog).inMilliseconds >= 500) {
+      _poseLogger.log(_pose, computeResults, _currentState.currentSubpose);
+      // print(_poseLogger.toJSON());
+      lastLog = DateTime.now();
+    }
+
+    if (currentStep.criteria.counter != null) {
+      _currentState.criteria = ExerciseDisplayCriteria.counter;
       _currentState.allSubpose += poseCheckerResult.incrementAllSubpose;
-      print("${_currentState.currentSubpose} -> ${_currentState.expectedNextSubpose}");
+      print(
+          "${_currentState.currentSubpose} -> ${_currentState.expectedNextSubpose}");
       print("Count: ${_currentState.repeatCount}");
-      if(poseCheckerResult.nextSubpose){
+      if (poseCheckerResult.nextSubpose) {
         _currentState.currentSubpose = _currentState.expectedNextSubpose;
-        _currentState.expectedNextSubpose = (_currentState.expectedNextSubpose + 1) % 2;
+        _currentState.expectedNextSubpose =
+            (_currentState.expectedNextSubpose + 1) % 2;
       }
-      if(poseCheckerResult.count){
+      if (poseCheckerResult.count) {
         _currentState.repeatCount++;
       }
-    }
-    else if(currentStep.criteria.timer != null){
-      if(poseCheckerResult.warning){
+    } else if (currentStep.criteria.timer != null) {
+      _currentState.criteria = ExerciseDisplayCriteria.timer;
+      if (poseCheckerResult.warning) {
         _currentState.timer.stop();
-      }
-      else{
+      } else {
         _currentState.timer.start();
       }
       print("Time Elapsed: ${_currentState.timer.elapsedMilliseconds}");
     }
 
-
     // TODO: call poseSuggestion
     // print("TEST");
-    print(PoseSuggestion.getSuggestion(poseCheckerResult, currentStep).warningMessage);
-    // TODO This is just a mock up
+    PoseSuggestionResult poseSuggestionResult =
+        PoseSuggestion.getSuggestion(poseCheckerResult, currentStep);
+    if (poseSuggestionResult.warning) {
+      _currentState.setWarning(poseSuggestionResult.warningMessage!, []);
+    } else {
+      _currentState.clearWarning();
+    }
+
+    // TODO: This is just a mock up
     return PoseProcessorResult();
   }
 
@@ -120,5 +134,13 @@ class ExerciseController {
     } else if (_currentState.stepCompleted()) {
       _onStepCompleteCallback!();
     }
+  }
+
+  void dumpLogToFile(String filename) async {
+    final Directory directory = await getApplicationDocumentsDirectory();
+    final File file = File('${directory.path}/$filename.json');
+    print("Saved to ${directory.path}/$filename.json");
+
+    file.writeAsStringSync(_poseLogger.toJSON());
   }
 }

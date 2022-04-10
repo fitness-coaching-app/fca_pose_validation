@@ -1,11 +1,12 @@
 import 'package:google_ml_kit/google_ml_kit.dart';
+import 'exercise_definition.dart';
 
 enum ExerciseDisplayCriteria { timer, counter }
 enum DisplayState { preExercise, teach, exercise }
 
 class ExerciseState {
   DisplayState _displayState = DisplayState.preExercise;
-  int currentStep = 0;
+  int currentStep = -1; // -1 = N/A
 
   bool _exerciseCompleted = false;
   bool _stepCompleted = false;
@@ -33,15 +34,31 @@ class ExerciseState {
   int correctSubpose = 0;
   int allSubpose = 0;
 
-  void loadNewStep() {
+  void loadNewStep(ExerciseStep step) {
     clearStateForNewStep();
+    setDisplayState(DisplayState.preExercise);
+    stepName = step.name;
+    if(step.criteria.counter != null){
+      criteria = ExerciseDisplayCriteria.counter;
+      target = step.criteria.counter!.repeat;
+    }
+    else if(step.criteria.timer != null){
+      criteria = ExerciseDisplayCriteria.timer;
+      targetTimeMillisec = step.criteria.timer!.duration * 1000;
+    }
   }
 
-  DisplayState getDisplayState() => _displayState;
-
-  void setDisplayState(DisplayState value) {
-    _displayState = value;
-    _displayStateChanged = true;
+  void update(){
+    if(criteria == ExerciseDisplayCriteria.counter){
+      if(repeatCount >= target) {
+        _stepCompleted = true;
+      }
+    }
+    else if(criteria == ExerciseDisplayCriteria.timer){
+      if(timer.elapsedMilliseconds >= targetTimeMillisec){
+        _stepCompleted = true;
+      }
+    }
   }
 
   void clearWarning() {
@@ -67,6 +84,8 @@ class ExerciseState {
 
     clearWarning();
   }
+
+
   bool isWarning(){
     return _warning;
   }
@@ -85,6 +104,17 @@ class ExerciseState {
     _warningPoseHighlight = warningPoseHighlight;
   }
 
+  DisplayState getDisplayState() => _displayState;
+
+  void setDisplayState(DisplayState value) {
+    _displayState = value;
+    _displayStateChanged = true;
+  }
+
+  void setExerciseCompleted(){
+    _exerciseCompleted = true;
+  }
+
   bool displayStateChanged() {
     bool temp = _displayStateChanged;
     _displayStateChanged = false;
@@ -98,8 +128,6 @@ class ExerciseState {
   }
 
   bool exerciseCompleted() {
-    bool temp = _exerciseCompleted;
-    _exerciseCompleted = false;
-    return temp;
+    return _exerciseCompleted;
   }
 }

@@ -9,16 +9,6 @@ import 'pose_logger.dart';
 import 'pose_suggestion.dart';
 import 'exercise_state.dart';
 
-class PoseProcessorResult {
-  int? predictedCurrentSubpose;
-  int? expectedCurrentSubpose;
-  int? predictedNextSubpose;
-
-  bool warning = false;
-  String warningMessage = "";
-  List<PoseLandmarkType> warningPoseHighlight = [];
-}
-
 class ExerciseController {
   late Pose _pose;
   PoseLogger _poseLogger = PoseLogger('testUserID', 'testCourseID');
@@ -42,6 +32,7 @@ class ExerciseController {
     _onExerciseCompleteCallback = onExerciseComplete;
     _poseLogger.startNewStep();
     lastLog = DateTime.now();
+    _currentState.loadNewStep(definition.steps[++_currentState.currentStep]);
   }
 
   void setPose(Pose newPose) {
@@ -54,6 +45,10 @@ class ExerciseController {
   }
 
   ExerciseState update() {
+    if(_currentState.exerciseCompleted()){
+      return _currentState;
+    }
+
     final ExerciseStep currentStep =
         definition.steps[_currentState.currentStep];
 
@@ -64,7 +59,9 @@ class ExerciseController {
     }
 
     // process the returned value from _processPoses
-    PoseProcessorResult result = _processPoses(currentStep);
+    _processPoses(currentStep);
+
+    _currentState.update(); // Update the state according to the parameters
 
     // callback
     _eventHandler();
@@ -72,7 +69,7 @@ class ExerciseController {
     return _currentState;
   }
 
-  PoseProcessorResult _processPoses(ExerciseStep currentStep) {
+  void _processPoses(ExerciseStep currentStep) {
     List<double> computeResults =
         _poseCalculator.computeFromDefinition(currentStep.poses);
 
@@ -82,15 +79,13 @@ class ExerciseController {
     // Log the pose
     if (DateTime.now().difference(lastLog).inMilliseconds >= 500) {
       _poseLogger.log(_pose, computeResults, _currentState.currentSubpose);
-      // print(_poseLogger.toJSON());
       lastLog = DateTime.now();
     }
 
     if (currentStep.criteria.counter != null) {
       _currentState.criteria = ExerciseDisplayCriteria.counter;
       _currentState.allSubpose += poseCheckerResult.incrementAllSubpose;
-      print(
-          "${_currentState.currentSubpose} -> ${_currentState.expectedNextSubpose}");
+      print("${_currentState.currentSubpose} -> ${_currentState.expectedNextSubpose}");
       print("Count: ${_currentState.repeatCount}");
       if (poseCheckerResult.nextSubpose) {
         _currentState.currentSubpose = _currentState.expectedNextSubpose;
@@ -110,29 +105,37 @@ class ExerciseController {
       print("Time Elapsed: ${_currentState.timer.elapsedMilliseconds}");
     }
 
-    // TODO: call poseSuggestion
-    // print("TEST");
     PoseSuggestionResult poseSuggestionResult =
         PoseSuggestion.getSuggestion(poseCheckerResult, currentStep);
+
     if (poseSuggestionResult.warning) {
       _currentState.setWarning(poseSuggestionResult.warningMessage!, []);
     } else {
       _currentState.clearWarning();
     }
-
-    // TODO: This is just a mock up
-    return PoseProcessorResult();
   }
 
   void _eventHandler() {
-    if (_currentState.displayStateChanged()) {
-      _onDisplayStateChangeCallback!(_currentState.getDisplayState());
+    if (_currentState.stepCompleted()) {
+      if(_currentState.currentStep + 1 < definition.steps.length){
+        _currentState.loadNewStep(definition.steps[++_currentState.currentStep]);
+      }
+      else {
+        // exerciseCompleted
+        _currentState.setExerciseCompleted();
+        if(_onExerciseCompleteCallback != null) {
+          _onExerciseCompleteCallback!();
+        }
+      }
+      if(_onStepCompleteCallback != null){
+        _onStepCompleteCallback!();
+      }
     }
 
-    if (_currentState.exerciseCompleted()) {
-      _onExerciseCompleteCallback!();
-    } else if (_currentState.stepCompleted()) {
-      _onStepCompleteCallback!();
+    if (_currentState.displayStateChanged()) {
+      if(_onDisplayStateChangeCallback != null){
+        _onDisplayStateChangeCallback!(_currentState.getDisplayState());
+      }
     }
   }
 

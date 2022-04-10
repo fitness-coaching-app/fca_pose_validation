@@ -35,7 +35,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   }
 
   _asyncMethod() async {
-    data = await rootBundle.loadString('assets/squats.yaml');
+    data = await rootBundle.loadString('assets/jumping-jacks.yaml');
     controller = ExerciseController(data);
     currentState = controller.getCurrentState();
 
@@ -143,7 +143,6 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
       final painter = PosePainter(poses, inputImage.inputImageData!.size,
           inputImage.inputImageData!.imageRotation);
       customPaint = CustomPaint(painter: painter);
-      // customPaint = null;
     } else {
       customPaint = null;
     }

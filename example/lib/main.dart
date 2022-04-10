@@ -36,7 +36,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Google ML Kit Demo App'),
+          title: Text('Pose Processor Test'),
           centerTitle: true,
           elevation: 0,
         ),

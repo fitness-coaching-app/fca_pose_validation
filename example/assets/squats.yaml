@@ -1,0 +1,65 @@
+id: courseId
+name: Squats (Preview)
+steps:
+  - name: Squats
+    mediaDir: ""
+    bounce: true
+    criteria:
+      counter:
+        countOnId: cnt
+        repeat: 10
+    posturePosition: stand
+    cameraAngle: front
+    facing: up
+    poses:
+      - definitions:
+          - angle:
+              landmarks:
+                - rightHip
+                - rightAnkle
+              vertex: rightKnee
+              range: [150, 180]
+          - angle:
+              landmarks:
+                - leftHip
+                - leftAnkle
+              vertex: leftKnee
+              range: [150, 180]
+          - angle:
+              landmarks:
+                - rightShoulder
+                - rightWrist
+              vertex: rightElbow
+              range: [150, 180]
+          - angle:
+              landmarks:
+                - leftShoulder
+                - leftWrist
+              vertex: leftElbow
+              range: [150, 180]
+      - id: cnt
+        definitions:
+          - angle:
+              landmarks:
+                - rightHip
+                - rightAnkle
+              vertex: rightKnee
+              range: [0, 90]
+          - angle:
+              landmarks:
+                - leftHip
+                - leftAnkle
+              vertex: leftKnee
+              range: [0, 90]
+          - angle:
+              landmarks:
+                - rightShoulder
+                - rightWrist
+              vertex: rightElbow
+              range: [0, 90]
+          - angle:
+              landmarks:
+                - leftShoulder
+                - leftWrist
+              vertex: leftElbow
+              range: [0, 90]

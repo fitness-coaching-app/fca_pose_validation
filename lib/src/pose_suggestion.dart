@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:collection/collection.dart';
 import 'package:recase/recase.dart';
@@ -48,7 +49,7 @@ class SuggestionSentence{
   }
 
   bool compareLandmarks(List<PoseLandmarkType> landmarks,PoseLandmarkType vertex){
-    return (const ListEquality().equals(this.landmarks,landmarks)) && (this.vertex == vertex);
+    return (setEquals(this.landmarks.toSet(),landmarks.toSet())) && (this.vertex == vertex);
   }
 }
 
@@ -193,11 +194,11 @@ class PoseSuggestion{
     final String cameraAngle = currentStep.cameraAngle;
     final String facing = currentStep.facing;
 
-    // print("$posturePosition / $cameraAngle / $facing");
 
     PoseSuggestionResult result = PoseSuggestionResult();
     if(!poseCheckerResult.warning) return result;
 
+    print("${poseCheckerResult.warningDefinition!.angle!.landmarks} / ${poseCheckerResult.warningDefinition!.angle!.vertex}");
     if(poseCheckerResult.warningDefinition!.angle != null){
       List<int> range = poseCheckerResult.warningDefinition!.angle!.range;
       Direction suggestingDirection = poseCheckerResult.actualValue! < range[0]? Direction.positive: Direction.negative;

@@ -21,7 +21,7 @@ class PoseProcessorResult {
 
 class ExerciseController {
   late Pose _pose;
-  final PoseLogger _poseLogger = PoseLogger('testUserID', 'testCourseID');
+  PoseLogger _poseLogger = PoseLogger('testUserID', 'testCourseID');
   final ExerciseState _currentState = ExerciseState();
   DateTime lastLog = DateTime.now();
   final PoseCalculator _poseCalculator = PoseCalculator();
@@ -142,5 +142,9 @@ class ExerciseController {
     print("Saved to ${directory.path}/$filename.json");
 
     file.writeAsStringSync(_poseLogger.toJSON());
+  }
+
+  void clearLog(){
+    _poseLogger = PoseLogger('testUserID', 'testCourseID');
   }
 }

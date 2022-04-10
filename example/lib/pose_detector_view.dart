@@ -35,7 +35,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   }
 
   _asyncMethod() async {
-    data = await rootBundle.loadString('assets/jumping-jacks.yaml');
+    data = await rootBundle.loadString('assets/squats.yaml');
     controller = ExerciseController(data);
     currentState = controller.getCurrentState();
 
@@ -74,7 +74,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
                   backgroundColor: Colors.white,
                 ),
                 onPressed: () {
-                  controller.dumpLogToFile("jumping-jacks_${DateTime.now().toUtc().toString()}");
+                  controller.dumpLogToFile("squats-10_${DateTime.now().toUtc().toString()}");
                 },
                 child: Text("Save to Log")),
             SizedBox(width: 25),

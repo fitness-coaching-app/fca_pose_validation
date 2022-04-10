@@ -102,17 +102,16 @@ class PoseChecker {
     for (int i = 0; i < isDefinitionCorrect.length; ++i) {
       if (!isDefinitionCorrect[i]) {
         subposeAllCorrect = false;
+        falsePoseCnt++;
+        // pose warning delay after 50 frames (approx. 5 sec.)
+        if (falsePoseCnt > 50) {
+          incrementAllSubpose++;
+          warningTriggered = true;
+          falsePoseCnt = 0;
+        }
         if (warningTriggered) {
           warningDefinition = subpose.definitions[i];
           warningActualValue = computeResults[i];
-        } else {
-          falsePoseCnt++;
-          // pose warning delay after 50 frames (approx. 5 sec.)
-          if (falsePoseCnt > 50) {
-            incrementAllSubpose++;
-            warningTriggered = true;
-            falsePoseCnt = 0;
-          }
         }
         break;
       }

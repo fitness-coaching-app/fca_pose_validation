@@ -58,27 +58,27 @@ class _CameraViewState extends State<CameraView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-        actions: [
-          Padding(
-            padding: EdgeInsets.only(right: 20.0),
-            child: GestureDetector(
-              onTap: _switchScreenMode,
-              child: Icon(
-                _mode == ScreenMode.liveFeed
-                    ? Icons.photo_library_outlined
-                    : (Platform.isIOS
-                        ? Icons.camera_alt_outlined
-                        : Icons.camera),
-              ),
-            ),
-          ),
-        ],
-      ),
+      // appBar: AppBar(
+      //   title: Text(widget.title),
+      //   actions: [
+      //     Padding(
+      //       padding: EdgeInsets.only(right: 20.0),
+      //       child: GestureDetector(
+      //         onTap: _switchScreenMode,
+      //         child: Icon(
+      //           _mode == ScreenMode.liveFeed
+      //               ? Icons.photo_library_outlined
+      //               : (Platform.isIOS
+      //                   ? Icons.camera_alt_outlined
+      //                   : Icons.camera),
+      //         ),
+      //       ),
+      //     ),
+      //   ],
+      // ),
       body: _body(),
-      floatingActionButton: _floatingActionButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      // floatingActionButton: _floatingActionButton(),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 
@@ -119,25 +119,25 @@ class _CameraViewState extends State<CameraView> {
         children: <Widget>[
           CameraPreview(_controller!),
           if (widget.customPaint != null) widget.customPaint!,
-          Positioned(
-            bottom: 100,
-            left: 50,
-            right: 50,
-            child: Slider(
-              value: zoomLevel,
-              min: minZoomLevel,
-              max: maxZoomLevel,
-              onChanged: (newSliderValue) {
-                setState(() {
-                  zoomLevel = newSliderValue;
-                  _controller!.setZoomLevel(zoomLevel);
-                });
-              },
-              divisions: (maxZoomLevel - 1).toInt() < 1
-                  ? null
-                  : (maxZoomLevel - 1).toInt(),
-            ),
-          )
+          // Positioned(
+          //   bottom: 100,
+          //   left: 50,
+          //   right: 50,
+          //   child: Slider(
+          //     value: zoomLevel,
+          //     min: minZoomLevel,
+          //     max: maxZoomLevel,
+          //     onChanged: (newSliderValue) {
+          //       setState(() {
+          //         zoomLevel = newSliderValue;
+          //         _controller!.setZoomLevel(zoomLevel);
+          //       });
+          //     },
+          //     divisions: (maxZoomLevel - 1).toInt() < 1
+          //         ? null
+          //         : (maxZoomLevel - 1).toInt(),
+          //   ),
+          // )
         ],
       ),
     );
@@ -203,7 +203,7 @@ class _CameraViewState extends State<CameraView> {
     final camera = cameras[_cameraIndex];
     _controller = CameraController(
       camera,
-      ResolutionPreset.low,
+      ResolutionPreset.medium,
       enableAudio: false,
     );
     _controller?.initialize().then((_) {

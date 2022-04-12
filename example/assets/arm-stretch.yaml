@@ -1,12 +1,12 @@
 id: courseId
 name: Jumping Jacks Timer (Preview)
 steps:
-  - name: Jumping Jacks Timer
+  - name: Arm Stretch
     mediaDir: ""
     bounce: true
     criteria:
       timer:
-        duration: 20
+        duration: 10
     posturePosition: stand
     cameraAngle: front
     facing: up
@@ -17,10 +17,10 @@ steps:
                 - rightElbow
                 - rightHip
               vertex: rightShoulder
-              range: [0, 30]
+              range: [100,180]
           - angle:
               landmarks:
                 - leftElbow
                 - leftHip
               vertex: leftShoulder
-              range: [0, 30]
+              range: [100,180]

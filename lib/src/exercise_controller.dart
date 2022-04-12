@@ -83,7 +83,6 @@ class ExerciseController {
     }
 
     if (currentStep.criteria.counter != null) {
-      _currentState.criteria = ExerciseDisplayCriteria.counter;
       _currentState.allSubpose += poseCheckerResult.incrementAllSubpose;
       print("${_currentState.currentSubpose} -> ${_currentState.expectedNextSubpose}");
       print("Count: ${_currentState.repeatCount}");
@@ -96,11 +95,13 @@ class ExerciseController {
         _currentState.repeatCount++;
       }
     } else if (currentStep.criteria.timer != null) {
-      _currentState.criteria = ExerciseDisplayCriteria.timer;
       if (poseCheckerResult.warning) {
         _currentState.timer.stop();
+        _currentState.wrongPoseTimer.start();
       } else {
         _currentState.timer.start();
+        _currentState.actualTimerDuration.start();
+        _currentState.wrongPoseTimer.stop();
       }
       print("Time Elapsed: ${_currentState.timer.elapsedMilliseconds}");
     }
@@ -117,6 +118,9 @@ class ExerciseController {
 
   void _eventHandler() {
     if (_currentState.stepCompleted()) {
+      _currentState.actualTimerDuration.stop();
+      _currentState.timer.stop();
+      print("State: ${_currentState.wrongPoseTimer.elapsedMilliseconds} | ${_currentState.actualTimerDuration.elapsedMilliseconds}");
       if(_currentState.currentStep + 1 < definition.steps.length){
         _currentState.loadNewStep(definition.steps[++_currentState.currentStep]);
       }

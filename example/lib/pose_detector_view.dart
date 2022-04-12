@@ -22,6 +22,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   late ExerciseController controller;
   late ExerciseState currentState;
 
+  String stepName = "";
   String criteria = "";
   String criteriaValue = "0";
 
@@ -35,9 +36,10 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   }
 
   _asyncMethod() async {
-    data = await rootBundle.loadString('assets/jumping-jacks.yaml');
-    controller = ExerciseController(data);
+    data = await rootBundle.loadString('assets/arm-stretch.yaml');
+    controller = await ExerciseController(data);
     currentState = controller.getCurrentState();
+    stepName = currentState.stepName;
 
     if (currentState.criteria == ExerciseDisplayCriteria.counter) {
       criteria = "Count";
@@ -92,7 +94,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
         top: 10,
         left: 20,
         child: Column(children: <Widget>[
-          Text("$criteria: $criteriaValue\nSuggestion: $poseSuggestionString",
+          Text("$stepName\n$criteria: $criteriaValue\nSuggestion: $poseSuggestionString",
               style: TextStyle(
                 backgroundColor: Colors.black,
                 color: Colors.white,

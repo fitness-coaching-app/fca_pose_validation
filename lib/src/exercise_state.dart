@@ -22,7 +22,7 @@ class ExerciseState {
 
   // For timer criteria
   Stopwatch timer = Stopwatch();
-  int targetTimeMillisec = 0;
+  int targetTimeMilliseconds = 0;
 
   bool _warning = false;
   String _warningMessage = "";
@@ -31,8 +31,12 @@ class ExerciseState {
   int currentSubpose = -1; // -1 = N/A
   int expectedNextSubpose = 0;
 
+  // Exercise scope parameters
   int correctSubpose = 0;
   int allSubpose = 0;
+
+  Stopwatch wrongPoseTimer = Stopwatch();
+  Stopwatch actualTimerDuration = Stopwatch();
 
   void loadNewStep(ExerciseStep step) {
     clearStateForNewStep();
@@ -44,7 +48,7 @@ class ExerciseState {
     }
     else if(step.criteria.timer != null){
       criteria = ExerciseDisplayCriteria.timer;
-      targetTimeMillisec = step.criteria.timer!.duration * 1000;
+      targetTimeMilliseconds = step.criteria.timer!.duration * 1000;
     }
   }
 
@@ -55,7 +59,7 @@ class ExerciseState {
       }
     }
     else if(criteria == ExerciseDisplayCriteria.timer){
-      if(timer.elapsedMilliseconds >= targetTimeMillisec){
+      if(timer.elapsedMilliseconds >= targetTimeMilliseconds){
         _stepCompleted = true;
       }
     }

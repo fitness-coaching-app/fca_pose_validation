@@ -29,7 +29,6 @@ class PoseChecker {
 
   PoseCheckerResult check(ExerciseStep currentStep, ExerciseState currentState,
       List<double> computeResults) {
-    List<ExercisePose> subposes = currentStep.poses;
     Criteria subposeCriteria = currentStep.criteria;
     PoseCheckerResult result = PoseCheckerResult(false); // Mock up
 

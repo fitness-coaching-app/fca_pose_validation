@@ -45,7 +45,7 @@ class AngleDefinition {
     }
 
     vertex = PoseLandmarkType.values.firstWhere((e) => e.toString() == 'PoseLandmarkType.' + angle['vertex']);
-    range = angle['range'];
+    range = List<int>.from(angle['range'].toList());
   }
 }
 
@@ -112,23 +112,31 @@ class ExerciseStep {
   String mediaDir = "";
   bool bounce = false;
   Criteria criteria = Criteria(null, null);
+  String posturePosition = "";
+  String cameraAngle = "";
+  String facing = "";
   List<ExercisePose> poses = []; // Only have 2 stages
   List<WarningPose> warningPoses = [];
 
   ExerciseStep(
-      this.name, this.mediaDir, this.bounce, this.criteria, this.poses);
+      this.name, this.mediaDir, this.bounce, this.criteria, this.posturePosition, this.cameraAngle, this.facing, this.poses);
 
   ExerciseStep.loadFromYaml(YamlMap step) {
     name = step['name'];
     mediaDir = step['mediaDir'];
     bounce = step['bounce'];
     criteria = Criteria.loadFromYaml(step['criteria']);
+    posturePosition = step['posturePosition'];
+    cameraAngle = step['cameraAngle'];
+    facing = step['facing'];
 
     for (YamlMap pose in step['poses']) {
       poses.add(ExercisePose.loadFromYaml(pose));
     }
-    for (YamlMap warningPose in step['warningPoses']) {
-      poses.add(ExercisePose.loadFromYaml(warningPose));
+    if(step['warningPoses'] != null){
+      for (YamlMap warningPose in step['warningPoses']) {
+        poses.add(ExercisePose.loadFromYaml(warningPose));
+      }
     }
   }
 }

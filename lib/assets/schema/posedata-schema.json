@@ -1,0 +1,62 @@
+{
+  "title": "posedata schema",
+  "description": "schema for posedata.yaml",
+  "type": "object",
+  "required": ['userId', 'courseId', 'startTimeUTC', 'steps'],
+  "properties":{
+    "userId": {
+      "type": "string"
+    },
+    "courseId": {
+      "type": "string"
+    },
+    "startTimeUTC": {
+      "type": "string"
+    },
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "recordedData": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "timeElapsed": {
+                  "type": "number"
+                },
+                "currentSubpose": {
+                  "type": "number"
+                },
+                "rawPoseData": {
+                  "type": "object",
+                  "properties": {
+                    "landmarks": {
+                      "type": "string"
+                    },
+                    "coordinate": {
+                      "type": "array",
+                      "items": {
+                        "type": "number"
+                      }
+                    },
+                    "likelihood": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "rawComputedDefinitionResult": {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

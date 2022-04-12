@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/foundation.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'dart:math';
@@ -21,7 +23,7 @@ class TouchChecker {
     ];
   }
 
-  String? touchChecker(PoseLandmarkType landmarkA, PoseLandmarkType landmarkB) {
+  double check(PoseLandmarkType landmarkA, PoseLandmarkType landmarkB) {
     List<double> coordinates =
         _getCoordinateFromLandmarks(landmarkA, landmarkB);
     if (kDebugMode) {
@@ -31,11 +33,13 @@ class TouchChecker {
     // dev.log("LANDMARK B: ${_pose.landmarks[landmarkB]!.x} | ${_pose.landmarks[landmarkB]!.y} | ${_pose.landmarks[landmarkB]!.z}");
 
     // set point of touch each other must not exceed 15 pixels in X and Y coordinates.
+    //False = Not Touch
+    //True = Touch
     if ((coordinates[0] - coordinates[1] >= 15 ||
         coordinates[2] - coordinates[3] >= 5)) {
-      return "Not Touch!";
+      return 0;
     } else {
-      return "Touch";
+      return 1;
     }
   }
 }

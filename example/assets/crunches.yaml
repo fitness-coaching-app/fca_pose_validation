@@ -1,0 +1,66 @@
+id: courseId
+name: Crunches Exercise (Preview)
+steps:
+  - name: Crunches
+    mediaDir: ""
+    bounce: true
+    criteria:
+      counter:
+        repeat: 10
+        countOnId: crunchesCnt
+    posturePosition: lieDown
+    cameraAngle: side
+    facing: up
+    poses:
+      - definitions:
+          - angle:
+              landmarks:
+                - rightHip
+                - rightAnkle
+              vertex: rightKnee
+              range: [65, 90]
+          - angle:
+              landmarks:
+                - leftHip
+                - leftAnkle
+              vertex: leftKnee
+              range: [65, 90]
+          - angle:
+              landmarks:
+                - rightShoulder
+                - rightKnee
+              vertex: rightHip
+              range: [100, 160]
+          - angle:
+              landmarks:
+                - leftShoulder
+                - leftKnee
+              vertex: leftHip
+              range: [100, 160]
+
+      - id: crunchesCnt
+        definitions:
+          - angle:
+              landmarks:
+                - rightHip
+                - rightAnkle
+              vertex: rightKnee
+              range: [65, 90]
+          - angle:
+              landmarks:
+                - leftHip
+                - leftAnkle
+              vertex: leftKnee
+              range: [65, 90]
+          - angle:
+              landmarks:
+                - rightShoulder
+                - rightKnee
+              vertex: rightHip
+              range: [50, 80]
+          - angle:
+              landmarks:
+                - leftShoulder
+                - leftKnee
+              vertex: leftHip
+              range: [50, 80]

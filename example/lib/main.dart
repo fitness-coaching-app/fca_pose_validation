@@ -28,7 +28,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> exerciseControllerLogicTest() async {
-    final data = await rootBundle.loadString('assets/course-test.yaml');
+    final data = await rootBundle.loadString('assets/jumping-jacks.yaml');
 
   }
 
@@ -36,7 +36,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Google ML Kit Demo App'),
+          title: Text('Pose Processor Test'),
           centerTitle: true,
           elevation: 0,
         ),

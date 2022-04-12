@@ -1,0 +1,41 @@
+id: courseId
+name: Jumping Jacks (Preview)
+steps:
+  - name: Jumping Jacks
+    mediaDir: ""
+    bounce: true
+    criteria:
+      counter:
+        countOnId: cnt
+        repeat: 10
+    posturePosition: stand
+    cameraAngle: front
+    facing: up
+    poses:
+      - definitions:
+          - angle:
+              landmarks:
+                - rightElbow
+                - rightHip
+              vertex: rightShoulder
+              range: [0, 30]
+          - angle:
+              landmarks:
+                - leftElbow
+                - leftHip
+              vertex: leftShoulder
+              range: [0, 30]
+      - id: cnt
+        definitions:
+          - angle:
+              landmarks:
+                - rightElbow
+                - rightHip
+              vertex: rightShoulder
+              range: [100,180]
+          - angle:
+              landmarks:
+                - leftElbow
+                - leftHip
+              vertex: leftShoulder
+              range: [100,180]

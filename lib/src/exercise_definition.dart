@@ -50,9 +50,10 @@ class AngleDefinition {
 }
 
 class TouchDefinition {
+  bool touch;
   List<PoseLandmarkType> landmarks;
 
-  TouchDefinition(this.landmarks);
+  TouchDefinition(this.touch,this.landmarks);
 }
 
 class Definition {
@@ -72,7 +73,7 @@ class Definition {
           landmarks.add(PoseLandmarkType.values.firstWhere(
               (e) => e.toString() == 'PoseLandmarkType.' + landmark));
         }
-        touch = TouchDefinition(landmarks);
+        touch = TouchDefinition(definition['touch']['touch'],landmarks);
         break;
     }
   }

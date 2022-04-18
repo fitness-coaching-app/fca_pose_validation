@@ -36,7 +36,7 @@ class TouchChecker {
     //False = Not Touch
     //True = Touch
     if ((coordinates[0] - coordinates[1] >= 15 ||
-        coordinates[2] - coordinates[3] >= 5)) {
+        coordinates[2] - coordinates[3] >= 15)) {
       return 0;
     } else {
       return 1;

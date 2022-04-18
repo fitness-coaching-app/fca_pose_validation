@@ -71,11 +71,7 @@ class PoseChecker {
           isDefinitionCorrect.add(false);
         }
       } else if (def.touch != null) {
-        if (computeResults[defIndex] == 1) {
-          isDefinitionCorrect.add(true);
-        } else {
-          isDefinitionCorrect.add(false);
-        }
+        isDefinitionCorrect.add((computeResults[defIndex] == 0? false: true) == def.touch!.touch);
       }
     }
     return isDefinitionCorrect;

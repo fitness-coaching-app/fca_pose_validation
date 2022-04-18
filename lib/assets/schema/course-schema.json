@@ -129,9 +129,10 @@
                         "properties": {
                           "touch": {
                             "type": "object",
-                            "required": ["landmarks"],
+                            "required": ["landmarks", "touch"],
                             "additionalProperties": false,
                             "properties": {
+                              "touch": {"type": "boolean"},
                               "landmarks": {
                                 "type": "array",
                                 "items": {

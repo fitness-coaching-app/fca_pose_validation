@@ -36,7 +36,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   }
 
   _asyncMethod() async {
-    data = await rootBundle.loadString('assets/arm-stretch.yaml');
+    data = await rootBundle.loadString('assets/jumping-jacks.yaml');
     controller = await ExerciseController(data);
     currentState = controller.getCurrentState();
     stepName = currentState.stepName;

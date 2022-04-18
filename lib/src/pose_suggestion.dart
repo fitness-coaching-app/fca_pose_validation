@@ -172,12 +172,12 @@ class SuggestionSentenceList{
     return resultSentence;
   }
 
-  static String? getSentenceTouch(List<PoseLandmarkType> landmarks){
+  static String? getSentenceTouch(bool touch, List<PoseLandmarkType> landmarks){
     List<String> landmarkString = [
       landmarks[0].toString().replaceAll("PoseLandmarkType.","").sentenceCase,
       landmarks[1].toString().replaceAll("PoseLandmarkType.","").sentenceCase,
     ];
-    return "${landmarkString[0]} and ${landmarkString[1]} have to touch";
+    return "${landmarkString[0]} and ${landmarkString[1]} ${touch? "": "dont't"} have to touch";
   }
 }
 
@@ -198,8 +198,8 @@ class PoseSuggestion{
     PoseSuggestionResult result = PoseSuggestionResult();
     if(!poseCheckerResult.warning) return result;
 
-    print("${poseCheckerResult.warningDefinition!.angle!.landmarks} / ${poseCheckerResult.warningDefinition!.angle!.vertex}");
     if(poseCheckerResult.warningDefinition!.angle != null){
+      print("${poseCheckerResult.warningDefinition!.angle!.landmarks} / ${poseCheckerResult.warningDefinition!.angle!.vertex}");
       List<int> range = poseCheckerResult.warningDefinition!.angle!.range;
       Direction suggestingDirection = poseCheckerResult.actualValue! < range[0]? Direction.positive: Direction.negative;
       result = PoseSuggestionResult(
@@ -213,7 +213,7 @@ class PoseSuggestion{
     else if(poseCheckerResult.warningDefinition!.touch != null){
       result = PoseSuggestionResult(
         warning: true,
-        warningMessage: SuggestionSentenceList.getSentenceTouch(poseCheckerResult.warningDefinition!.touch!.landmarks)
+        warningMessage: SuggestionSentenceList.getSentenceTouch(poseCheckerResult.warningDefinition!.touch!.touch,poseCheckerResult.warningDefinition!.touch!.landmarks)
       );
     }
 

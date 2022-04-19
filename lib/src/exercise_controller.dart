@@ -133,6 +133,7 @@ class ExerciseController {
       }
       if(_onStepCompleteCallback != null){
         _onStepCompleteCallback!();
+        _currentState.setDisplayState(DisplayState.teach);
       }
     }
 
@@ -140,6 +141,17 @@ class ExerciseController {
       if(_onDisplayStateChangeCallback != null){
         _onDisplayStateChangeCallback!(_currentState.getDisplayState());
       }
+    }
+  }
+
+  void preExerciseCompleted(){
+    if(_currentState.getDisplayState() == DisplayState.preExercise){
+      _currentState.setDisplayState(DisplayState.teach);
+    }
+  }
+  void teachCompleted(){
+    if(_currentState.getDisplayState() == DisplayState.teach){
+      _currentState.setDisplayState(DisplayState.exercise);
     }
   }
 

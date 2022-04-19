@@ -69,8 +69,8 @@ class ExerciseController {
     return _currentState;
   }
 
-  void _processPoses(ExerciseStep currentStep) async {
-    List<double> computeResults = await compute(PoseCalculator.computeFromDefinition,PoseCalculatorParams(currentStep.poses,_pose));
+  void _processPoses(ExerciseStep currentStep) {
+    List<double> computeResults = PoseCalculator.computeFromDefinition(currentStep.poses,_pose);
 
     PoseCheckerResult poseCheckerResult =
         _poseChecker.check(currentStep, _currentState, computeResults);

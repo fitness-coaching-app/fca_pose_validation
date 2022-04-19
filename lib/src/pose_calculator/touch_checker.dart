@@ -7,25 +7,19 @@ import 'package:vector_math/vector_math.dart';
 import 'dart:developer' as dev;
 
 class TouchChecker {
-  late Pose _pose;
-
-  void setPose(Pose pose) {
-    _pose = pose;
-  }
-
-  List<double> _getCoordinateFromLandmarks(
-      PoseLandmarkType landmarkA, PoseLandmarkType landmarkB) {
+  static List<double> _getCoordinateFromLandmarks(
+      PoseLandmarkType landmarkA, PoseLandmarkType landmarkB, Pose pose) {
     return [
-      _pose.landmarks[landmarkA]!.x,
-      _pose.landmarks[landmarkB]!.x,
-      _pose.landmarks[landmarkA]!.y,
-      _pose.landmarks[landmarkB]!.y
+      pose.landmarks[landmarkA]!.x,
+      pose.landmarks[landmarkB]!.x,
+      pose.landmarks[landmarkA]!.y,
+      pose.landmarks[landmarkB]!.y
     ];
   }
 
-  double check(PoseLandmarkType landmarkA, PoseLandmarkType landmarkB) {
+  static double check(PoseLandmarkType landmarkA, PoseLandmarkType landmarkB, Pose pose) {
     List<double> coordinates =
-        _getCoordinateFromLandmarks(landmarkA, landmarkB);
+        _getCoordinateFromLandmarks(landmarkA, landmarkB, pose);
     if (kDebugMode) {
       print(coordinates);
     }

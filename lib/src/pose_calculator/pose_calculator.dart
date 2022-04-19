@@ -5,28 +5,26 @@ import 'touch_checker.dart';
 
 enum PoseCalculatorType { angle, touch }
 
+class PoseCalculatorParams{
+  List<ExercisePose> subposes;
+  Pose pose;
+  PoseCalculatorParams(this.subposes, this.pose);
+}
+
 class PoseCalculator {
-  AngleCalculator angle = AngleCalculator();
-  TouchChecker touch = TouchChecker();
-
-  void setPose(Pose pose) {
-    angle.setPose(pose);
-    touch.setPose(pose);
-  }
-
-  List<double> computeFromDefinition(List<ExercisePose> subposes) {
+  static List<double> computeFromDefinition(PoseCalculatorParams params) {
     // Call getAngle and getTouch according to the definition.
-    final subposeDef = subposes[0]; // Use only first subpose for calculation
+    final subposeDef = params.subposes[0]; // Use only first subpose for calculation
     List<double> result = [];
     for (var i in subposeDef.definitions) {
       if (i.angle != null) {
         result += [
-          angle.getAngle(
-              i.angle!.vertex, i.angle!.landmarks[0], i.angle!.landmarks[1])
+          AngleCalculator.computeAngle(
+              i.angle!.vertex, i.angle!.landmarks[0], i.angle!.landmarks[1], params.pose)
         ];
       } else if (i.touch != null) {
         result += [
-          touch.check(i.touch!.landmarks[0], i.touch!.landmarks[1])
+          TouchChecker.check(i.touch!.landmarks[0], i.touch!.landmarks[1], params.pose)
         ];
       }
     }

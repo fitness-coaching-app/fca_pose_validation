@@ -40,7 +40,6 @@ class ExerciseState {
 
   void loadNewStep(ExerciseStep step) {
     clearStateForNewStep();
-    setDisplayState(DisplayState.preExercise);
     stepName = step.name;
     if(step.criteria.counter != null){
       criteria = ExerciseDisplayCriteria.counter;

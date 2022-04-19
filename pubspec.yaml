@@ -1,6 +1,6 @@
 name: fca_pose_validation
-description: A new flutter plugin project.
-version: 0.0.1
+description: FCA core pose validation and processor
+version: 1.0.1
 homepage:
 
 environment:

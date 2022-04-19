@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'package:google_ml_kit/google_ml_kit.dart';
@@ -37,7 +38,6 @@ class ExerciseController {
 
   void setPose(Pose newPose) {
     _pose = newPose;
-    _poseCalculator.setPose(newPose);
   }
 
   ExerciseState getCurrentState() {
@@ -69,9 +69,8 @@ class ExerciseController {
     return _currentState;
   }
 
-  void _processPoses(ExerciseStep currentStep) {
-    List<double> computeResults =
-        _poseCalculator.computeFromDefinition(currentStep.poses);
+  void _processPoses(ExerciseStep currentStep) async {
+    List<double> computeResults = await compute(PoseCalculator.computeFromDefinition,PoseCalculatorParams(currentStep.poses,_pose));
 
     PoseCheckerResult poseCheckerResult =
         _poseChecker.check(currentStep, _currentState, computeResults);

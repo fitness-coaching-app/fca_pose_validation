@@ -120,6 +120,10 @@ class ExerciseController {
       _currentState.actualTimerDuration.stop();
       _currentState.timer.stop();
       print("State: ${_currentState.wrongPoseTimer.elapsedMilliseconds} | ${_currentState.actualTimerDuration.elapsedMilliseconds}");
+      if(_onStepCompleteCallback != null){
+        _onStepCompleteCallback!();
+        _currentState.setDisplayState(DisplayState.teach);
+      }
       if(_currentState.currentStep + 1 < definition.steps.length){
         _currentState.loadNewStep(definition.steps[++_currentState.currentStep]);
       }
@@ -129,10 +133,6 @@ class ExerciseController {
         if(_onExerciseCompleteCallback != null) {
           _onExerciseCompleteCallback!();
         }
-      }
-      if(_onStepCompleteCallback != null){
-        _onStepCompleteCallback!();
-        _currentState.setDisplayState(DisplayState.teach);
       }
     }
 

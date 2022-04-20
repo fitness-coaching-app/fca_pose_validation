@@ -15,7 +15,6 @@ class ExerciseController {
   PoseLogger _poseLogger = PoseLogger('testUserID', 'testCourseID');
   final ExerciseState _currentState = ExerciseState();
   DateTime lastLog = DateTime.now();
-  final PoseCalculator _poseCalculator = PoseCalculator();
   final PoseChecker _poseChecker = PoseChecker();
   late ExerciseDefinition definition;
 
@@ -123,7 +122,6 @@ class ExerciseController {
       if(_onStepCompleteCallback != null){
         _onStepCompleteCallback!();
       }
-      _currentState.setDisplayState(DisplayState.teach);
       if(_currentState.currentStep + 1 < definition.steps.length){
         _currentState.loadNewStep(definition.steps[++_currentState.currentStep]);
       }
@@ -134,6 +132,7 @@ class ExerciseController {
           _onExerciseCompleteCallback!();
         }
       }
+      _currentState.setDisplayState(DisplayState.teach);
     }
 
     if (_currentState.displayStateChanged()) {

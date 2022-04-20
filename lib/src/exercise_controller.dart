@@ -146,11 +146,13 @@ class ExerciseController {
   void preExerciseCompleted(){
     if(_currentState.getDisplayState() == DisplayState.preExercise){
       _currentState.setDisplayState(DisplayState.teach);
+      _onDisplayStateChangeCallback!(_currentState.getDisplayState());
     }
   }
   void teachCompleted(){
     if(_currentState.getDisplayState() == DisplayState.teach){
       _currentState.setDisplayState(DisplayState.exercise);
+      _onDisplayStateChangeCallback!(_currentState.getDisplayState());
     }
   }
 

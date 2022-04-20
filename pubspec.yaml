@@ -1,6 +1,6 @@
 name: fca_pose_validation
 description: FCA core pose validation and processor
-version: 1.0.2
+version: 1.0.3
 homepage:
 
 environment:

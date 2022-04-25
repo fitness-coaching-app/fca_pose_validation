@@ -32,6 +32,8 @@ dependencies:
   image_picker: ^0.7.2
   camera: ^0.8.1
   yaml: ^3.1.0
+  flutter_svg: ^1.0.3
+  ionicons: ^0.1.2
 
 dev_dependencies:
   flutter_test:

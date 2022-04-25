@@ -78,7 +78,7 @@ class _WorkoutMainViewState extends State<WorkoutMainView> {
   Future<String> loadData() async {
     // TODO: Load course data from the API
     data = await rootBundle
-        .loadString('assets/seal-jacks.yaml'); // TODO: Load .yaml file here
+        .loadString('assets/side-arm-raises.yaml'); // TODO: Load .yaml file here
     controller = ExerciseController(data,
         onDisplayStateChange: onDisplayStateChange,
         onStepComplete: onStepComplete,

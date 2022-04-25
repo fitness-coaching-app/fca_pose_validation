@@ -1,0 +1,59 @@
+id: courseId
+name: Side Lunges
+steps:
+  - name: Side Lunges
+    mediaDir: ""
+    bounce: true
+    criteria:
+      counter:
+        countOnId: cnt
+        repeat: 10
+    posturePosition: stand
+    cameraAngle: front
+    facing: up
+    poses:
+      - id: cnt
+        definitions:
+#          right arm
+          - angle:
+              landmarks: [rightWrist, rightShoulder]
+              vertex: rightElbow
+              range: [160,180]
+#          left arm
+          - angle:
+              landmarks: [leftWrist, leftShoulder]
+              vertex: leftElbow
+              range: [160,180]
+#          right leg
+          - angle:
+              landmarks: [rightHip, rightAnkle]
+              vertex: rightKnee
+              range: [0,45]
+#          left leg
+          - angle:
+              landmarks: [leftHip, leftAnkle]
+              vertex: leftKnee
+              range: [160,180]
+      - id: cnt
+        definitions:
+#          right arm
+          - angle:
+              landmarks: [rightWrist, rightShoulder]
+              vertex: rightElbow
+              range: [160,180]
+#          left arm
+          - angle:
+              landmarks: [leftWrist, leftShoulder]
+              vertex: leftElbow
+              range: [160,180]
+#          right leg
+          - angle:
+              landmarks: [rightHip, rightAnkle]
+              vertex: rightKnee
+              range: [160,180]
+#          left leg
+          - angle:
+              landmarks: [leftHip, leftAnkle]
+              vertex: leftKnee
+              range: [0,45]
+          

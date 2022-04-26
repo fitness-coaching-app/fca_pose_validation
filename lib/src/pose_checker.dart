@@ -87,7 +87,11 @@ class PoseChecker {
         }
       }
       else if(calculator.touch != null){
-        isDefinitionCorrect[key] = computeResults[key] == def.withParams!["touch"];
+        print(key);
+        print(def.withParams!["touch"]);
+        print(computeResults[key]);
+        bool temp = computeResults[key] == 0? false: true;
+        isDefinitionCorrect[key] = temp == def.withParams!["touch"];
       }
     }
 

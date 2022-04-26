@@ -15,7 +15,7 @@ import 'package:fca_pose_validation/fca_pose_processor.dart';
 import 'dart:async' as dart_async;
 
 // แก้ชื่อไฟล์ที่จะ save และท่าที่จะโหลด
-const String workoutFilePath = 'assets/jumping-jacks-new-yaml-concept.yaml';
+const String workoutFilePath = 'assets/seal-jacks.yaml';
 const String fileName = 'side-lunges-test';
 
 class WorkoutMainView extends StatefulWidget {

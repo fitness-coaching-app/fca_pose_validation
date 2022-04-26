@@ -11,55 +11,48 @@ steps:
     posturePosition: stand
     cameraAngle: front
     facing: up
+    calculators:
+      - name: right forearm
+        angle:
+          landmarks: [rightWrist, rightShoulder]
+          vertex: rightElbow
+      - name: left forearm
+        angle:
+          landmarks: [leftWrist, leftShoulder]
+          vertex: leftElbow
+      - name: right leg
+        angle:
+          landmarks: [ rightHip, rightAnkle ]
+          vertex: rightKnee
+      - name: left leg
+        angle:
+          landmarks: [ leftHip, leftAnkle ]
+          vertex: leftKnee
     poses:
       - definitions:
-          - angle:
-              landmarks:
-                - rightHip
-                - rightAnkle
-              vertex: rightKnee
+          - calculator: right leg
+            with:
               range: [150, 180]
-          - angle:
-              landmarks:
-                - leftHip
-                - leftAnkle
-              vertex: leftKnee
+          - calculator: left leg
+            with:
               range: [150, 180]
-          - angle:
-              landmarks:
-                - rightShoulder
-                - rightWrist
-              vertex: rightElbow
+          - calculator: right forearm
+            with:
               range: [150, 180]
-          - angle:
-              landmarks:
-                - leftShoulder
-                - leftWrist
-              vertex: leftElbow
+          - calculator: left forearm
+            with:
               range: [150, 180]
       - id: cnt
         definitions:
-          - angle:
-              landmarks:
-                - rightHip
-                - rightAnkle
-              vertex: rightKnee
+          - calculator: right leg
+            with:
               range: [0, 90]
-          - angle:
-              landmarks:
-                - leftHip
-                - leftAnkle
-              vertex: leftKnee
+          - calculator: left leg
+            with:
               range: [0, 90]
-          - angle:
-              landmarks:
-                - rightShoulder
-                - rightWrist
-              vertex: rightElbow
+          - calculator: right forearm
+            with:
               range: [0, 90]
-          - angle:
-              landmarks:
-                - leftShoulder
-                - leftWrist
-              vertex: leftElbow
+          - calculator: left forearm
+            with:
               range: [0, 90]

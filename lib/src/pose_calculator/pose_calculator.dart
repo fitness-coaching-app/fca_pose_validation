@@ -6,20 +6,17 @@ import 'touch_checker.dart';
 enum PoseCalculatorType { angle, touch }
 
 class PoseCalculator {
-  static List<double> computeFromDefinition(List<ExercisePose> subposes, Pose pose) {
+  static Map<String, double> computeFromDefinition(
+      {required List<ExercisePose> subposes,
+      required Pose pose,
+      required Map<String, CalculatorDefinition> calculators}) {
     // Call getAngle and getTouch according to the definition.
-    final subposeDef = subposes[0]; // Use only first subpose for calculation
-    List<double> result = [];
-    for (var i in subposeDef.definitions) {
-      if (i.angle != null) {
-        result += [
-          AngleCalculator.computeAngle(
-              i.angle!.vertex, i.angle!.landmarks[0], i.angle!.landmarks[1], pose)
-        ];
-      } else if (i.touch != null) {
-        result += [
-          TouchChecker.check(i.touch!.landmarks[0], i.touch!.landmarks[1], pose)
-        ];
+    Map<String, double> result = {};
+    for (var i in calculators.keys) {
+      if (calculators[i]!.angle != null) {
+        result[i] = AngleCalculator.computeAngle(calculators[i]!.angle!.vertex, calculators[i]!.angle!.landmarks[0], calculators[i]!.angle!.landmarks[1], pose);
+      } else if (calculators[i]!.touch != null) {
+        result[i] = TouchChecker.check(calculators[i]!.touch!.landmarks[0], calculators[i]!.touch!.landmarks[1], pose);
       }
     }
     return result;

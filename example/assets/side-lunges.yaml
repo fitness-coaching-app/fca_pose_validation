@@ -11,49 +11,50 @@ steps:
     posturePosition: stand
     cameraAngle: front
     facing: up
+    calculators:
+      - name: right forearm
+        angle:
+          landmarks: [rightWrist, rightShoulder]
+          vertex: rightElbow
+      - name: left forearm
+        angle:
+          landmarks: [leftWrist, leftShoulder]
+          vertex: leftElbow
+      - name: right leg
+        angle:
+          landmarks: [ rightKnee, leftHip ]
+          vertex: rightHip
+      - name: left leg
+        angle:
+          landmarks: [ leftKnee, rightHip ]
+          vertex: leftHip
     poses:
       - id: cnt
         definitions:
-#          right arm
-          - angle:
-              landmarks: [rightWrist, rightShoulder]
-              vertex: rightElbow
-              range: [160,180]
-#          left arm
-          - angle:
-              landmarks: [leftWrist, leftShoulder]
-              vertex: leftElbow
-              range: [160,180]
-#          right leg
-          - angle:
-              landmarks: [rightHip, rightAnkle]
-              vertex: rightKnee
-              range: [0,45]
-#          left leg
-          - angle:
-              landmarks: [leftHip, leftAnkle]
-              vertex: leftKnee
-              range: [160,180]
+          - calculator: right forearm
+            with:
+              range: [ 160,180 ]
+          - calculator: left forearm
+            with:
+              range: [ 160,180 ]
+          - calculator: right leg
+            with:
+              range: [ 0,45 ]
+          - calculator: left leg
+            with:
+              range: [ 160,180 ]
       - id: cnt
         definitions:
-#          right arm
-          - angle:
-              landmarks: [rightWrist, rightShoulder]
-              vertex: rightElbow
-              range: [160,180]
-#          left arm
-          - angle:
-              landmarks: [leftWrist, leftShoulder]
-              vertex: leftElbow
-              range: [160,180]
-#          right leg
-          - angle:
-              landmarks: [rightHip, rightAnkle]
-              vertex: rightKnee
-              range: [160,180]
-#          left leg
-          - angle:
-              landmarks: [leftHip, leftAnkle]
-              vertex: leftKnee
-              range: [0,45]
+          - calculator: right forearm
+            with:
+              range: [ 160,180 ]
+          - calculator: left forearm
+            with:
+              range: [ 160,180 ]
+          - calculator: right leg
+            with:
+              range: [ 160,180 ]
+          - calculator: left leg
+            with:
+              range: [ 0,45 ]
           

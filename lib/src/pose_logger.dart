@@ -4,12 +4,12 @@ import 'dart:convert';
 class PoseStep{
   final List<Pose> poses = [];
   final List<DateTime> poseTimestamp = [];
-  final List<List<double>> computedDefinition = [];
+  final List<Map<String, double>> computedDefinition = [];
   final List<int> currentSubpose = [];
   int length = 0;
 
   PoseStep();
-  void addEntry(Pose pose, List<double> computedDefinition, int currentSubpose){
+  void addEntry(Pose pose, Map<String, double> computedDefinition, int currentSubpose){
     poses.add(pose);
     poseTimestamp.add(DateTime.now());
     this.computedDefinition.add(computedDefinition);
@@ -32,7 +32,7 @@ class PoseLogger{
     _steps.add(PoseStep());
   }
 
-  void log(Pose pose, List<double> computedDefinition,int currentSubpose){
+  void log(Pose pose, Map<String, double> computedDefinition,int currentSubpose){
     if(_currentStep < 0) return;
 
     _startTime ??= DateTime.now();
@@ -54,7 +54,7 @@ class PoseLogger{
         final int timeElapsed = _steps[i].poseTimestamp[j].difference(_startTime!).inMilliseconds;
         final int currentSubpose = _steps[i].currentSubpose[j];
         final List<Map<String, dynamic>> rawPoseData = [];
-        final List<double> rawComputedDefinition = _steps[i].computedDefinition[j];
+        final Map<String, double> rawComputedDefinition = _steps[i].computedDefinition[j];
 
         _steps[i].poses[j].landmarks.forEach((PoseLandmarkType key, PoseLandmark value) {
           rawPoseData.add({

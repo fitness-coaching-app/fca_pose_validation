@@ -1,0 +1,39 @@
+id: courseId
+name: Jumping Jacks New Course.yaml Conecpt
+steps:
+  - name: Jumping Jacks YAML Concept
+    mediaDir: ""
+    bounce: true
+    criteria:
+      counter:
+        repeat: 10
+        countOnId: cnt
+    posturePosition: stand
+    cameraAngle: front
+    facing: up
+    calculators:
+      - name: right arm
+        angle:
+          landmarks: [rightElbow, rightHip]
+          vertex: rightShoulder
+      - name: left arm
+        angle:
+          landmarks: [leftElbow, leftHip]
+          vertex: leftShoulder
+    poses:
+      - definitions:
+          - calculator: right arm
+            with:
+              range: [0, 30]
+          - calculator: left arm
+            with:
+              range: [0, 30]
+
+      - id: cnt
+        definitions:
+          - calculator: right arm
+            with:
+              range: [100, 180]
+          - calculator: left arm
+            with:
+              range: [100, 180]

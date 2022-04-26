@@ -198,22 +198,22 @@ class PoseSuggestion{
     PoseSuggestionResult result = PoseSuggestionResult();
     if(!poseCheckerResult.warning) return result;
 
-    if(poseCheckerResult.warningDefinition!.angle != null){
-      print("${poseCheckerResult.warningDefinition!.angle!.landmarks} / ${poseCheckerResult.warningDefinition!.angle!.vertex}");
-      List<int> range = poseCheckerResult.warningDefinition!.angle!.range;
+    if(poseCheckerResult.warningCalculator!.angle != null){
+      print("${poseCheckerResult.warningCalculator!.angle!.landmarks} / ${poseCheckerResult.warningCalculator!.angle!.vertex}");
+      List<int> range = poseCheckerResult.warningDefinition!.withParams!["range"];
       Direction suggestingDirection = poseCheckerResult.actualValue! < range[0]? Direction.positive: Direction.negative;
       result = PoseSuggestionResult(
         warning: true,
         warningMessage: SuggestionSentenceList.getSentenceAngle(
-            poseCheckerResult.warningDefinition!.angle!.landmarks,
-            poseCheckerResult.warningDefinition!.angle!.vertex,
+            poseCheckerResult.warningCalculator!.angle!.landmarks,
+            poseCheckerResult.warningCalculator!.angle!.vertex,
             posturePosition, cameraAngle, suggestingDirection, facing: facing)
       );
     }
-    else if(poseCheckerResult.warningDefinition!.touch != null){
+    else if(poseCheckerResult.warningCalculator!.touch != null){
       result = PoseSuggestionResult(
         warning: true,
-        warningMessage: SuggestionSentenceList.getSentenceTouch(poseCheckerResult.warningDefinition!.touch!.touch,poseCheckerResult.warningDefinition!.touch!.landmarks)
+        warningMessage: SuggestionSentenceList.getSentenceTouch(poseCheckerResult.warningDefinition!.withParams!["touch"],poseCheckerResult.warningCalculator!.touch!.landmarks)
       );
     }
 

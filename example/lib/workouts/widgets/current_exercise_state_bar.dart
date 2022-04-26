@@ -252,10 +252,6 @@ class _CurrentExerciseStateBarState extends State<CurrentExerciseStateBar> {
               )
             ]),
           ),
-          Center(
-              child: SvgPicture.asset(
-            'assets/Icon/Detail Expand Icon.svg', // dot dot dot
-          )),
           SizedBox(
             height: 10,
           )

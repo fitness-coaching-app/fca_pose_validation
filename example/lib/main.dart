@@ -1,3 +1,4 @@
+import './workouts/screens/workout_portrait_main_view.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:io';
@@ -73,7 +74,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return PoseDetectorApplication();
+    return MaterialApp(home: WorkoutMainView());
   }
 
 }

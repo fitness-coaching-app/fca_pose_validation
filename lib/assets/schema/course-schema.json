@@ -177,10 +177,10 @@
                                 "type": "object",
                                 "properties": {
                                   "from": {
-                                    "type": "integer",
+                                    "type": "integer"
                                   },
                                   "to": {
-                                    "type": "integer",
+                                    "type": "integer"
                                   }
                                 }
                               }

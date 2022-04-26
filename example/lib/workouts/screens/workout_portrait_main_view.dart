@@ -14,6 +14,10 @@ import 'package:fca_pose_validation/fca_pose_processor.dart';
 
 import 'dart:async' as dart_async;
 
+// แก้ชื่อไฟล์ที่จะ save และท่าที่จะโหลด
+const String workoutFilePath = 'assets/side-lunges.yaml';
+const String fileName = 'side-lunges-test';
+
 class WorkoutMainView extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _WorkoutMainViewState();
@@ -78,7 +82,7 @@ class _WorkoutMainViewState extends State<WorkoutMainView> {
   Future<String> loadData() async {
     // TODO: Load course data from the API
     data = await rootBundle
-        .loadString('assets/side-lunges.yaml'); // TODO: Load .yaml file here
+        .loadString(workoutFilePath); // TODO: Load .yaml file here
     controller = ExerciseController(data,
         onDisplayStateChange: onDisplayStateChange,
         onStepComplete: onStepComplete,
@@ -145,8 +149,7 @@ class _WorkoutMainViewState extends State<WorkoutMainView> {
                             backgroundColor: Colors.white,
                           ),
                           onPressed: () {
-                            controller.dumpLogToFile(
-                                "squats-10_${DateTime.now().toUtc().toString()}");
+                            controller.dumpLogToFile(fileName);
                           },
                           child: Text("Save to Log")),
                       SizedBox(width: 25),

@@ -1,0 +1,68 @@
+id: courseId
+name: Seal Jacks
+steps:
+  - name: Seal Jacks
+    mediaDir: ""
+    bounce: true
+    criteria:
+      counter:
+        countOnId: cnt
+        repeat: 10
+    posturePosition: stand
+    cameraAngle: front
+    facing: up
+    calculators:
+      - name: right arm
+        angle:
+          landmarks: [rightElbow, rightHip]
+          vertex: rightShoulder
+      - name: left arm
+        angle:
+          landmarks: [leftElbow, leftHip]
+          vertex: leftShoulder
+      - name: right leg
+        angle:
+          landmarks: [rightKnee, leftHip]
+          vertex: rightHip
+      - name: left leg
+        angle:
+          landmarks: [leftKnee, rightHip]
+          vertex: leftHip
+      - name: clap
+        touch:
+          landmarks: [leftIndex, rightIndex]
+
+    poses:
+      - definitions:
+        - calculator: right arm
+          with:
+            range: [75,100]
+        - calculator: left arm
+          with:
+            range: [75,100]
+        - calculator: right leg
+          with:
+            range: [75,100]
+        - calculator: left leg
+          with:
+            range: [75,100]
+        - calculator: clap
+          with:
+            touch: false
+      - id: cnt
+        definitions:
+        - calculator: right arm
+          with:
+            range: [0, 180]
+        - calculator: left arm
+          with:
+            range: [0, 180]
+        - calculator: right leg
+          with:
+            range: [95,120]
+        - calculator: left leg
+          with:
+            range: [95,120]
+        - calculator: clap
+          with:
+            touch: true

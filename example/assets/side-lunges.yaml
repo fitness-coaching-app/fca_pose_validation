@@ -1,7 +1,7 @@
 id: courseId
-name: Squats (Preview)
+name: Side Lunges
 steps:
-  - name: Squats
+  - name: Side Lunges
     mediaDir: ""
     bounce: true
     criteria:
@@ -22,37 +22,39 @@ steps:
           vertex: leftElbow
       - name: right leg
         angle:
-          landmarks: [ rightHip, rightAnkle ]
-          vertex: rightKnee
+          landmarks: [ rightKnee, leftHip ]
+          vertex: rightHip
       - name: left leg
         angle:
-          landmarks: [ leftHip, leftAnkle ]
-          vertex: leftKnee
+          landmarks: [ leftKnee, rightHip ]
+          vertex: leftHip
     poses:
-      - definitions:
-          - calculator: right leg
-            with:
-              range: [150, 180]
-          - calculator: left leg
-            with:
-              range: [150, 180]
-          - calculator: right forearm
-            with:
-              range: [150, 180]
-          - calculator: left forearm
-            with:
-              range: [150, 180]
       - id: cnt
         definitions:
-          - calculator: right leg
-            with:
-              range: [0, 90]
-          - calculator: left leg
-            with:
-              range: [0, 90]
           - calculator: right forearm
             with:
-              range: [0, 90]
+              range: [ 160,180 ]
           - calculator: left forearm
             with:
-              range: [0, 90]
+              range: [ 160,180 ]
+          - calculator: right leg
+            with:
+              range: [ 0,45 ]
+          - calculator: left leg
+            with:
+              range: [ 160,180 ]
+      - id: cnt
+        definitions:
+          - calculator: right forearm
+            with:
+              range: [ 160,180 ]
+          - calculator: left forearm
+            with:
+              range: [ 160,180 ]
+          - calculator: right leg
+            with:
+              range: [ 160,180 ]
+          - calculator: left leg
+            with:
+              range: [ 0,45 ]
+          

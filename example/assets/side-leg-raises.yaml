@@ -1,0 +1,59 @@
+id: courseId
+name: Side Leg Raises
+steps:
+  - name: Side Leg Raises
+    mediaDir: ""
+    bounce: true
+    criteria:
+      counter:
+        countOnId: cnt
+        repeat: 10
+    posturePosition: stand
+    cameraAngle: front
+    facing: up
+    calculators:
+      - name: right thigh
+        angle:
+          landmarks: [ leftHip, rightKnee ]
+          vertex: rightHip
+      - name: right leg
+        angle:
+          landmarks: [ rightHip, rightAnkle ]
+          vertex: rightKnee
+      - name: left thigh
+        angle:
+          landmarks: [ rightHip, leftKnee ]
+          vertex: leftHip
+      - name: left leg
+        angle:
+          landmarks: [ leftHip, leftAnkle ]
+          vertex: leftKnee
+    poses:
+      - id: cnt
+        definitions:
+          - calculator: right thigh
+            with:
+              range: [ 140,180 ]
+          - calculator: right leg
+            with:
+              range: [ 160,180 ]
+          - calculator: left thigh
+            with:
+              range: [ 80,110 ]
+          - calculator: left leg
+            with:
+              range: [ 160,180 ]
+      - id: cnt
+        definitions:
+          - calculator: right thigh
+            with:
+              range: [ 80,110 ]
+          - calculator: right leg
+            with:
+              range: [ 160,180 ]
+          - calculator: left thigh
+            with:
+              range: [ 140,180 ]
+          - calculator: left leg
+            with:
+              range: [ 160,180 ]

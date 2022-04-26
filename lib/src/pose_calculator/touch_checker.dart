@@ -26,11 +26,11 @@ class TouchChecker {
     // dev.log("LANDMARK A: ${_pose.landmarks[landmarkA]!.x} | ${_pose.landmarks[landmarkA]!.y} | ${_pose.landmarks[landmarkA]!.z}");
     // dev.log("LANDMARK B: ${_pose.landmarks[landmarkB]!.x} | ${_pose.landmarks[landmarkB]!.y} | ${_pose.landmarks[landmarkB]!.z}");
 
-    // set point of touch each other must not exceed 15 pixels in X and Y coordinates.
+    // set point of touch each other must not exceed 50 pixels in X and Y coordinates.
     //False = Not Touch
     //True = Touch
-    if ((coordinates[0] - coordinates[1] >= 15 ||
-        coordinates[2] - coordinates[3] >= 15)) {
+    if ((coordinates[0] - coordinates[1] >= 50 ||
+        coordinates[2] - coordinates[3] >= 50)) {
       return 0;
     } else {
       return 1;

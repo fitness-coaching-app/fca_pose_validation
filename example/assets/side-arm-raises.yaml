@@ -1,7 +1,7 @@
 id: courseId
-name: Squats (Preview)
+name: Side Arm Raises
 steps:
-  - name: Squats
+  - name: Side Arm Raises
     mediaDir: ""
     bounce: true
     criteria:
@@ -12,47 +12,48 @@ steps:
     cameraAngle: front
     facing: up
     calculators:
+      - name: right arm
+        angle:
+          landmarks: [rightElbow, rightHip]
+          vertex: rightShoulder
       - name: right forearm
         angle:
           landmarks: [rightWrist, rightShoulder]
           vertex: rightElbow
+      - name: left arm
+        angle:
+          landmarks: [leftElbow, leftHip]
+          vertex: leftShoulder
       - name: left forearm
         angle:
           landmarks: [leftWrist, leftShoulder]
           vertex: leftElbow
-      - name: right leg
-        angle:
-          landmarks: [ rightHip, rightAnkle ]
-          vertex: rightKnee
-      - name: left leg
-        angle:
-          landmarks: [ leftHip, leftAnkle ]
-          vertex: leftKnee
     poses:
       - definitions:
-          - calculator: right leg
+          - calculator: right arm
             with:
-              range: [150, 180]
-          - calculator: left leg
-            with:
-              range: [150, 180]
+              range: [0,30]
           - calculator: right forearm
             with:
-              range: [150, 180]
+              range: [160,180]
+          - calculator: left arm
+            with:
+              range: [0,30]
           - calculator: left forearm
             with:
-              range: [150, 180]
+              range: [160,180]
       - id: cnt
         definitions:
-          - calculator: right leg
+          - calculator: right arm
             with:
-              range: [0, 90]
-          - calculator: left leg
-            with:
-              range: [0, 90]
+              range: [80,110]
           - calculator: right forearm
             with:
-              range: [0, 90]
+              range: [160,180]
+          - calculator: left arm
+            with:
+              range: [80,110]
           - calculator: left forearm
             with:
-              range: [0, 90]
+              range: [160,180]
+          

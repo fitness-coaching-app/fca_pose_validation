@@ -5,6 +5,7 @@ import 'exercise_state.dart';
 
 class PoseCheckerResult {
   bool warning;
+  CalculatorDefinition? warningCalculator;
   Definition? warningDefinition;
   double? actualValue;
   int incrementCorrectSubpose = 0;
@@ -13,7 +14,8 @@ class PoseCheckerResult {
   bool count = false;
 
   PoseCheckerResult(this.warning,
-      {this.warningDefinition,
+      {this.warningCalculator,
+      this.warningDefinition,
       this.actualValue,
       this.incrementCorrectSubpose = 0,
       this.incrementAllSubpose = 0,
@@ -27,16 +29,23 @@ class PoseChecker {
   bool warningTriggered = false;
   Stopwatch warningBufferTimer = Stopwatch();
 
-  PoseCheckerResult check(ExerciseStep currentStep, ExerciseState currentState,
-      List<double> computeResults) {
+  PoseCheckerResult check(
+      {required ExerciseStep currentStep,
+      required ExerciseState currentState,
+      required Map<String, double> computeResults,
+      required Map<String, CalculatorDefinition> calculators}) {
     Criteria subposeCriteria = currentStep.criteria;
     PoseCheckerResult result = PoseCheckerResult(false); // Mock up
 
     //check yaml criteria is counter and collect repeat, countOnId
     if (subposeCriteria.counter != null) {
-      final Map<String, dynamic> countCheckResult =
-          _countCheck(currentStep, currentState, computeResults);
+      final Map<String, dynamic> countCheckResult = _countCheck(
+          currentStep: currentStep,
+          currentState: currentState,
+          computeResults: computeResults,
+          calculators: calculators);
       result = PoseCheckerResult(warningTriggered,
+          warningCalculator: countCheckResult["warningCalculator"],
           warningDefinition: countCheckResult["warningDefinition"],
           actualValue: countCheckResult["warningActualValue"],
           incrementCorrectSubpose: countCheckResult["incrementCorrectSubpose"],
@@ -47,38 +56,53 @@ class PoseChecker {
 
     // check yaml criteria is timer and collect duration
     if (subposeCriteria.timer != null) {
-      final Map<String, dynamic> timerCheckResult = _timerCheck(currentStep, computeResults);
+      final Map<String, dynamic> timerCheckResult = _timerCheck(
+          currentStep: currentStep,
+          calculators: calculators,
+          computeResults: computeResults);
       result = PoseCheckerResult(warningTriggered,
-        warningDefinition: timerCheckResult["warningDefinition"],
-        actualValue: timerCheckResult["warningActualValue"]
-      );
+          warningCalculator: timerCheckResult["warningCalculator"],
+          warningDefinition: timerCheckResult["warningDefinition"],
+          actualValue: timerCheckResult["warningActualValue"]);
     }
 
     return result;
   }
 
-  List<bool> _definitionCheck(
-      ExercisePose subpose, List<double> computeResults) {
-    List<bool> isDefinitionCorrect = [];
+  Map<String, bool> _definitionCheck(
+      {required ExercisePose subpose,
+      required Map<String, CalculatorDefinition> calculators,
+      required Map<String, double> computeResults}) {
+    Map<String, bool> isDefinitionCorrect = {};
     // loop for check computeResults's angle is in the range of angleDefinition
-    for (int defIndex = 0; defIndex < subpose.definitions.length; ++defIndex) {
-      Definition def = subpose.definitions[defIndex];
-      if (def.angle != null) {
-        if (computeResults[defIndex] >= def.angle!.range[0] &&
-            computeResults[defIndex] <= def.angle!.range[1]) {
-          isDefinitionCorrect.add(true);
+    for (String key in calculators.keys) {
+      Definition def = subpose.definitions[key]!;
+      CalculatorDefinition calculator = calculators[key]!;
+      if (calculator.angle != null) {
+        if (computeResults[key]! >= def.withParams!["range"]![0] &&
+            computeResults[key]! <= def.withParams!["range"]![1]) {
+          isDefinitionCorrect[key] = true;
         } else {
-          isDefinitionCorrect.add(false);
+          isDefinitionCorrect[key] = false;
         }
-      } else if (def.touch != null) {
-        isDefinitionCorrect.add((computeResults[defIndex] == 0? false: true) == def.touch!.touch);
+      }
+      else if(calculator.touch != null){
+        print(key);
+        print(def.withParams!["touch"]);
+        print(computeResults[key]);
+        bool temp = computeResults[key] == 0? false: true;
+        isDefinitionCorrect[key] = temp == def.withParams!["touch"];
       }
     }
+
     return isDefinitionCorrect;
   }
 
-  Map<String, dynamic> _countCheck(ExerciseStep currentStep,
-      ExerciseState currentState, List<double> computeResults) {
+  Map<String, dynamic> _countCheck(
+      {required ExerciseStep currentStep,
+      required ExerciseState currentState,
+      required Map<String, CalculatorDefinition> calculators,
+      required Map<String, double> computeResults}) {
     int incrementCorrectSubpose = 0;
     int incrementAllSubpose = 0;
     List<ExercisePose> subposes = currentStep.poses;
@@ -90,12 +114,16 @@ class PoseChecker {
     bool subposeAllCorrect = true;
     ExercisePose subpose = subposes[currentState.expectedNextSubpose];
 
-    List<bool> isDefinitionCorrect = _definitionCheck(subpose, computeResults);
+    Map<String, bool> isDefinitionCorrect = _definitionCheck(
+        subpose: subpose,
+        computeResults: computeResults,
+        calculators: calculators);
     Definition? warningDefinition;
+    CalculatorDefinition? warningCalculator;
     double? warningActualValue;
 
-    for (int i = 0; i < isDefinitionCorrect.length; ++i) {
-      if (!isDefinitionCorrect[i]) {
+    for (var key in isDefinitionCorrect.keys) {
+      if (!(isDefinitionCorrect[key]!)) {
         subposeAllCorrect = false;
         falsePoseCnt++;
         // pose warning delay after 50 frames (approx. 5 sec.)
@@ -105,8 +133,9 @@ class PoseChecker {
           falsePoseCnt = 0;
         }
         if (warningTriggered) {
-          warningDefinition = subpose.definitions[i];
-          warningActualValue = computeResults[i];
+          warningDefinition = subpose.definitions[key];
+          warningCalculator = calculators[key];
+          warningActualValue = computeResults[key];
         }
         break;
       }
@@ -126,6 +155,7 @@ class PoseChecker {
     }
 
     return {
+      "warningCalculator": warningCalculator,
       "warningDefinition": warningDefinition,
       "warningActualValue": warningActualValue,
       "incrementCorrectSubpose": incrementCorrectSubpose,
@@ -135,24 +165,32 @@ class PoseChecker {
     };
   }
 
-  Map<String, dynamic> _timerCheck(ExerciseStep currentStep, List<double> computeResults) {
+  Map<String, dynamic> _timerCheck(
+      {required ExerciseStep currentStep,
+      required Map<String, CalculatorDefinition> calculators,
+      required Map<String, double> computeResults}) {
     ExercisePose subpose = currentStep.poses[0];
 
-    List<bool> isDefinitionCorrect = _definitionCheck(subpose, computeResults);
+    Map<String, bool> isDefinitionCorrect = _definitionCheck(
+        subpose: subpose,
+        computeResults: computeResults,
+        calculators: calculators);
     bool allCorrect = true;
     Definition? warningDefinition;
     double? warningActualValue;
+    CalculatorDefinition? warningCalculator;
 
-    for (int i = 0; i < isDefinitionCorrect.length; ++i) {
-      if (!isDefinitionCorrect[i]) {
+    for (var key in isDefinitionCorrect.keys) {
+      if (!(isDefinitionCorrect[key]!)) {
         allCorrect = false;
         warningBufferTimer.start();
         if (warningBufferTimer.elapsedMilliseconds > 1500) {
           warningTriggered = true;
         }
         if (warningTriggered) {
-          warningDefinition = subpose.definitions[i];
-          warningActualValue = computeResults[i];
+          warningCalculator = calculators[key];
+          warningDefinition = subpose.definitions[key];
+          warningActualValue = computeResults[key];
         }
         break;
       }
@@ -163,6 +201,7 @@ class PoseChecker {
     }
 
     return {
+      "warningCalculator": warningCalculator,
       "warningDefinition": warningDefinition,
       "warningActualValue": warningActualValue
     };

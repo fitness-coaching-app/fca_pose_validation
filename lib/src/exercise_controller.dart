@@ -69,10 +69,19 @@ class ExerciseController {
   }
 
   void _processPoses(ExerciseStep currentStep) {
-    List<double> computeResults = PoseCalculator.computeFromDefinition(currentStep.poses,_pose);
+    Map<String, double> computeResults = PoseCalculator.computeFromDefinition(
+          subposes: currentStep.poses,
+          pose: _pose,
+          calculators: currentStep.calculators
+    );
 
     PoseCheckerResult poseCheckerResult =
-        _poseChecker.check(currentStep, _currentState, computeResults);
+        _poseChecker.check(
+            currentStep: currentStep,
+            currentState: _currentState,
+            computeResults: computeResults,
+            calculators: currentStep.calculators
+        );
 
     // Log the pose
     if (DateTime.now().difference(lastLog).inMilliseconds >= 500) {
@@ -87,7 +96,7 @@ class ExerciseController {
       if (poseCheckerResult.nextSubpose) {
         _currentState.currentSubpose = _currentState.expectedNextSubpose;
         _currentState.expectedNextSubpose =
-            (_currentState.expectedNextSubpose + 1) % 2;
+            (_currentState.expectedNextSubpose + 1) % 2; // TODO: Make it more dynamic to support more subpose
       }
       if (poseCheckerResult.count) {
         _currentState.repeatCount++;

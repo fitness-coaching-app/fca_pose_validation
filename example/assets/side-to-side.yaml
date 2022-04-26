@@ -1,0 +1,108 @@
+id: courseId
+name: Side-to-Side Jumps
+steps:
+  - name: Side-to-Side Jumps
+    mediaDir: ""
+    bounce: true
+    criteria:
+      counter:
+        countOnId: cnt
+        repeat: 10
+    posturePosition: stand
+    cameraAngle: front
+    facing: up
+    calculators:
+      - name: right arm
+        angle:
+          landmarks: [rightElbow, rightHip]
+          vertex: rightShoulder
+      - name: left arm
+        angle:
+          landmarks: [leftElbow, leftHip]
+          vertex: leftShoulder
+      - name: right forearm
+        angle:
+          landmarks: [rightWrist, rightShoulder]
+          vertex: rightElbow
+      - name: left forearm
+        angle:
+          landmarks: [leftWrist, leftShoulder]
+          vertex: leftElbow
+      - name: right thigh
+        angle:
+          landmarks: [ leftHip, rightKnee ]
+          vertex: rightHip
+      - name: right leg
+        angle:
+          landmarks: [ rightHip, rightAnkle ]
+          vertex: rightKnee
+      - name: left thigh
+        angle:
+          landmarks: [ rightHip, leftKnee ]
+          vertex: leftHip
+      - name: left leg
+        angle:
+          landmarks: [ leftHip, leftAnkle ]
+          vertex: leftKnee
+    poses:
+      - id: cnt
+        definitions:
+#          right arm
+          - calculator: right arm
+            with:
+              range: [30,50]
+          - calculator: right forearm
+            with:
+              range: [170,180]
+#          left arm
+          - calculator: left arm
+            with:
+              range: [0,45]
+          - calculator: left forearm
+            with:
+              range: [80,110]
+#            right leg
+          - calculator: right thigh
+            with:
+              range: [80,110]
+          - calculator: right leg
+            with:
+              range: [170,180]
+#          left leg
+          - calculator: left thigh
+            with:
+              range: [80,110]
+          - calculator: left leg
+            with:
+              range: [80,110]
+      - id: cnt
+        definitions:
+#          right arm
+          - calculator: right arm
+            with:
+              range: [0,45]
+          - calculator: right forearm
+            with:
+              range: [80,110]
+#          left arm
+          - calculator: left arm
+            with:
+              range: [30,50]
+          - calculator: left forearm
+            with:
+              range: [170,180]
+#            right leg
+          - calculator: right thigh
+            with:
+              range: [80,110]
+          - calculator: right leg
+            with:
+              range: [80,110]
+#          left leg
+          - calculator: left thigh
+            with:
+              range: [80,110]
+          - calculator: left leg
+            with:
+              range: [170,180]
+          

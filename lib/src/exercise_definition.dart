@@ -36,46 +36,66 @@ class Criteria {
 class AngleDefinition {
   List<PoseLandmarkType> landmarks = [];
   late PoseLandmarkType vertex;
-  List<int> range = [];
 
-  AngleDefinition(this.landmarks, this.vertex, this.range);
-  AngleDefinition.loadFromYaml(YamlMap angle){
-    for(String landmark in angle['landmarks']){
-      landmarks.add(PoseLandmarkType.values.firstWhere((e) => e.toString() == 'PoseLandmarkType.' + landmark));
+  AngleDefinition({required this.landmarks, required this.vertex});
+
+  AngleDefinition.loadFromYaml(YamlMap angle) {
+    for (String landmark in angle['landmarks']) {
+      landmarks.add(PoseLandmarkType.values
+          .firstWhere((e) => e.toString() == 'PoseLandmarkType.' + landmark));
     }
 
-    vertex = PoseLandmarkType.values.firstWhere((e) => e.toString() == 'PoseLandmarkType.' + angle['vertex']);
-    range = List<int>.from(angle['range'].toList());
+    vertex = PoseLandmarkType.values.firstWhere(
+        (e) => e.toString() == 'PoseLandmarkType.' + angle['vertex']);
+    // range = List<int>.from(angle['range'].toList());
   }
 }
 
 class TouchDefinition {
-  bool touch;
-  List<PoseLandmarkType> landmarks;
+  // bool touch;
+  List<PoseLandmarkType> landmarks = [];
 
-  TouchDefinition(this.touch,this.landmarks);
+  TouchDefinition({required this.landmarks});
+
+  TouchDefinition.loadFromYaml(YamlMap touch) {
+    for (String landmark in touch['landmarks']) {
+      landmarks.add(PoseLandmarkType.values
+          .firstWhere((e) => e.toString() == 'PoseLandmarkType.' + landmark));
+    }
+
+    // range = List<int>.from(angle['range'].toList());
+  }
 }
 
 class Definition {
-  AngleDefinition? angle;
-  TouchDefinition? touch;
+  String calculator = "";
+  Map<String, dynamic>? withParams = {};
+  bool count = false;
 
-  Definition(this.angle, this.touch);
+  Definition(
+      {required this.calculator, this.withParams, this.count = false});
 
   Definition.loadFromYaml(YamlMap definition) {
-    switch (definition.keys.first) {
-      case "angle":
-        angle = AngleDefinition.loadFromYaml(definition['angle']);
-        break;
-      case "touch":
-        List<PoseLandmarkType> landmarks = [];
-        for (String landmark in definition['touch']['landmarks']) {
-          landmarks.add(PoseLandmarkType.values.firstWhere(
-              (e) => e.toString() == 'PoseLandmarkType.' + landmark));
+    calculator = definition["calculator"]!;
+    withParams = {};
+    for(String i in definition["with"].keys){
+      if(i == "range"){
+        List<int> temp = [];
+        for(var a in definition["with"][i]){
+          temp.add(a);
         }
-        touch = TouchDefinition(definition['touch']['touch'],landmarks);
-        break;
+        withParams![i] = temp;
+      }
+      else{
+        withParams![i] = definition["with"][i];
+      }
+
+
+      print(withParams);
     }
+    print("TEST");
+    print(withParams);
+    // count = definition["count"];
   }
 }
 
@@ -83,8 +103,9 @@ class WarningPose {
   List<Definition> definitions = [];
   String? warningMessage = "";
 
-  WarningPose(this.definitions,this.warningMessage);
-  WarningPose.loadFromYaml(YamlMap warningPose){
+  WarningPose(this.definitions, this.warningMessage);
+
+  WarningPose.loadFromYaml(YamlMap warningPose) {
     for (YamlMap def in warningPose['definitions']) {
       definitions.add(Definition.loadFromYaml(def));
     }
@@ -95,15 +116,32 @@ class WarningPose {
 
 class ExercisePose {
   String? id;
-  List<Definition> definitions = [];
+  Map<String, Definition> definitions = {};
 
   ExercisePose(this.id, this.definitions);
 
   ExercisePose.loadFromYaml(YamlMap pose) {
     id = pose['id'];
-
     for (YamlMap def in pose['definitions']) {
-      definitions.add(Definition.loadFromYaml(def));
+      print(def);
+      definitions[def["calculator"]] = Definition.loadFromYaml(def);
+    }
+  }
+}
+
+class CalculatorDefinition {
+  String name = "";
+  AngleDefinition? angle;
+  TouchDefinition? touch;
+
+  CalculatorDefinition(this.angle, this.touch);
+
+  CalculatorDefinition.loadFromYaml(YamlMap calculator) {
+    name = calculator["name"];
+    if (calculator["angle"] != null) {
+      angle = AngleDefinition.loadFromYaml(calculator['angle']);
+    } else if (calculator["touch"] != null) {
+      touch = TouchDefinition.loadFromYaml(calculator['touch']);
     }
   }
 }
@@ -116,11 +154,20 @@ class ExerciseStep {
   String posturePosition = "";
   String cameraAngle = "";
   String facing = "";
+  Map<String,CalculatorDefinition> calculators = {};
   List<ExercisePose> poses = []; // Only have 2 stages
   List<WarningPose> warningPoses = [];
 
   ExerciseStep(
-      this.name, this.mediaDir, this.bounce, this.criteria, this.posturePosition, this.cameraAngle, this.facing, this.poses);
+      {required this.name,
+      required this.mediaDir,
+      required this.bounce,
+      required this.criteria,
+      required this.posturePosition,
+      required this.cameraAngle,
+      required this.facing,
+      required this.calculators,
+      required this.poses});
 
   ExerciseStep.loadFromYaml(YamlMap step) {
     name = step['name'];
@@ -131,14 +178,20 @@ class ExerciseStep {
     cameraAngle = step['cameraAngle'];
     facing = step['facing'];
 
+    for(YamlMap calculator in step['calculators']){
+      print(calculator);
+      calculators[calculator['name']] = CalculatorDefinition.loadFromYaml(calculator);
+    }
     for (YamlMap pose in step['poses']) {
+      print(pose);
       poses.add(ExercisePose.loadFromYaml(pose));
     }
-    if(step['warningPoses'] != null){
+    if (step['warningPoses'] != null) {
       for (YamlMap warningPose in step['warningPoses']) {
         poses.add(ExercisePose.loadFromYaml(warningPose));
       }
     }
+    print("complete!");
   }
 }
 

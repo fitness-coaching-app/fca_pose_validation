@@ -2,7 +2,7 @@ id: courseId
 name: Jumping Jacks
 steps:
   - name: Jumping Jacks
-    mediaDir: ""
+    mediaDir: "https://storage.googleapis.com/fca-bucket/courses/jumping-jacks/jumping%20jacks.mp4"
     bounce: true
     criteria:
       counter:

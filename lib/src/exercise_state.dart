@@ -16,6 +16,8 @@ class ExerciseState {
 
   ExerciseDisplayCriteria criteria = ExerciseDisplayCriteria.counter;
 
+  Stopwatch globalTimer = Stopwatch();
+
   // For counter criteria
   int repeatCount = 0;
   int target = 0;

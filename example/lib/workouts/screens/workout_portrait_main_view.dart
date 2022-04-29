@@ -76,7 +76,10 @@ class _WorkoutMainViewState extends State<WorkoutMainView> {
   }
 
   void onExerciseComplete() {
-    // TODO: Change the page to exercise summary
+    var summary = controller.getExerciseSummary();
+    print("Exercise Completed");
+    print(summary.exerciseDuration);
+    print(summary.score);
   }
 
   Future<String> loadData() async {

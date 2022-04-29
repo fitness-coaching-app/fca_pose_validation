@@ -84,6 +84,7 @@ class ExerciseState {
     target = 0;
 
     timer.reset();
+    timer.stop();
 
     clearWarning();
   }

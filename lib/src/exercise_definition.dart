@@ -89,12 +89,7 @@ class Definition {
       else{
         withParams![i] = definition["with"][i];
       }
-
-
-      print(withParams);
     }
-    print("TEST");
-    print(withParams);
     // count = definition["count"];
   }
 }
@@ -123,7 +118,6 @@ class ExercisePose {
   ExercisePose.loadFromYaml(YamlMap pose) {
     id = pose['id'];
     for (YamlMap def in pose['definitions']) {
-      print(def);
       definitions[def["calculator"]] = Definition.loadFromYaml(def);
     }
   }
@@ -179,11 +173,9 @@ class ExerciseStep {
     facing = step['facing'];
 
     for(YamlMap calculator in step['calculators']){
-      print(calculator);
       calculators[calculator['name']] = CalculatorDefinition.loadFromYaml(calculator);
     }
     for (YamlMap pose in step['poses']) {
-      print(pose);
       poses.add(ExercisePose.loadFromYaml(pose));
     }
     if (step['warningPoses'] != null) {
@@ -191,7 +183,6 @@ class ExerciseStep {
         poses.add(ExercisePose.loadFromYaml(warningPose));
       }
     }
-    print("complete!");
   }
 }
 

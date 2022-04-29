@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -9,13 +10,18 @@ import 'pose_checker.dart';
 import 'pose_logger.dart';
 import 'pose_suggestion.dart';
 import 'exercise_state.dart';
+class ExerciseSummary{
+  final int exerciseDuration;
+  final int score;
+
+  ExerciseSummary({required this.exerciseDuration, required this.score});
+}
 
 class ExerciseController {
   late Pose _pose;
   PoseLogger _poseLogger = PoseLogger('testUserID', 'testCourseID');
   final ExerciseState _currentState = ExerciseState();
   DateTime lastLog = DateTime.now();
-  final PoseCalculator _poseCalculator = PoseCalculator();
   PoseChecker _poseChecker = PoseChecker();
   late ExerciseDefinition definition;
 
@@ -49,13 +55,17 @@ class ExerciseController {
       return _currentState;
     }
     if(_currentState.getDisplayState() == DisplayState.exercise){
+      _currentState.globalTimer.start();
       final ExerciseStep currentStep =
       definition.steps[_currentState.currentStep];
 
       // process the returned value from _processPoses
       _processPoses(currentStep);
-
     }
+    else{
+      _currentState.globalTimer.stop();
+    }
+
     _currentState.update(); // Update the state according to the parameters
     // callback
     _eventHandler();
@@ -151,6 +161,29 @@ class ExerciseController {
       if (_onDisplayStateChangeCallback != null) {
         _onDisplayStateChangeCallback!(_currentState.getDisplayState());
       }
+    }
+  }
+
+  ExerciseSummary getExerciseSummary(){
+    bool countCriteria = false;
+    bool timerCriteria = false;
+    var scoreCount = (_currentState.correctSubpose / _currentState.allSubpose) * 100;
+    var scoreTimer = ((_currentState.actualTimerDuration.elapsedMilliseconds - _currentState.wrongPoseTimer.elapsedMilliseconds) / _currentState.actualTimerDuration.elapsedMilliseconds) * 100;
+    for(var i in definition.steps){
+      if(i.criteria.counter != null) {
+        countCriteria = true;
+      } else if(i.criteria.timer != null) {
+        timerCriteria = true;
+      }
+    }
+    if(countCriteria && timerCriteria){
+      return ExerciseSummary(exerciseDuration: _currentState.globalTimer.elapsed.inSeconds, score: (scoreCount + scoreTimer) ~/ 2);
+    }
+    else if(countCriteria){
+      return ExerciseSummary(exerciseDuration: _currentState.globalTimer.elapsed.inSeconds, score: scoreCount.toInt());
+    }
+    else{
+      return ExerciseSummary(exerciseDuration: _currentState.globalTimer.elapsed.inSeconds, score: scoreTimer.toInt());
     }
   }
 

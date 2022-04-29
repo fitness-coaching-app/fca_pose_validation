@@ -6,7 +6,7 @@ steps:
     bounce: true
     criteria:
       timer:
-        duration: 15
+        duration: 10
     posturePosition: stand
     cameraAngle: front
     facing: up

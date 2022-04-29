@@ -1,0 +1,113 @@
+id: courseId
+name: Warrior II
+steps:
+  - name: Warrior II Right Leg
+    mediaDir: ""
+    bounce: true
+    criteria:
+      timer:
+        duration: 10
+    posturePosition: stand
+    cameraAngle: front
+    facing: up
+    calculators:
+      - name: right arm
+        angle:
+          landmarks: [rightElbow, rightHip]
+          vertex: rightShoulder
+      - name: left arm
+        angle:
+          landmarks: [leftElbow, leftHip]
+          vertex: leftShoulder
+      - name: right arm stretch
+        angle:
+          landmarks: [rightWrist, rightShoulder]
+          vertex: rightElbow
+      - name: left arm stretch
+        angle:
+          landmarks: [leftWrist, leftShoulder]
+          vertex: leftElbow
+      - name: right leg
+        angle:
+          landmarks: [rightHip, rightAnkle]
+          vertex: rightKnee
+      - name: left leg
+        angle:
+          landmarks: [leftHip, leftAnkle]
+          vertex: leftKnee
+
+    poses:
+      - definitions:
+        - calculator: right arm
+          with:
+            range: [70,110]
+        - calculator: left arm
+          with:
+            range: [70,110]
+        - calculator: right arm stretch
+          with:
+            range: [140,180]
+        - calculator: left arm stretch
+          with:
+            range: [140,180]
+        - calculator: right leg
+          with:
+            range: [70,110]
+        - calculator: left leg
+          with:
+            range: [140,180]
+  - name: Warrior II Left Leg
+    mediaDir: ""
+    bounce: true
+    criteria:
+      timer:
+        duration: 10
+    posturePosition: stand
+    cameraAngle: front
+    facing: up
+    calculators:
+      - name: left arm
+        angle:
+          landmarks: [leftElbow, leftHip]
+          vertex: leftShoulder
+      - name: right arm
+        angle:
+          landmarks: [rightElbow, rightHip]
+          vertex: rightShoulder
+      - name: left arm stretch
+        angle:
+          landmarks: [leftWrist, leftShoulder]
+          vertex: leftElbow
+      - name: right arm stretch
+        angle:
+          landmarks: [rightWrist, rightShoulder]
+          vertex: rightElbow
+      - name: left leg
+        angle:
+          landmarks: [leftHip, leftAnkle]
+          vertex: leftKnee
+      - name: right leg
+        angle:
+          landmarks: [rightHip, rightAnkle]
+          vertex: rightKnee
+
+    poses:
+      - definitions:
+        - calculator: left arm
+          with:
+            range: [70,110]
+        - calculator: right arm
+          with:
+            range: [70,110]
+        - calculator: left arm stretch
+          with:
+            range: [140,180]
+        - calculator: right arm stretch
+          with:
+            range: [140,180]
+        - calculator: left leg
+          with:
+            range: [70,110]
+        - calculator: right leg
+          with:
+            range: [140,180]

@@ -1,0 +1,83 @@
+id: courseId
+name: Tree Pose
+steps:
+  - name: Tree Pose Right Leg
+    mediaDir: ""
+    bounce: true
+    criteria:
+      timer:
+        duration: 15
+    posturePosition: stand
+    cameraAngle: front
+    facing: up
+    calculators:
+      - name: right arm
+        angle:
+          landmarks: [rightElbow, rightHip]
+          vertex: rightShoulder
+      - name: left arm
+        angle:
+          landmarks: [leftElbow, leftHip]
+          vertex: leftShoulder
+      - name: right leg
+        angle:
+          landmarks: [rightHip, rightAnkle]
+          vertex: rightKnee
+      - name: foot touch knee
+        touch:
+          landmarks: [rightFootIndex, leftKnee]
+
+    poses:
+      - definitions:
+        - calculator: right arm
+          with:
+            range: [140,180]
+        - calculator: left arm
+          with:
+            range: [140,180]
+        - calculator: right leg
+          with:
+            range: [0,70]
+        - calculator: foot touch knee
+          with:
+            touch: true
+  - name: Tree Pose Left Leg
+    mediaDir: ""
+    bounce: true
+    criteria:
+      timer:
+        duration: 15
+    posturePosition: stand
+    cameraAngle: front
+    facing: up
+    calculators:
+      - name: right arm
+        angle:
+          landmarks: [rightElbow, rightHip]
+          vertex: rightShoulder
+      - name: left arm
+        angle:
+          landmarks: [leftElbow, leftHip]
+          vertex: leftShoulder
+      - name: left leg
+        angle:
+          landmarks: [leftHip, leftAnkle]
+          vertex: leftKnee
+      - name: foot touch knee
+        touch:
+          landmarks: [leftFootIndex, rightKnee]
+
+    poses:
+      - definitions:
+        - calculator: right arm
+          with:
+            range: [140,180]
+        - calculator: left arm
+          with:
+            range: [140,180]
+        - calculator: left leg
+          with:
+            range: [0,70]
+        - calculator: foot touch knee
+          with:
+            touch: true

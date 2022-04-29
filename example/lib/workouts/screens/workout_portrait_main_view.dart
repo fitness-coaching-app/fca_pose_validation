@@ -15,7 +15,7 @@ import 'package:fca_pose_validation/fca_pose_processor.dart';
 import 'dart:async' as dart_async;
 
 // แก้ชื่อไฟล์ที่จะ save และท่าที่จะโหลด
-const String workoutFilePath = 'assets/squats.yaml';
+const String workoutFilePath = 'assets/jumping-jacks.yaml';
 const String fileName = 'side-lunges-test';
 
 class WorkoutMainView extends StatefulWidget {
@@ -129,6 +129,7 @@ class _WorkoutMainViewState extends State<WorkoutMainView> {
                     if (currentDisplayState == DisplayState.teach) {
                       return TeachView(onComplete: () {
                         controller.teachCompleted();
+                        print("teach completed");
                       });
                     }
 

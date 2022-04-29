@@ -21,6 +21,7 @@ class _TeachViewState extends State<TeachView> {
 
     // TODO: Remove this timer, mockup only
     Timer.periodic(const Duration(milliseconds: 2000), (timer) {
+      print("timer cancel");
       timer.cancel();
       if(widget.onComplete != null) widget.onComplete!();
     });
@@ -30,6 +31,7 @@ class _TeachViewState extends State<TeachView> {
   Widget build(BuildContext context) {
     // TODO: Display Teaching Video
     // TODO: Call widget.onComplete!() when done teaching video
+
     return Expanded(
         child: Text("Teaching Video...")
     );

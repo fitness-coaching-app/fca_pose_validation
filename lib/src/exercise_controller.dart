@@ -15,7 +15,8 @@ class ExerciseController {
   PoseLogger _poseLogger = PoseLogger('testUserID', 'testCourseID');
   final ExerciseState _currentState = ExerciseState();
   DateTime lastLog = DateTime.now();
-  final PoseChecker _poseChecker = PoseChecker();
+  final PoseCalculator _poseCalculator = PoseCalculator();
+  PoseChecker _poseChecker = PoseChecker();
   late ExerciseDefinition definition;
 
   void Function(DisplayState displayState)? _onDisplayStateChangeCallback;
@@ -44,24 +45,18 @@ class ExerciseController {
   }
 
   ExerciseState update() {
-    if(_currentState.exerciseCompleted()){
+    if (_currentState.exerciseCompleted()) {
       return _currentState;
     }
+    if(_currentState.getDisplayState() == DisplayState.exercise){
+      final ExerciseStep currentStep =
+      definition.steps[_currentState.currentStep];
 
-    final ExerciseStep currentStep =
-        definition.steps[_currentState.currentStep];
+      // process the returned value from _processPoses
+      _processPoses(currentStep);
 
-    if (currentStep.criteria.counter != null) {
-      _currentState.criteria = ExerciseDisplayCriteria.counter;
-    } else if (currentStep.criteria.timer != null) {
-      _currentState.criteria = ExerciseDisplayCriteria.timer;
     }
-
-    // process the returned value from _processPoses
-    _processPoses(currentStep);
-
     _currentState.update(); // Update the state according to the parameters
-
     // callback
     _eventHandler();
 
@@ -70,18 +65,15 @@ class ExerciseController {
 
   void _processPoses(ExerciseStep currentStep) {
     Map<String, double> computeResults = PoseCalculator.computeFromDefinition(
-          subposes: currentStep.poses,
-          pose: _pose,
-          calculators: currentStep.calculators
-    );
+        subposes: currentStep.poses,
+        pose: _pose,
+        calculators: currentStep.calculators);
 
-    PoseCheckerResult poseCheckerResult =
-        _poseChecker.check(
-            currentStep: currentStep,
-            currentState: _currentState,
-            computeResults: computeResults,
-            calculators: currentStep.calculators
-        );
+    PoseCheckerResult poseCheckerResult = _poseChecker.check(
+        currentStep: currentStep,
+        currentState: _currentState,
+        computeResults: computeResults,
+        calculators: currentStep.calculators);
 
     // Log the pose
     if (DateTime.now().difference(lastLog).inMilliseconds >= 500) {
@@ -91,12 +83,14 @@ class ExerciseController {
 
     if (currentStep.criteria.counter != null) {
       _currentState.allSubpose += poseCheckerResult.incrementAllSubpose;
-      print("${_currentState.currentSubpose} -> ${_currentState.expectedNextSubpose}");
+      print(
+          "${_currentState.currentSubpose} -> ${_currentState.expectedNextSubpose}");
       print("Count: ${_currentState.repeatCount}");
       if (poseCheckerResult.nextSubpose) {
         _currentState.currentSubpose = _currentState.expectedNextSubpose;
         _currentState.expectedNextSubpose =
-            (_currentState.expectedNextSubpose + 1) % 2; // TODO: Make it more dynamic to support more subpose
+            (_currentState.expectedNextSubpose + 1) %
+                2; // TODO: Make it more dynamic to support more subpose
       }
       if (poseCheckerResult.count) {
         _currentState.repeatCount++;
@@ -127,40 +121,50 @@ class ExerciseController {
     if (_currentState.stepCompleted()) {
       _currentState.actualTimerDuration.stop();
       _currentState.timer.stop();
-      print("State: ${_currentState.wrongPoseTimer.elapsedMilliseconds} | ${_currentState.actualTimerDuration.elapsedMilliseconds}");
-      if(_onStepCompleteCallback != null){
-        _onStepCompleteCallback!();
-      }
-      if(_currentState.currentStep + 1 < definition.steps.length){
-        _currentState.loadNewStep(definition.steps[++_currentState.currentStep]);
-      }
-      else {
+      print(
+          "State: ${_currentState.wrongPoseTimer.elapsedMilliseconds} | ${_currentState.actualTimerDuration.elapsedMilliseconds}");
+      if (_currentState.currentStep + 1 < definition.steps.length) {
+        _currentState
+            .loadNewStep(definition.steps[++_currentState.currentStep]);
+        _poseChecker = PoseChecker();
+        if (definition.steps[_currentState.currentStep].criteria.counter !=
+            null) {
+          _currentState.criteria = ExerciseDisplayCriteria.counter;
+        } else if (definition.steps[_currentState.currentStep].criteria.timer !=
+            null) {
+          _currentState.criteria = ExerciseDisplayCriteria.timer;
+        }
+      } else {
         // exerciseCompleted
         _currentState.setExerciseCompleted();
-        if(_onExerciseCompleteCallback != null) {
+        if (_onExerciseCompleteCallback != null) {
           _onExerciseCompleteCallback!();
         }
       }
-      _currentState.setDisplayState(DisplayState.teach);
+      if (_onStepCompleteCallback != null) {
+        _onStepCompleteCallback!();
+        _currentState.setDisplayState(DisplayState.teach);
+      }
     }
 
     if (_currentState.displayStateChanged()) {
-      if(_onDisplayStateChangeCallback != null){
+      if (_onDisplayStateChangeCallback != null) {
         _onDisplayStateChangeCallback!(_currentState.getDisplayState());
       }
     }
   }
 
-  void preExerciseCompleted(){
-    if(_currentState.getDisplayState() == DisplayState.preExercise){
+  void preExerciseCompleted() {
+    if (_currentState.getDisplayState() == DisplayState.preExercise) {
       _currentState.setDisplayState(DisplayState.teach);
-      _onDisplayStateChangeCallback!(_currentState.getDisplayState());
+      _eventHandler();
     }
   }
-  void teachCompleted(){
-    if(_currentState.getDisplayState() == DisplayState.teach){
+
+  void teachCompleted() {
+    if (_currentState.getDisplayState() == DisplayState.teach) {
       _currentState.setDisplayState(DisplayState.exercise);
-      _onDisplayStateChangeCallback!(_currentState.getDisplayState());
+      _eventHandler();
     }
   }
 
@@ -172,7 +176,7 @@ class ExerciseController {
     file.writeAsStringSync(_poseLogger.toJSON());
   }
 
-  void clearLog(){
+  void clearLog() {
     _poseLogger = PoseLogger('testUserID', 'testCourseID');
   }
 }

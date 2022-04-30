@@ -1,0 +1,75 @@
+id: courseId
+name: Arm Raises
+steps:
+  - name: Arm Raises
+    mediaDir: ""
+    bounce: true
+    criteria:
+      counter:
+        countOnId: cnt
+        repeat: 10
+    posturePosition: stand
+    cameraAngle: front
+    facing: up
+    calculators:
+      - name: right arm
+        angle:
+          landmarks: [rightElbow, rightHip]
+          vertex: rightShoulder
+      - name: left arm
+        angle:
+          landmarks: [leftElbow, leftHip]
+          vertex: leftShoulder
+      - name: touch left hip
+        touch:
+          landmarks: [leftElbow, leftHip]
+      - name: touch right hip
+        touch:
+          landmarks: [rightElbow, rightHip]
+      - name: touch left ear
+        touch:
+          landmarks: [leftElbow, leftEar]
+      - name: touch right ear
+        touch:
+          landmarks: [rightElbow, rightEar]
+
+    poses:
+      - definitions:
+        - calculator: right arm
+          with:
+            range: [0,75]
+        - calculator: left arm
+          with:
+            range: [0,75]
+        - calculator: touch left hip
+          with:
+            touch: true
+        - calculator: touch right hip
+          with:
+            touch: true
+        - calculator: touch left ear
+          with:
+            touch: false
+        - calculator: touch right ear
+          with:
+            touch: false
+      - id: cnt
+        definitions:
+        - calculator: right arm
+          with:
+            range: [100,180]
+        - calculator: left arm
+          with:
+            range: [100,180]
+        - calculator: touch left hip
+          with:
+            touch: false
+        - calculator: touch right hip
+          with:
+            touch: false
+        - calculator: touch left ear
+          with:
+            touch: true
+        - calculator: touch right ear
+          with:
+            touch: true

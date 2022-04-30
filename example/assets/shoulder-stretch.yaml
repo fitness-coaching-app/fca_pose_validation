@@ -1,7 +1,7 @@
 id: courseId
-name: Tree Pose
+name: Shoulder Stretch
 steps:
-  - name: Tree Pose Right Leg
+  - name: Shoulder Stretch
     mediaDir: ""
     bounce: true
     criteria:
@@ -19,29 +19,22 @@ steps:
         angle:
           landmarks: [leftElbow, leftHip]
           vertex: leftShoulder
-      - name: right leg
-        angle:
-          landmarks: [rightHip, rightAnkle]
-          vertex: rightKnee
-      - name: foot touch knee
+      - name: touch elbow
         touch:
-          landmarks: [rightFootIndex, leftKnee]
+          landmarks: [leftElbow, rightElbow]
 
     poses:
       - definitions:
         - calculator: right arm
           with:
-            range: [140,180]
+            range: [0,70]
         - calculator: left arm
           with:
-            range: [140,180]
-        - calculator: right leg
-          with:
             range: [0,70]
-        - calculator: foot touch knee
+        - calculator: touch elbow
           with:
             touch: true
-  - name: Tree Pose Left Leg
+  - name: Shoulder Stretch Switch Arms
     mediaDir: ""
     bounce: true
     criteria:
@@ -59,25 +52,18 @@ steps:
         angle:
           landmarks: [leftElbow, leftHip]
           vertex: leftShoulder
-      - name: left leg
-        angle:
-          landmarks: [leftHip, leftAnkle]
-          vertex: leftKnee
-      - name: foot touch knee
+      - name: touch elbow
         touch:
-          landmarks: [leftFootIndex, rightKnee]
+          landmarks: [leftElbow, rightElbow]
 
     poses:
       - definitions:
         - calculator: right arm
           with:
-            range: [140,180]
+            range: [0,70]
         - calculator: left arm
           with:
-            range: [140,180]
-        - calculator: left leg
-          with:
             range: [0,70]
-        - calculator: foot touch knee
+        - calculator: touch elbow
           with:
             touch: true

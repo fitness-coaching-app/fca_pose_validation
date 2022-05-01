@@ -5,6 +5,7 @@ import 'package:google_ml_kit/google_ml_kit.dart';
 import 'dart:math';
 import 'package:vector_math/vector_math.dart';
 import 'dart:developer' as dev;
+import 'dart:core';
 
 class TouchChecker {
   static List<double> _getCoordinateFromLandmarks(
@@ -26,14 +27,13 @@ class TouchChecker {
     // dev.log("LANDMARK A: ${_pose.landmarks[landmarkA]!.x} | ${_pose.landmarks[landmarkA]!.y} | ${_pose.landmarks[landmarkA]!.z}");
     // dev.log("LANDMARK B: ${_pose.landmarks[landmarkB]!.x} | ${_pose.landmarks[landmarkB]!.y} | ${_pose.landmarks[landmarkB]!.z}");
 
-    // set point of touch each other must not exceed 50 pixels in X and Y coordinates.
-    //False = Not Touch
+    // set point of touch each other must not exceed 25 pixels in X and Y coordinates.
+    //False = Not Toucflkih
     //True = Touch
-    if ((coordinates[0] - coordinates[1] <= 50 ||
-        coordinates[2] - coordinates[3] <= 50)) {
-      return 0;
-    } else {
+    if (((coordinates[0] - coordinates[1]).abs() <= 25 && (coordinates[2] - coordinates[3]).abs() <= 25)) {
       return 1;
+    } else {
+      return 0;
     }
   }
 }

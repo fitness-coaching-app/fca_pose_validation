@@ -97,6 +97,7 @@ class ExerciseController {
           "${_currentState.currentSubpose} -> ${_currentState.expectedNextSubpose}");
       print("Count: ${_currentState.repeatCount}");
       if (poseCheckerResult.nextSubpose) {
+        _currentState.correctSubpose++;
         _currentState.currentSubpose = _currentState.expectedNextSubpose;
         _currentState.expectedNextSubpose =
             (_currentState.expectedNextSubpose + 1) %
@@ -169,6 +170,8 @@ class ExerciseController {
     bool timerCriteria = false;
     var scoreCount = (_currentState.correctSubpose / _currentState.allSubpose) * 100;
     var scoreTimer = ((_currentState.actualTimerDuration.elapsedMilliseconds - _currentState.wrongPoseTimer.elapsedMilliseconds) / _currentState.actualTimerDuration.elapsedMilliseconds) * 100;
+    print("scoreCount ${_currentState.correctSubpose} / ${_currentState.allSubpose}");
+    print("scoreTimer $scoreTimer");
     for(var i in definition.steps){
       if(i.criteria.counter != null) {
         countCriteria = true;

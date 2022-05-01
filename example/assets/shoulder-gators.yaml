@@ -1,7 +1,7 @@
 id: courseId
-name: Seal Jacks
+name: Shoulder Gators
 steps:
-  - name: Seal Jacks
+  - name: Shoulder Gators
     mediaDir: ""
     bounce: true
     criteria:
@@ -20,17 +20,15 @@ steps:
         angle:
           landmarks: [leftElbow, leftHip]
           vertex: leftShoulder
-      - name: right leg
-        angle:
-          landmarks: [rightKnee, leftHip]
-          vertex: rightHip
-      - name: left leg
-        angle:
-          landmarks: [leftKnee, rightHip]
-          vertex: leftHip
+      - name: touch left ear
+        touch:
+          landmarks: [leftWrist, leftEar]
+      - name: touch right ear
+        touch:
+          landmarks: [rightWrist, rightEar]
       - name: clap
         touch:
-          landmarks: [leftIndex, rightIndex]
+          landmarks: [leftElbow, rightElbow]
 
     poses:
       - definitions:
@@ -40,12 +38,12 @@ steps:
         - calculator: left arm
           with:
             range: [75,100]
-        - calculator: right leg
+        - calculator: touch left ear
           with:
-            range: [75,100]
-        - calculator: left leg
+            touch: true
+        - calculator: touch right ear
           with:
-            range: [75,100]
+            touch: true
         - calculator: clap
           with:
             touch: false
@@ -57,12 +55,12 @@ steps:
         - calculator: left arm
           with:
             range: [75,100]
-        - calculator: right leg
+        - calculator: touch left ear
           with:
-            range: [95,120]
-        - calculator: left leg
+            touch: true
+        - calculator: touch right ear
           with:
-            range: [95,120]
+            touch: true
         - calculator: clap
           with:
             touch: true

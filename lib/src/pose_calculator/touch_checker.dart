@@ -29,8 +29,8 @@ class TouchChecker {
     // set point of touch each other must not exceed 50 pixels in X and Y coordinates.
     //False = Not Touch
     //True = Touch
-    if ((coordinates[0] - coordinates[1] >= 50 ||
-        coordinates[2] - coordinates[3] >= 50)) {
+    if ((coordinates[0] - coordinates[1] <= 50 ||
+        coordinates[2] - coordinates[3] <= 50)) {
       return 0;
     } else {
       return 1;

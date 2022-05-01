@@ -1,7 +1,7 @@
 id: courseId
-name: Seal Jacks
+name: Claps Over Head
 steps:
-  - name: Seal Jacks
+  - name: Claps Over Head
     mediaDir: ""
     bounce: true
     criteria:
@@ -20,14 +20,6 @@ steps:
         angle:
           landmarks: [leftElbow, leftHip]
           vertex: leftShoulder
-      - name: right leg
-        angle:
-          landmarks: [rightKnee, leftHip]
-          vertex: rightHip
-      - name: left leg
-        angle:
-          landmarks: [leftKnee, rightHip]
-          vertex: leftHip
       - name: clap
         touch:
           landmarks: [leftIndex, rightIndex]
@@ -40,12 +32,6 @@ steps:
         - calculator: left arm
           with:
             range: [75,100]
-        - calculator: right leg
-          with:
-            range: [75,100]
-        - calculator: left leg
-          with:
-            range: [75,100]
         - calculator: clap
           with:
             touch: false
@@ -53,16 +39,10 @@ steps:
         definitions:
         - calculator: right arm
           with:
-            range: [75,100]
+            range: [140, 180]
         - calculator: left arm
           with:
-            range: [75,100]
-        - calculator: right leg
-          with:
-            range: [95,120]
-        - calculator: left leg
-          with:
-            range: [95,120]
+            range: [140, 180]
         - calculator: clap
           with:
             touch: true

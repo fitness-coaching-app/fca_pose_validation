@@ -1,0 +1,69 @@
+id: courseId
+name: Shoulder Stretch
+steps:
+  - name: Shoulder Stretch
+    mediaDir: ""
+    bounce: true
+    criteria:
+      timer:
+        duration: 10
+    posturePosition: stand
+    cameraAngle: front
+    facing: up
+    calculators:
+      - name: right arm
+        angle:
+          landmarks: [rightElbow, rightHip]
+          vertex: rightShoulder
+      - name: left arm
+        angle:
+          landmarks: [leftElbow, leftHip]
+          vertex: leftShoulder
+      - name: touch elbow
+        touch:
+          landmarks: [leftElbow, rightElbow]
+
+    poses:
+      - definitions:
+        - calculator: right arm
+          with:
+            range: [0,70]
+        - calculator: left arm
+          with:
+            range: [0,70]
+        - calculator: touch elbow
+          with:
+            touch: true
+  - name: Shoulder Stretch Switch Arms
+    mediaDir: ""
+    bounce: true
+    criteria:
+      timer:
+        duration: 10
+    posturePosition: stand
+    cameraAngle: front
+    facing: up
+    calculators:
+      - name: right arm
+        angle:
+          landmarks: [rightElbow, rightHip]
+          vertex: rightShoulder
+      - name: left arm
+        angle:
+          landmarks: [leftElbow, leftHip]
+          vertex: leftShoulder
+      - name: touch elbow
+        touch:
+          landmarks: [leftElbow, rightElbow]
+
+    poses:
+      - definitions:
+        - calculator: right arm
+          with:
+            range: [0,70]
+        - calculator: left arm
+          with:
+            range: [0,70]
+        - calculator: touch elbow
+          with:
+            touch: true

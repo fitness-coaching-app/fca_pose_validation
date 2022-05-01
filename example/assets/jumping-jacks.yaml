@@ -1,47 +1,13 @@
 id: courseId
 name: Jumping Jacks
 steps:
-#  - name: Jumping Jacks
-#    mediaDir: "https://storage.googleapis.com/fca-bucket/courses/jumping-jacks/jumping%20jacks.mp4"
-#    bounce: true
-#    criteria:
-#      counter:
-#        repeat: 5
-#        countOnId: cnt
-#    posturePosition: stand
-#    cameraAngle: front
-#    facing: up
-#    calculators:
-#      - name: right arm
-#        angle:
-#          landmarks: [ rightElbow, rightHip ]
-#          vertex: rightShoulder
-#      - name: left arm
-#        angle:
-#          landmarks: [ leftElbow, leftHip ]
-#          vertex: leftShoulder
-#    poses:
-#      - definitions:
-#          - calculator: right arm
-#            with:
-#              range: [ 0, 30 ]
-#          - calculator: left arm
-#            with:
-#              range: [ 0, 30 ]
-#      - id: cnt
-#        definitions:
-#          - calculator: right arm
-#            with:
-#              range: [ 100, 180 ]
-#          - calculator: left arm
-#            with:
-#              range: [ 100, 180 ]
-  - name: Arm Stretch
+  - name: Jumping Jacks
     mediaDir: "https://storage.googleapis.com/fca-bucket/courses/jumping-jacks/jumping%20jacks.mp4"
     bounce: true
     criteria:
-      timer:
-        duration: 3
+      counter:
+        repeat: 5
+        countOnId: cnt
     posturePosition: stand
     cameraAngle: front
     facing: up
@@ -54,38 +20,28 @@ steps:
         angle:
           landmarks: [ leftElbow, leftHip ]
           vertex: leftShoulder
+      - name: clap
+        touch:
+          landmarks: [leftIndex, rightIndex]
     poses:
       - definitions:
+          - calculator: right arm
+            with:
+              range: [ 0, 30 ]
+          - calculator: left arm
+            with:
+              range: [ 0, 30 ]
+          - calculator: clap
+            with:
+              touch: false
+      - id: cnt
+        definitions:
           - calculator: right arm
             with:
               range: [ 100, 180 ]
           - calculator: left arm
             with:
               range: [ 100, 180 ]
-
-  - name: Arm Stretch - 2
-    mediaDir: "https://storage.googleapis.com/fca-bucket/courses/jumping-jacks/jumping%20jacks.mp4"
-    bounce: true
-    criteria:
-      timer:
-        duration: 5
-    posturePosition: stand
-    cameraAngle: front
-    facing: up
-    calculators:
-      - name: right arm
-        angle:
-          landmarks: [ rightElbow, rightHip ]
-          vertex: rightShoulder
-      - name: left arm
-        angle:
-          landmarks: [ leftElbow, leftHip ]
-          vertex: leftShoulder
-    poses:
-      - definitions:
-          - calculator: right arm
+          - calculator: clap
             with:
-              range: [ 100, 180 ]
-          - calculator: left arm
-            with:
-              range: [ 100, 180 ]
+              touch: true

@@ -184,8 +184,9 @@ class SuggestionSentenceList{
 class PoseSuggestionResult{
   bool warning;
   String? warningMessage;
+  List<PoseLandmarkType>? warningPoseHighlight;
 
-  PoseSuggestionResult({this.warning = false, this.warningMessage});
+  PoseSuggestionResult({this.warning = false, this.warningMessage, this.warningPoseHighlight});
 }
 
 class PoseSuggestion{
@@ -207,7 +208,8 @@ class PoseSuggestion{
         warningMessage: SuggestionSentenceList.getSentenceAngle(
             poseCheckerResult.warningCalculator!.angle!.landmarks,
             poseCheckerResult.warningCalculator!.angle!.vertex,
-            posturePosition, cameraAngle, suggestingDirection, facing: facing)
+            posturePosition, cameraAngle, suggestingDirection, facing: facing),
+        warningPoseHighlight: [...poseCheckerResult.warningCalculator!.angle!.landmarks,poseCheckerResult.warningCalculator!.angle!.vertex]
       );
     }
     else if(poseCheckerResult.warningCalculator!.touch != null){

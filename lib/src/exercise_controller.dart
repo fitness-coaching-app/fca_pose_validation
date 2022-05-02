@@ -122,7 +122,7 @@ class ExerciseController {
         PoseSuggestion.getSuggestion(poseCheckerResult, currentStep);
 
     if (poseSuggestionResult.warning) {
-      _currentState.setWarning(poseSuggestionResult.warningMessage!, []);
+      _currentState.setWarning(poseSuggestionResult.warningMessage!, poseSuggestionResult.warningPoseHighlight!);
     } else {
       _currentState.clearWarning();
     }
